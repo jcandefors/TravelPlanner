@@ -1,13 +1,12 @@
-/**
- * 
- */
 package kth.TravelPlanner;
+
+import javax.swing.JFrame;
 
 /**
  * @author j
  *
  */
-public class TravelPlanner {
+public class TravelPlanner extends JFrame{
 
 	/**
 	 * @param args
