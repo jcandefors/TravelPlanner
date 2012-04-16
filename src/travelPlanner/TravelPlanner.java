@@ -3,7 +3,7 @@ package travelPlanner;
 import javax.swing.JFrame;
 
 /**
- * @author j
+ * @author j nej RAgnhild
  *
  */
 public class TravelPlanner extends JFrame{
