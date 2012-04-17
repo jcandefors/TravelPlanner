@@ -29,24 +29,23 @@ public class LayoutHandler {
 	public LayoutHandler(JFrame frame){
 		this.frame = frame;
 		contentPane = frame.getContentPane();
-		contentPane.setLayout(new BorderLayout(5,5));
+		contentPane.setLayout(new BorderLayout(2,2));
 		top = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		top.setBackground(Color.BLUE);
-		menu = new JPanel();
-		new BoxLayout(menu, BoxLayout.Y_AXIS);			//TBC
+		top.setBackground(Color.BLUE);		
+		menu = new JPanel();	
 		menu.setBackground(Color.PINK);
-		menu.setPreferredSize(new Dimension(400, 900));	
+		menu.setPreferredSize(new Dimension(300, 900));	
+		new BoxLayout(menu, BoxLayout.X_AXIS);
 		map = new JPanel(new FlowLayout());			//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
-		map.setPreferredSize(new Dimension(800,300));
+		map.setPreferredSize(new Dimension(1000,300));
 		map.setBackground(Color.YELLOW);
 		main = new JPanel(new FlowLayout());		// set size perhaps?
 		main.setBackground(Color.GREEN);
-		main.setPreferredSize(new Dimension(800, 800));
-		main.revalidate();
+		main.setPreferredSize(new Dimension(1000, 800));
 		JPanel tempMain = new JPanel(new FlowLayout(FlowLayout.CENTER,0,2));
 		tempMain.add(map);
 		tempMain.add(main);
-		
+				
 		topMenu = new JMenu("Meny");
 		topMenu.add(new JMenuItem("Avsluta"));		//TBC - needs action
 		topMenu.add(new JMenuItem("Byt Användare"));
