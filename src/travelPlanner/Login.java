@@ -1,7 +1,5 @@
 package travelPlanner;
 
-import java.io.BufferedReader;
-
 public class Login {
 	private UserHandler userhandler;
 	private User user; //ev

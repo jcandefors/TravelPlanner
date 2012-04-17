@@ -2,8 +2,8 @@ package travelPlanner;
 
 public class Destinations extends Slide{
 
-	public Destinations() {
-		// TODO Auto-generated constructor stub
+	public Destinations(LayoutHandler layoutHandler, String title) {
+		super(layoutHandler, title);
 	}
 
 }
