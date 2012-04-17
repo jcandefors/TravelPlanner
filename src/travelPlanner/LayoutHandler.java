@@ -29,31 +29,35 @@ public class LayoutHandler {
 	public LayoutHandler(JFrame frame){
 		this.frame = frame;
 		contentPane = frame.getContentPane();
-		contentPane.setLayout(new BorderLayout(10,10));
-		top = new JPanel(new FlowLayout(FlowLayout.LEFT, 7, 7));
+		contentPane.setLayout(new BorderLayout(5,5));
+		top = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		top.setBackground(Color.BLUE);
-		menu = new JPanel(new FlowLayout()); 		//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
+		menu = new JPanel();
+		new BoxLayout(menu, BoxLayout.Y_AXIS);			//TBC
 		menu.setBackground(Color.PINK);
-		menu.setPreferredSize(new Dimension(400, 900));		
-		map = new JPanel(new FlowLayout());
+		menu.setPreferredSize(new Dimension(400, 900));	
+		map = new JPanel(new FlowLayout());			//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
+		map.setPreferredSize(new Dimension(800,300));
 		map.setBackground(Color.YELLOW);
 		main = new JPanel(new FlowLayout());		// set size perhaps?
 		main.setBackground(Color.GREEN);
-		main.setPreferredSize(new Dimension(400, 400));
+		main.setPreferredSize(new Dimension(800, 800));
 		main.revalidate();
+		JPanel tempMain = new JPanel(new FlowLayout(FlowLayout.CENTER,0,2));
+		tempMain.add(map);
+		tempMain.add(main);
+		
 		topMenu = new JMenu("Meny");
 		topMenu.add(new JMenuItem("Avsluta"));		//TBC - needs action
 		topMenu.add(new JMenuItem("Byt Användare"));
 		title = new JLabel();
 
 		contentPane.add(menu,BorderLayout.WEST);
-		contentPane.add(map,BorderLayout.CENTER);
-		contentPane.add(main,BorderLayout.SOUTH);
+		contentPane.add(tempMain,BorderLayout.CENTER);
 		contentPane.add(top,BorderLayout.NORTH);
 
 		top.add(topMenu);
 		top.add(topMenu);
-
 
 		frame.setVisible(true);
 	}
