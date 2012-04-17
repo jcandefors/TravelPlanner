@@ -17,7 +17,8 @@ public class LayoutHandler {
 	private JFrame frame;
 	private Container contentPane;
 	private JPanel top;
-	private JPanel menu;
+	private JPanel menuUp;
+	private JPanel menuLow;
 	private JPanel map;
 	private JPanel main;
 	private JMenu topMenu;
@@ -32,10 +33,21 @@ public class LayoutHandler {
 		contentPane.setLayout(new BorderLayout(2,2));
 		top = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		top.setBackground(Color.BLUE);		
-		menu = new JPanel();	
-		menu.setBackground(Color.PINK);
+		
+		JPanel menu = new JPanel(new FlowLayout(FlowLayout.CENTER,0,2));
 		menu.setPreferredSize(new Dimension(300, 900));	
-		new BoxLayout(menu, BoxLayout.X_AXIS);
+		menuUp = new JPanel();	
+		menuUp.setBackground(Color.red);
+		menuUp.setPreferredSize(new Dimension(290, 400));
+		new BoxLayout(menuUp, BoxLayout.X_AXIS);
+		
+		menuLow = new JPanel();	
+		menuLow.setBackground(Color.PINK);
+		menuLow.setPreferredSize(new Dimension(290, 500));
+		new BoxLayout(menuLow, BoxLayout.X_AXIS);
+		menu.add(menuUp);
+		menu.add(menuLow);
+		
 		map = new JPanel(new FlowLayout());			//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
 		map.setPreferredSize(new Dimension(1000,300));
 		map.setBackground(Color.YELLOW);
@@ -62,14 +74,22 @@ public class LayoutHandler {
 	}
 
 	/**
-	 * Adds component to the main area of the layout.
+	 * Adds component to the upper menu area of the layout.
 	 * @param component The component to be added.
 	 */
-	public void addToMenu(Component component){
-		menu.add(component);
+	public void addToMenuUp(Component component){
+		menuUp.add(component);
 
 	}
 
+	/**
+	 * Adds component to the lower menu area of the layout.
+	 * @param component The component to be added.
+	 */
+	public void addToMenuLow(Component component){
+		menuLow.add(component);
+
+	}
 
 	/**
 	 * Adds component to the main area of the layout.
@@ -96,7 +116,9 @@ public class LayoutHandler {
 	 */
 	public void clearMenu(){
 
-		menu.removeAll();
+		menuUp.removeAll();
+		menuLow.removeAll();
+		
 	}
 	/**
 	 * Removes all components from the main panel.
@@ -116,7 +138,8 @@ public class LayoutHandler {
 	 * Removes all components from all the panels.
 	 */
 	public void clearAll(){
-		menu.removeAll();
+		menuUp.removeAll();
+		menuLow.removeAll();
 		main.removeAll();
 		map.removeAll();
 	}

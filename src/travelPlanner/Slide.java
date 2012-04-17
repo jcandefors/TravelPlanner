@@ -7,14 +7,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 
 public class Slide {
 
 	protected String title;
 	protected LayoutHandler layoutHandler;
-	protected String[] txtData;		//holds the data loaded from the about.txt 
-	protected String[] subPlaces;	//holds the data loaded from the index.txt
+	protected ArrayList<String> txtData;		//holds the data loaded from the about.txt 
+	protected ArrayList<String> subPlaces;	//holds the data loaded from the index.txt
 	protected BufferedReader fileReader = null;
 	protected File aboutFile;
 	protected File indexFile; 
@@ -28,11 +29,11 @@ public class Slide {
 	 */
 	public Slide(LayoutHandler layoutHandler, String title){
 		this.layoutHandler = layoutHandler;
-		filePath = "/"+ title +"/";
+		filePath = title + "/";																//TBC - own method?
 		aboutFile = new File("" + filePath + "about.txt"); //textfilen att med all data.
-		aboutFile = new File("" + filePath + "index.txt"); //textfilen för att se underliggande "platser".
-		txtData =  new String[]{};
-		subPlaces = new String[]{};
+		indexFile = new File("" + filePath + "index.txt"); //textfilen för att se underliggande "platser".
+		txtData =  new ArrayList<String>();
+		subPlaces = new ArrayList<String>();
 
 		loadDataFromFile();		 
 		listSubPlaces();
@@ -50,18 +51,22 @@ public class Slide {
 			fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(indexFile), "UTF-8"));
 		}catch (UnsupportedEncodingException e){
 			ErrorHandler.printError(e);
+			//ErrorHandler.printError(e);
 		}catch (FileNotFoundException e){
-			ErrorHandler.printError(e);}
-		
+			ErrorHandler.printError(e);
+			//ErrorHandler.printError(e);
+		}
+					
 		String line;
 		
 		try{
-			for(int row = 0; (line = fileReader.readLine()) != null; row++){
+			while ((line = fileReader.readLine()) != null){
 
-				subPlaces[row] = line;
+				subPlaces.add(line);
 			}
 		}catch (IOException e){
 			ErrorHandler.printError(e);
+			//ErrorHandler.printError(e);
 		}
 	}
 	
@@ -81,9 +86,9 @@ public class Slide {
 		String line;
 		
 		try{
-			for(int row = 0; (line = fileReader.readLine()) != null; row++){
+			while ((line = fileReader.readLine()) != null){
 
-				txtData[row] = line;
+				txtData.add(line);
 			}
 		}catch (IOException e){
 			ErrorHandler.printError(e);
