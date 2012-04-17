@@ -1,5 +1,6 @@
 package travelPlanner;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -10,29 +11,50 @@ import java.util.Iterator;
  *
  */
 
-public class TravelProject extends Slide {	
-	
+public class TravelProject extends Slide {
+
+	protected ArrayList<String> destinations;	//holds the data loaded from the index.txt
+
+
 	/**
 	 * Constructor of class TravelProject.
 	 * @param layoutHandler
 	 * @param title
 	 */
-
 	public TravelProject(LayoutHandler layoutHandler, String title) {
-		
+
 		super(layoutHandler, title);
-	
-	}
-	
-	public void subPlacesLayout(){
-		Iterator<String> iterator = super.subPlaces.iterator();
-		while (iterator.hasNext())
+		destinations = super.loadDataFromFile(super.indexFile);
+
+	}	
+
+
+	/**
+	 * Creates components (DestinationButtons) for all the destinations in the TravelProject.
+	 */
+
+	public void destinationLayout(){
+		Iterator<String> iterator = destinations.iterator();
+		while (iterator.hasNext()){
 			new DestinationButton(super.layoutHandler, iterator.next());
+		}
+		// to be placed in the main layout area?
+	}
+
+	/**
+	 * Creates general components common for every TravelProject.
+	 */
+	public void generalProjectLayout(){
+		
+		//super.layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", typ 1));
+		//super.layoutHandler.addToMenuUp(new ProjectButton("Skapa destination", typ 2));
 	}
 	
-	public void generalProjectComponents(){
-		//super.layoutHandler.addToMenu(new ProjectButton("Redigera reseprojekt"));
-		//super.layoutHandler.addToMenu(new ProjectButton("Skapa destination"));
+	/**
+	 * Creates components from about.txt (super.txtData) and adds them to the frame.
+	 */
+	public void projectInfoLayout(){
+		
 	}
 
 }

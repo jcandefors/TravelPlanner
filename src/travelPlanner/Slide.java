@@ -14,8 +14,7 @@ public class Slide {
 
 	protected String title;
 	protected LayoutHandler layoutHandler;
-	protected ArrayList<String> txtData;		//holds the data loaded from the about.txt 
-	protected ArrayList<String> subPlaces;	//holds the data loaded from the index.txt
+	protected ArrayList<String> txtData;		//holds the data loaded from the about.txt 	
 	protected BufferedReader fileReader = null;
 	protected File aboutFile;
 	protected File indexFile; 
@@ -29,69 +28,41 @@ public class Slide {
 	 */
 	public Slide(LayoutHandler layoutHandler, String title){
 		this.layoutHandler = layoutHandler;
-		filePath = title + "/";																//TBC - own method?
+		filePath = title + "/";		//later User + title + "/";	//kanske bör sparas i barnen?														//TBC - own method?
 		aboutFile = new File("" + filePath + "about.txt"); //textfilen att med all data.
 		indexFile = new File("" + filePath + "index.txt"); //textfilen för att se underliggande "platser".
 		txtData =  new ArrayList<String>();
-		subPlaces = new ArrayList<String>();
-
-		loadDataFromFile();		 
-		listSubPlaces();
-
-	}
-
-	/**
-	 * Listar projekt i portfolion, resmål i projektet från index.txt och returnerar i en String[].
-	 */
-	
-	//Kanske de två följande bör slås ihop till en = mindre kod?
-	
-	private void listSubPlaces() {
-		try{
-			fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(indexFile), "UTF-8"));
-		}catch (UnsupportedEncodingException e){
-			ErrorHandler.printError(e);
-			//ErrorHandler.printError(e);
-		}catch (FileNotFoundException e){
-			ErrorHandler.printError(e);
-			//ErrorHandler.printError(e);
-		}
-					
-		String line;
 		
-		try{
-			while ((line = fileReader.readLine()) != null){
 
-				subPlaces.add(line);
-			}
-		}catch (IOException e){
-			ErrorHandler.printError(e);
-			//ErrorHandler.printError(e);
-		}
+		loadDataFromFile(aboutFile);		
+
 	}
-	
 
 	/**
 	 * //Läser filen about och returnerar en string[] med informationen.
 	 * @return
 	 */
-	private void loadDataFromFile() {
+	public ArrayList loadDataFromFile(File file) {
 		try{
-			fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(aboutFile), "UTF-8"));
+			fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
 		}catch (UnsupportedEncodingException e){
 			ErrorHandler.printError(e);
 		}catch (FileNotFoundException e){
 			ErrorHandler.printError(e);}
 		
+		ArrayList<String> dataArray = new ArrayList<String>();
 		String line;
 		
 		try{
 			while ((line = fileReader.readLine()) != null){
 
-				txtData.add(line);
+				dataArray.add(line);
 			}
+			return dataArray;
 		}catch (IOException e){
 			ErrorHandler.printError(e);
 		}
+		return null;
 	}
+	
 }

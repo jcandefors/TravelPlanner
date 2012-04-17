@@ -19,13 +19,11 @@ public class ErrorHandler {
 
 	public static void printError(Exception e){
 		JFrame frame = new JFrame();
-		System.err.printf("%s: %s%n", e);
-		JOptionPane.showMessageDialog(frame, "Ett fel har uppstått i programmet som kommer behöva avslutas: %n"
-		+ e.getMessage() + "%n Vänligen se felloggen för mer information.", "TravelPlanner Error" ,JOptionPane.WARNING_MESSAGE);
-		frame.setVisible(true);
-		
-		//quit.addActionListener(new ActionListener() {
-		//public void actionPerformed(ActionEvent e) { System.exit(-1);	} });				
+		System.err.printf("%s%n", e);
+		JOptionPane.showMessageDialog(frame, "Ett fel har uppstått i programmet som kommer behöva avslutas: "
+		+ e.getMessage() + ". Vänligen se felloggen för mer information.", "TravelPlanner Error" ,JOptionPane.WARNING_MESSAGE);
+		quit();
+				
 	}
 
 	/**
@@ -39,6 +37,13 @@ public class ErrorHandler {
 		}catch (FileNotFoundException e){
 			//do nothing
 		}
-
+	}
+	
+	/**
+	 * Quits the application, closing files.
+	 */
+	public static void quit(){
+		//TBC to be nicely done.
+		System.exit(-1);
 	}
 }
