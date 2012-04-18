@@ -20,3 +20,4 @@ public class TravelPlanner extends JFrame{
 	}
 
 }
+
