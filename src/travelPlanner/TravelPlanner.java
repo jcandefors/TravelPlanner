@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 /**
  * This is the main class of the application TravelPlanner
+ * here Ragnhild change
  * @author j
  *
  */
