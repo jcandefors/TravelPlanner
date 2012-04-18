@@ -37,14 +37,15 @@ public class LayoutHandler {
 		JPanel menu = new JPanel(new FlowLayout(FlowLayout.CENTER,0,2));
 		menu.setPreferredSize(new Dimension(300, 900));	
 		menuUp = new JPanel();	
+		menuUp.setLayout(new BoxLayout(menuUp, BoxLayout.Y_AXIS));
 		menuUp.setBackground(Color.red);
 		menuUp.setPreferredSize(new Dimension(290, 400));
-		new BoxLayout(menuUp, BoxLayout.X_AXIS);
-		
+				
 		menuLow = new JPanel();	
+		menuLow.setLayout(new BoxLayout(menuLow, BoxLayout.Y_AXIS));	
 		menuLow.setBackground(Color.PINK);
 		menuLow.setPreferredSize(new Dimension(290, 500));
-		new BoxLayout(menuLow, BoxLayout.X_AXIS);
+		
 		menu.add(menuUp);
 		menu.add(menuLow);
 		
@@ -54,7 +55,8 @@ public class LayoutHandler {
 		main = new JPanel(new FlowLayout());		// set size perhaps?
 		main.setBackground(Color.GREEN);
 		main.setPreferredSize(new Dimension(1000, 800));
-		JPanel tempMain = new JPanel(new FlowLayout(FlowLayout.CENTER,0,2));
+		JPanel tempMain = new JPanel();
+		tempMain.setLayout(new BoxLayout(tempMain, BoxLayout.Y_AXIS));
 		tempMain.add(map);
 		tempMain.add(main);
 				
@@ -69,7 +71,7 @@ public class LayoutHandler {
 
 		top.add(topMenu);
 		top.add(topMenu);
-
+		frame.pack();
 		frame.setVisible(true);
 	}
 
@@ -79,7 +81,7 @@ public class LayoutHandler {
 	 */
 	public void addToMenuUp(Component component){
 		menuUp.add(component);
-
+		menuUp.add(Box.createHorizontalStrut(5));
 	}
 
 	/**
@@ -88,6 +90,7 @@ public class LayoutHandler {
 	 */
 	public void addToMenuLow(Component component){
 		menuLow.add(component);
+		menuLow.add(Box.createHorizontalStrut(5));
 
 	}
 

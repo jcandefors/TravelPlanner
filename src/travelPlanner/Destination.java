@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Destination extends Slide{
 	protected ArrayList<String> otherDestinations;
+	private String travelProject;
 
 
 
@@ -13,8 +14,10 @@ public class Destination extends Slide{
 	 * @param layoutHandler the layoutHandler to be used for laying out components.
 	 * @param title The name of the destination.
 	 */
-	public Destination(LayoutHandler layoutHandler, String title) {		
-		super(layoutHandler, title);
+	public Destination(LayoutHandler layoutHandler, String travelProject, String title) {		
+		super(layoutHandler, (travelProject + "/" + title +"/"), title);
+		this.travelProject = travelProject;
+		
 	}
 
 
@@ -37,7 +40,7 @@ public class Destination extends Slide{
 
 	public void listOtherDestinations(){
 
-		File projectIndexFile = new File("/index.txt"); //("/" + user + "/index.txt")
+		File projectIndexFile = new File(travelProject + "/index.txt"); //("/" + user + "/index.txt")
 		otherDestinations = super.loadDataFromFile(projectIndexFile);//listar andra destinationer än den man är vid och presenterar i menuLow.
 	}
 }

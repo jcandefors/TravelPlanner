@@ -1,8 +1,5 @@
 package travelPlanner;
 
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -19,7 +16,7 @@ public class ErrorHandler {
 
 	public static void printError(Exception e){
 		JFrame frame = new JFrame();
-		System.err.printf("%s%n", e);
+		System.err.printf("%s%n", e); //to be improved
 		JOptionPane.showMessageDialog(frame, "Ett fel har uppstått i programmet som kommer behöva avslutas: "
 		+ e.getMessage() + ". Vänligen se felloggen för mer information.", "TravelPlanner Error" ,JOptionPane.WARNING_MESSAGE);
 		quit();
@@ -31,7 +28,7 @@ public class ErrorHandler {
 	 */
 	public static void setErrorOut(){
 		try{
-		OutputStream output = new FileOutputStream("TPError.txt");
+		OutputStream output = new FileOutputStream("TPError.txt", true);
 		PrintStream printOut = new PrintStream(output);
 		System.setErr(printOut);
 		}catch (FileNotFoundException e){

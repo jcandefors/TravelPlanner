@@ -26,9 +26,9 @@ public class Slide {
 	 * Contructor of class Slide, the superclass of the "places" in the application "TravelPlanner". 
 	 * @param title The title of this "place"
 	 */
-	public Slide(LayoutHandler layoutHandler, String title){
+	public Slide(LayoutHandler layoutHandler, String filePath, String title){
 		this.layoutHandler = layoutHandler;
-		filePath = title + "/";		//later User + title + "/";	//kanske bör sparas i barnen?														//TBC - own method?
+		this.filePath = filePath;														//TBC - own method?
 		aboutFile = new File("" + filePath + "about.txt"); //textfilen att med all data.
 		indexFile = new File("" + filePath + "index.txt"); //textfilen för att se underliggande "platser".
 		txtData =  new ArrayList<String>();
@@ -42,7 +42,7 @@ public class Slide {
 	 * //Läser filen about och returnerar en string[] med informationen.
 	 * @return
 	 */
-	public ArrayList loadDataFromFile(File file) {
+	public ArrayList<String> loadDataFromFile(File file) {
 		try{
 			fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
 		}catch (UnsupportedEncodingException e){

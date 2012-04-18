@@ -1,7 +1,10 @@
 package travelPlanner;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JButton;
 
 /**
  * The class TravelProject is a subclass of the class Slide, meant to manage data 
@@ -23,8 +26,9 @@ public class TravelProject extends Slide {
 	 */
 	public TravelProject(LayoutHandler layoutHandler, String title) {
 
-		super(layoutHandler, title);
+		super(layoutHandler,(title+"/"), title);
 		destinations = super.loadDataFromFile(super.indexFile);
+		destinationLayout();
 
 	}	
 
@@ -34,9 +38,10 @@ public class TravelProject extends Slide {
 	 */
 
 	public void destinationLayout(){
+		
 		Iterator<String> iterator = destinations.iterator();
 		while (iterator.hasNext()){
-			new DestinationButton(super.layoutHandler, iterator.next());
+			layoutHandler.addToMenuLow(new DestinationButton(super.layoutHandler,title, iterator.next()));
 		}
 		// to be placed in the main layout area?
 	}
@@ -55,6 +60,27 @@ public class TravelProject extends Slide {
 	 */
 	public void projectInfoLayout(){
 		
+	}
+	
+	
+	
+	public class DestinationButton extends JButton{
+		private LayoutHandler layoutHandler;
+		private String travelProject; 
+
+		public DestinationButton(LayoutHandler layoutHandler, String travelProject, String destinationTitle){
+			
+			super(destinationTitle);
+			this.layoutHandler = layoutHandler;
+			this.travelProject = travelProject;
+			super.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) { openDestination();	} });	
+			
+		}
+		
+		public void openDestination(){
+			new travelPlanner.Destination(layoutHandler, travelProject, super.getText());		
+		}
 	}
 
 }
