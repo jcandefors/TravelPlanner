@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 /**
  * This is the main class of the application TravelPlanner
- * @author j
+ * @author joakim not
  *
  */
 public class TravelPlanner{
