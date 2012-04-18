@@ -5,7 +5,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 
-
+/**
+ * 
+ * kommentarer 
+ * @author ragnhild
+ *
+ */
 public class LogInWindow {
 
 	private JFrame loginFrame;
