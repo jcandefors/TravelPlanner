@@ -17,7 +17,8 @@ public class LayoutHandler {
 	private JFrame frame;
 	private Container contentPane;
 	private JPanel top;
-	private JPanel menu;
+	private JPanel menuUp;
+	private JPanel menuLow;
 	private JPanel map;
 	private JPanel main;
 	private JMenu topMenu;
@@ -32,17 +33,30 @@ public class LayoutHandler {
 		contentPane.setLayout(new BorderLayout(2,2));
 		top = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		top.setBackground(Color.BLUE);		
-		menu = new JPanel();	
-		menu.setBackground(Color.PINK);
+		
+		JPanel menu = new JPanel(new FlowLayout(FlowLayout.CENTER,0,2));
 		menu.setPreferredSize(new Dimension(300, 900));	
-		new BoxLayout(menu, BoxLayout.X_AXIS);
+		menuUp = new JPanel();	
+		menuUp.setLayout(new BoxLayout(menuUp, BoxLayout.Y_AXIS));
+		menuUp.setBackground(Color.red);
+		menuUp.setPreferredSize(new Dimension(290, 400));
+				
+		menuLow = new JPanel();	
+		menuLow.setLayout(new BoxLayout(menuLow, BoxLayout.Y_AXIS));	
+		menuLow.setBackground(Color.PINK);
+		menuLow.setPreferredSize(new Dimension(290, 500));
+		
+		menu.add(menuUp);
+		menu.add(menuLow);
+		
 		map = new JPanel(new FlowLayout());			//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
 		map.setPreferredSize(new Dimension(1000,300));
 		map.setBackground(Color.YELLOW);
 		main = new JPanel(new FlowLayout());		// set size perhaps?
 		main.setBackground(Color.GREEN);
 		main.setPreferredSize(new Dimension(1000, 800));
-		JPanel tempMain = new JPanel(new FlowLayout(FlowLayout.CENTER,0,2));
+		JPanel tempMain = new JPanel();
+		tempMain.setLayout(new BoxLayout(tempMain, BoxLayout.Y_AXIS));
 		tempMain.add(map);
 		tempMain.add(main);
 				
@@ -57,19 +71,28 @@ public class LayoutHandler {
 
 		top.add(topMenu);
 		top.add(topMenu);
-
+		frame.pack();
 		frame.setVisible(true);
 	}
 
 	/**
-	 * Adds component to the main area of the layout.
+	 * Adds component to the upper menu area of the layout.
 	 * @param component The component to be added.
 	 */
-	public void addToMenu(Component component){
-		menu.add(component);
-
+	public void addToMenuUp(Component component){
+		menuUp.add(component);
+		menuUp.add(Box.createHorizontalStrut(5));
 	}
 
+	/**
+	 * Adds component to the lower menu area of the layout.
+	 * @param component The component to be added.
+	 */
+	public void addToMenuLow(Component component){
+		menuLow.add(component);
+		menuLow.add(Box.createHorizontalStrut(5));
+
+	}
 
 	/**
 	 * Adds component to the main area of the layout.
@@ -96,7 +119,9 @@ public class LayoutHandler {
 	 */
 	public void clearMenu(){
 
-		menu.removeAll();
+		menuUp.removeAll();
+		menuLow.removeAll();
+		
 	}
 	/**
 	 * Removes all components from the main panel.
@@ -116,7 +141,8 @@ public class LayoutHandler {
 	 * Removes all components from all the panels.
 	 */
 	public void clearAll(){
-		menu.removeAll();
+		menuUp.removeAll();
+		menuLow.removeAll();
 		main.removeAll();
 		map.removeAll();
 	}
