@@ -6,7 +6,7 @@ import javax.swing.JTextField;
 
 
 /**
- * 
+ * Här ändrar vi 
  * kommentarer 
  * @author ragnhild
  *
