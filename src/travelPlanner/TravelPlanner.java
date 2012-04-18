@@ -7,7 +7,7 @@ import javax.swing.JFrame;
  * @author j
  *
  */
-public class TravelPlanner extends JFrame{
+public class TravelPlanner{
 
 	/**
 	 * @param args
