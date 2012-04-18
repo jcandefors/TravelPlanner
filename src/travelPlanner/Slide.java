@@ -29,10 +29,11 @@ public class Slide {
 	public Slide(LayoutHandler layoutHandler, String filePath, String title){
 		this.layoutHandler = layoutHandler;
 		this.filePath = filePath;														//TBC - own method?
+		this.title = title;
 		aboutFile = new File("" + filePath + "about.txt"); //textfilen att med all data.
 		indexFile = new File("" + filePath + "index.txt"); //textfilen för att se underliggande "platser".
 		txtData =  new ArrayList<String>();
-		
+
 
 		loadDataFromFile(aboutFile);		
 
@@ -49,10 +50,10 @@ public class Slide {
 			ErrorHandler.printError(e);
 		}catch (FileNotFoundException e){
 			ErrorHandler.printError(e);}
-		
+
 		ArrayList<String> dataArray = new ArrayList<String>();
 		String line;
-		
+
 		try{
 			while ((line = fileReader.readLine()) != null){
 
@@ -64,5 +65,5 @@ public class Slide {
 		}
 		return null;
 	}
-	
+
 }

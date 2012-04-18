@@ -1,10 +1,14 @@
 package travelPlanner;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  * The class TravelProject is a subclass of the class Slide, meant to manage data 
@@ -28,7 +32,9 @@ public class TravelProject extends Slide {
 
 		super(layoutHandler,(title+"/"), title);
 		destinations = super.loadDataFromFile(super.indexFile);
+		generalProjectLayout();
 		destinationLayout();
+		
 
 	}	
 
@@ -41,18 +47,21 @@ public class TravelProject extends Slide {
 		
 		Iterator<String> iterator = destinations.iterator();
 		while (iterator.hasNext()){
-			layoutHandler.addToMenuLow(new DestinationButton(super.layoutHandler,title, iterator.next()));
+			layoutHandler.addToMenuLow(new DestinationButton(super.layoutHandler,super.title, iterator.next()));
 		}
-		// to be placed in the main layout area?
+		
 	}
 
 	/**
 	 * Creates general components common for every TravelProject.
 	 */
 	public void generalProjectLayout(){
-		
-		//super.layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", typ 1));
-		//super.layoutHandler.addToMenuUp(new ProjectButton("Skapa destination", typ 2));
+		layoutHandler.updateTitle("Resenär: " + super.title);
+		JLabel menuLabel = new JLabel("Destinationer:");
+		menuLabel.setSize(100, 30);
+		layoutHandler.addToMenuLow(menuLabel);
+		//layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", typ 1));
+		//layoutHandler.addToMenuUp(new ProjectButton("Skapa destination", typ 2));
 	}
 	
 	/**
@@ -71,6 +80,9 @@ public class TravelProject extends Slide {
 		public DestinationButton(LayoutHandler layoutHandler, String travelProject, String destinationTitle){
 			
 			super(destinationTitle);
+			super.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			super.setBorderPainted(false);
+			super.setToolTipText("Öppna destinationen " + destinationTitle);
 			this.layoutHandler = layoutHandler;
 			this.travelProject = travelProject;
 			super.addActionListener(new ActionListener() {
