@@ -1,10 +1,5 @@
 package travelPlanner;
 
-import java.awt.Cursor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JButton;
@@ -12,7 +7,7 @@ import javax.swing.JLabel;
 
 /**
  * The class TravelProject is a subclass of the class Slide, meant to manage data 
- * for travel projects in the application "TravelPlanner" and create gui components from this data 
+ * for travel projects in the application "TravelPlanner" and create GUI-components from this data 
  * for the user to view and use. 
  * @author Joakim Candefors
  *
@@ -20,7 +15,8 @@ import javax.swing.JLabel;
 
 public class TravelProject extends Slide {
 
-	protected ArrayList<String> destinations;	//holds the data loaded from the index.txt
+	private ArrayList<String> destinations;	//holds the data loaded from the index.txt
+	private ArrayList<String> labels;
 
 
 	/**
@@ -32,9 +28,12 @@ public class TravelProject extends Slide {
 
 		super(layoutHandler,(title+"/"), title);
 		destinations = super.loadDataFromFile(super.indexFile);
+//		labels = new ArrayList<String>(){"Reseprojekt:";"Startdatum:";"Slutdatum"};
 		generalProjectLayout();
 		destinationLayout();
-		
+//		projectInfoLayout(labels.iterator());
+//		projectInfoLayout(txtData.iterator());
+
 
 	}	
 
@@ -44,12 +43,11 @@ public class TravelProject extends Slide {
 	 */
 
 	public void destinationLayout(){
-		
 		Iterator<String> iterator = destinations.iterator();
 		while (iterator.hasNext()){
 			layoutHandler.addToMenuLow(new DestinationButton(super.layoutHandler,super.title, iterator.next()));
 		}
-		
+
 	}
 
 	/**
@@ -63,35 +61,15 @@ public class TravelProject extends Slide {
 		//layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", typ 1));
 		//layoutHandler.addToMenuUp(new ProjectButton("Skapa destination", typ 2));
 	}
-	
+
 	/**
 	 * Creates components from about.txt (super.txtData) and adds them to the frame.
 	 */
-	public void projectInfoLayout(){
-		
-	}
-	
-	
-	
-	public class DestinationButton extends JButton{
-		private LayoutHandler layoutHandler;
-		private String travelProject; 
+	public void projectInfoLayout(Iterator<String> InputIterator){
+		Iterator<String> iterator = InputIterator;
+		while (iterator.hasNext()){
+			layoutHandler.addToMain(new JLabel(iterator.next()));
 
-		public DestinationButton(LayoutHandler layoutHandler, String travelProject, String destinationTitle){
-			
-			super(destinationTitle);
-			super.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			super.setBorderPainted(false);
-			super.setToolTipText("Öppna destinationen " + destinationTitle);
-			this.layoutHandler = layoutHandler;
-			this.travelProject = travelProject;
-			super.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) { openDestination();	} });	
-			
-		}
-		
-		public void openDestination(){
-			new travelPlanner.Destination(layoutHandler, travelProject, super.getText());		
 		}
 	}
 

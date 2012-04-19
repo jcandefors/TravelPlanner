@@ -1,1 +1,8 @@
 java.io.FileNotFoundException: null\London\about.txt (Det går inte att hitta sökvägen)
+Exception in thread "main" java.lang.Error: Unresolved compilation problems: 
+	Syntax error on token ""Reseprojekt:"", { expected
+	Syntax error, insert "AssignmentOperator Expression" to complete Expression
+	Syntax error on token ""Slutdatum"", } expected
+
+	at travelPlanner.TravelProject.<init>(TravelProject.java:36)
+	at travelPlanner.Start.main(Start.java:22)

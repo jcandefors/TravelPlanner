@@ -79,13 +79,14 @@ public class LayoutHandler {
 		menuUp = new JPanel();	
 		menuUp.setLayout(new BoxLayout(menuUp, BoxLayout.Y_AXIS));
 		menuUp.setOpaque(false);
-		menuUp.setPreferredSize(new Dimension(290, 400));
+		menuUp.setPreferredSize(new Dimension(290, 500));
 		menuUp.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		menuLow = new JPanel();
 		menuLow.setLayout(new BoxLayout(menuLow, BoxLayout.Y_AXIS));		
 		menuLow.setOpaque(false);
 		menuLow.setPreferredSize(new Dimension(290, 900));
 		menuLow.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+		menuLow.add(Box.createRigidArea(new Dimension(10, 10)));
 		menu.add(menuUp);
 		menu.add(menuLow);
 		background.add(menu,BorderLayout.WEST);	
@@ -96,15 +97,16 @@ public class LayoutHandler {
 	 */
 	public void setUpMain(){
 		map = new JPanel(new FlowLayout());			//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
-		map.setPreferredSize(new Dimension(1000,300));
+		map.setPreferredSize(new Dimension(1600,300));
 		map.setOpaque(false);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		main = new JPanel(new FlowLayout());		// set size perhaps?
 		main.setOpaque(false);
-		main.setPreferredSize(new Dimension(1000, 800));
+		main.setPreferredSize(new Dimension(1600, 800));
 		main.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		JPanel tempMain = new JPanel();
-		tempMain.setLayout(new BoxLayout(tempMain, BoxLayout.Y_AXIS));		
+		//tempMain.setLayout(new BoxLayout(tempMain, BoxLayout.Y_AXIS));
+		tempMain.setLayout(new FlowLayout(FlowLayout.CENTER,0,2));	
 		tempMain.setOpaque(false);
 		tempMain.add(map);
 		tempMain.add(main);
