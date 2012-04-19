@@ -14,9 +14,9 @@ import javax.swing.JOptionPane;
 public class ErrorHandler {	
 
 
-	public static void printError(Exception e){
+	public static void printError(Exception e, String classname){
 		JFrame frame = new JFrame();
-		System.err.printf("%s%n", e); //to be improved
+		System.err.printf("%s%n", classname, e); //to be improved
 		JOptionPane.showMessageDialog(frame, "Ett fel har uppstått i programmet som kommer behöva avslutas: "
 		+ e.getMessage() + ". Vänligen se felloggen för mer information.", "TravelPlanner Error" ,JOptionPane.WARNING_MESSAGE);
 		quit();

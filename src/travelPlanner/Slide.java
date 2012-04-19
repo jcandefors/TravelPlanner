@@ -47,9 +47,9 @@ public class Slide {
 		try{
 			fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
 		}catch (UnsupportedEncodingException e){
-			ErrorHandler.printError(e);
+			ErrorHandler.printError(e, this.getClass().toString());
 		}catch (FileNotFoundException e){
-			ErrorHandler.printError(e);}
+			ErrorHandler.printError(e, this.getClass().toString());}
 
 		ArrayList<String> dataArray = new ArrayList<String>();
 		String line;
@@ -61,7 +61,7 @@ public class Slide {
 			}
 			return dataArray;
 		}catch (IOException e){
-			ErrorHandler.printError(e);
+			ErrorHandler.printError(e, this.getClass().toString());
 		}
 		return null;
 	}

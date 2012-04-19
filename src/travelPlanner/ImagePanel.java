@@ -14,7 +14,7 @@ import travelPlanner.ErrorHandler;
  * @author j
  *
  */
-public class BackgroundPanel extends JPanel {
+public class ImagePanel extends JPanel {
 
 	private Image backgroundImage;
 	
@@ -22,7 +22,7 @@ public class BackgroundPanel extends JPanel {
  * Constructs a background panel.
  * @param file The file with the image to set as background.
  */
-	public BackgroundPanel(File file){		   
+	public ImagePanel(File file){		   
 			setBackground(file);
 	}
 	
@@ -31,7 +31,7 @@ public class BackgroundPanel extends JPanel {
 		try{
 			backgroundImage = ImageIO.read(file);
 		}catch (IOException e){
-			ErrorHandler.printError(e);
+			ErrorHandler.printError(e, this.getClass().toString());
 		}   	
 		paintComponent(backgroundImage.getGraphics());
 	}

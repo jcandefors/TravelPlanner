@@ -22,7 +22,7 @@ import javax.swing.event.MenuKeyEvent;
 public class LayoutHandler {
 
 	private JFrame frame;
-	private BackgroundPanel background;
+	private ImagePanel background;
 	private Container contentPane;
 	private JPanel top;
 	private JPanel menuUp;
@@ -39,7 +39,7 @@ public class LayoutHandler {
 	public LayoutHandler(JFrame frame){
 		this.frame = frame;		
 		contentPane = frame.getContentPane();		
-		background = new BackgroundPanel(new File("img/main.jpg"));
+		background = new ImagePanel(new File("img/main.jpg"));
 		background.setPreferredSize(frame.getSize());
 		background.setLayout(new BorderLayout(2,2));
 		contentPane.add(background);
@@ -74,17 +74,17 @@ public class LayoutHandler {
 	 */
 	public void setUpMenu(){		
 		JPanel menu = new JPanel(new FlowLayout(FlowLayout.CENTER,0,2));
-		menu.setPreferredSize(new Dimension(300, 900));	
+		menu.setPreferredSize(new Dimension(frame.getWidth()/6,frame.getHeight()-50));	
 		menu.setOpaque(false);
 		menuUp = new JPanel();	
 		menuUp.setLayout(new BoxLayout(menuUp, BoxLayout.Y_AXIS));
 		menuUp.setOpaque(false);
-		menuUp.setPreferredSize(new Dimension(290, 500));
+		menuUp.setPreferredSize(new Dimension(frame.getWidth()/6, frame.getHeight()/3));
 		menuUp.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		menuLow = new JPanel();
 		menuLow.setLayout(new BoxLayout(menuLow, BoxLayout.Y_AXIS));		
 		menuLow.setOpaque(false);
-		menuLow.setPreferredSize(new Dimension(290, 900));
+		menuLow.setPreferredSize(new Dimension(frame.getWidth()/6, frame.getHeight()*2/3));
 		menuLow.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		menuLow.add(Box.createRigidArea(new Dimension(10, 10)));
 		menu.add(menuUp);
