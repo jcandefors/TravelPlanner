@@ -6,10 +6,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.event.MenuKeyListener;
-import javax.swing.event.MenuKeyEvent;
+
 
 
 /**
@@ -56,13 +53,13 @@ public class LayoutHandler {
 	public void setUpTop(){
 		top = new JPanel(new GridLayout(1, 5, 5, 5));
 		top.setBackground(Color.LIGHT_GRAY);		
-		topMenu = new JMenu("Meny");
+		topMenu = new JMenu("Meny");									//TBC needs action
 		topMenu.setMnemonic(KeyEvent.VK_A);
 		JMenuItem menuItem = new JMenuItem("Avsluta", KeyEvent.VK_F4);
-		topMenu.add(menuItem);		//TBC - needs action
+		topMenu.add(menuItem);											//TBC - needs action
 		topMenu.add(new JMenuItem("Byt Användare"));
 		title = new JLabel();
-		title.setSize(100, 36);
+		title.setSize(100, 36);											//TBC size?
 		title.setFont(Font.getFont("Calibri"));
 		top.add(topMenu);
 		top.add(title);
@@ -197,8 +194,8 @@ public class LayoutHandler {
 		title.revalidate();
 	}
 
-	public void setBackground(File file){
-
+	public void setBackground(File file){		
+		background.setBackground(file);
 
 	}
 

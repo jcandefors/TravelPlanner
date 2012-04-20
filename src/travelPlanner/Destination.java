@@ -1,11 +1,16 @@
 package travelPlanner;
 
-import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Destination extends Slide{
-	protected ArrayList<String> otherDestinations;
+public class Destination implements Serializable{
+	private String title;
 	private String travelProject;
+	private ArrayList<String> destinationInfo;
+	private LayoutHandler layoutHandler = null;	
+	private String[] labels;
+	private ArrayList<String> otherDestinations;
+	
 
 
 
@@ -14,14 +19,19 @@ public class Destination extends Slide{
 	 * @param layoutHandler the layoutHandler to be used for laying out components.
 	 * @param title The name of the destination.
 	 */
-	public Destination(LayoutHandler layoutHandler, String travelProject, String title) {		
-		super(layoutHandler, (travelProject + "/" + title +"/"), title);
+	public Destination(LayoutHandler layoutHandler, String travelProject) {		
 		this.travelProject = travelProject;
+		this.title = ""; //sätter användaren genom editDestination. 
 		
 	}
 
 
-
+/**
+ * 
+ */
+	public void prepareLayout(){
+		//destinationInfoLayout();...
+	}
 
 	/**
 	 * Creates all the components with travel info from the text file and calls the LayoutHandler to place them in the frame.
@@ -37,10 +47,11 @@ public class Destination extends Slide{
 
 	}
 
-
+/**
+ * 
+ */
 	public void listOtherDestinations(){
 
-		File projectIndexFile = new File(travelProject + "/index.txt"); //("/" + user + "/index.txt")
-		otherDestinations = super.loadDataFromFile(projectIndexFile);//listar andra destinationer än den man är vid och presenterar i menuLow.
+		//listar andra destinationer än den man är vid och presenterar i menuLow.
 	}
 }

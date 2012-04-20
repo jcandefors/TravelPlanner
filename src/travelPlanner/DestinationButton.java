@@ -2,15 +2,15 @@ package travelPlanner;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.JButton;
-import travelPlanner.LayoutHandler;
+
 /**
  * 
  * @author Joakim Candefors
  *
  */
 public class DestinationButton extends JButton{
-	private LayoutHandler layoutHandler;
 	private String travelProject; 
 	
 /**
@@ -19,13 +19,13 @@ public class DestinationButton extends JButton{
  * @param travelProject	A the name of the travelProject the destination belongs to.
  * @param destinationTitle	The title of the destination.
  */
-	public DestinationButton(LayoutHandler layoutHandler, String travelProject, String destinationTitle){
+	public DestinationButton(String travelProject, String destinationTitle){
 
 		super(destinationTitle);
 		super.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		super.setBorderPainted(false);
 		super.setToolTipText("Öppna destinationen " + destinationTitle);
-		this.layoutHandler = layoutHandler;
+		
 		this.travelProject = travelProject;
 		super.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { openDestination();	} });	
@@ -33,6 +33,12 @@ public class DestinationButton extends JButton{
 	}
 
 	public void openDestination(){
-		new travelPlanner.Destination(layoutHandler, travelProject, super.getText());		
+		try{
+		ObjectIO.loadObject(travelProject, super.getText());
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}catch (ClassNotFoundException e){
+			ErrorHandler.printError(e, this.getClass().toString());			
+		}
 	}
 }

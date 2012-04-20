@@ -1,69 +1,32 @@
 package travelPlanner;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-
-
 public class Slide {
 
-	protected String title;
-	protected LayoutHandler layoutHandler;
-	protected ArrayList<String> txtData;		//holds the data loaded from the about.txt 	
-	protected BufferedReader fileReader = null;
-	protected File aboutFile;
-	protected File indexFile; 
-	protected String filePath;
-	//(MapPanel map;)
 
-
+	//Frågan är om vi ska använda arv till Destination och TravelProject.
+	
+	/**
+	 * Serializability of a class is enabled by the class implementing the java.io.Serializable interface. 
+	 * Classes that do not implement this interface will not have any of their state serialized or deserialized. 
+	 * All subtypes of a serializable class are themselves serializable. 
+	 * The serialization interface has no methods or fields and serves only to identify the semantics of being serializable.
+	 * To allow subtypes of non-serializable classes to be serialized, the subtype may assume responsibility for saving and 
+	 * restoring the state of the supertype's public, protected, and (if accessible) package fields. 
+	 * The subtype may assume this responsibility only if the class it extends has an accessible no-arg constructor 
+	 * to initialize the class's state. It is an error to declare a class Serializable if this is not the case. 
+	 * The error will be detected at runtime. 
+	 */
+	
+	
+	
+	
+	
+	
 	/**
 	 * Contructor of class Slide, the superclass of the "places" in the application "TravelPlanner". 
 	 * @param title The title of this "place"
 	 */
-	public Slide(LayoutHandler layoutHandler, String filePath, String title){
-		this.layoutHandler = layoutHandler;
-		this.filePath = filePath;														//TBC - own method?
-		this.title = title;
-		aboutFile = new File("" + filePath + "about.txt"); //textfilen att med all data.
-		indexFile = new File("" + filePath + "index.txt"); //textfilen för att se underliggande "platser".
-		txtData =  new ArrayList<String>();
-
-
-		loadDataFromFile(aboutFile);		
-
+	public Slide(){
 	}
-
-	/**
-	 * //Läser filen about och returnerar en string[] med informationen.
-	 * @return
-	 */
-	public ArrayList<String> loadDataFromFile(File file) {
-		try{
-			fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
-		}catch (UnsupportedEncodingException e){
-			ErrorHandler.printError(e, this.getClass().toString());
-		}catch (FileNotFoundException e){
-			ErrorHandler.printError(e, this.getClass().toString());}
-
-		ArrayList<String> dataArray = new ArrayList<String>();
-		String line;
-
-		try{
-			while ((line = fileReader.readLine()) != null){
-
-				dataArray.add(line);
-			}
-			return dataArray;
-		}catch (IOException e){
-			ErrorHandler.printError(e, this.getClass().toString());
-		}
-		return null;
 	}
-
-}
+	

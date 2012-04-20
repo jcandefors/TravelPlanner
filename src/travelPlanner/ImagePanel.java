@@ -14,7 +14,7 @@ import travelPlanner.ErrorHandler;
  * @author j
  *
  */
-public class ImagePanel extends JPanel {
+public class ImagePanel extends JPanel{
 
 	private Image backgroundImage;
 	

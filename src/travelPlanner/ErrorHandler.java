@@ -18,9 +18,8 @@ public class ErrorHandler {
 		JFrame frame = new JFrame();
 		System.err.printf("%s%n", classname, e); //to be improved
 		JOptionPane.showMessageDialog(frame, "Ett fel har uppstått i programmet som kommer behöva avslutas: "
-		+ e.getMessage() + ". Vänligen se felloggen för mer information.", "TravelPlanner Error" ,JOptionPane.WARNING_MESSAGE);
-		quit();
-				
+				+ e.getMessage() + ". Vänligen se felloggen för mer information.", "TravelPlanner Error" ,JOptionPane.WARNING_MESSAGE);
+
 	}
 
 	/**
@@ -28,19 +27,12 @@ public class ErrorHandler {
 	 */
 	public static void setErrorOut(){
 		try{
-		OutputStream output = new FileOutputStream("TPError.txt", true);
-		PrintStream printOut = new PrintStream(output);
-		System.setErr(printOut);
+			OutputStream output = new FileOutputStream("TPError.txt", true);
+			PrintStream printOut = new PrintStream(output);
+			System.setErr(printOut);
 		}catch (FileNotFoundException e){
 			//do nothing
 		}
 	}
-	
-	/**
-	 * Quits the application, closing files.
-	 */
-	public static void quit(){
-		//TBC to be nicely done.
-		System.exit(-1);
-	}
+
 }

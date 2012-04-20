@@ -1,16 +1,14 @@
 package travelPlanner;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 
 public class EditTravelProject {
@@ -54,19 +52,36 @@ public class EditTravelProject {
 	
 	public void createPopUp(){
 		JFrame frame = new JFrame("Redigera reseprojekt");
-		frame.setSize(600, 900);
+		frame.setSize(600, 700);
 		Container contentPane = frame.getContentPane();		
-		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 3, 3));		
-		labelPanel.setPreferredSize(new Dimension(290,900));
-		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
-		contentPane.add(labelPanel);
-		labelPanel.add(Box.createRigidArea(new Dimension(5,5)));	
+		contentPane.setLayout(new BorderLayout(10, 1));		
+		labelPanel.setPreferredSize(new Dimension(290,500));
+		labelPanel.setLayout(new GridLayout(7, 1, 20 , 20));
+		contentPane.add(labelPanel, BorderLayout.WEST);		
 		fillLabelPanel();
-		editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
-		editPanel.setPreferredSize(new Dimension(290,900));
-		editPanel.add(Box.createRigidArea(new Dimension(5,5)));
-		contentPane.add(editPanel);
+		
+		editPanel.setLayout(new GridLayout(7, 1, 20 , 20));
+		editPanel.setPreferredSize(new Dimension(290,500));		
+		contentPane.add(editPanel, BorderLayout.EAST);
 		fillEditPanel();
+		
+		JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT,10,10));
+		bottom.setOpaque(false);
+		JButton save = new JButton("Spara");
+		save.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent arg0) {
+				try{writeToFile();}
+				catch (FileNotFoundException e){
+					ErrorHandler.printError(e, this.getClass().toString());	}}});
+		JButton cancel = new JButton("Avbryt");
+		cancel.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent arg0) {
+				//TBC
+				}});		
+		bottom.add(save);
+		bottom.add(cancel);
+		contentPane.add(bottom, BorderLayout.SOUTH);
+		frame.setLocation(400,50);
 		frame.pack();
 		frame.setVisible(true);
 		
@@ -77,14 +92,14 @@ public class EditTravelProject {
 		
 		for(int index = 0; index < labels.length; index++){
 			labelPanel.add(new JLabel(labels[index]));
-			labelPanel.add(Box.createHorizontalStrut(1));
-		}
+			labelPanel.add(Box.createRigidArea(new Dimension(5,40)));	
+			}
 	}
 	
 	public void fillEditPanel(){
 		for(int index = 0; index < txtData.length; index++){
 			editPanel.add(new JTextField(txtData[index]));
-			editPanel.add(Box.createHorizontalStrut(1));
+			editPanel.add(Box.createRigidArea(new Dimension(5,10)));
 		}
 		
 	}
@@ -97,7 +112,8 @@ public class EditTravelProject {
 			txtWriter.println(txtData[i]);
 			txtWriter.flush();
 		}
-
 	}
+
+	
 
 }
