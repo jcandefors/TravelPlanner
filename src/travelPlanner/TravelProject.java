@@ -70,7 +70,7 @@ public class TravelProject{
 		}catch (IOException e){
 			ErrorHandler.printError(e, this.getClass().toString());
 		}
-		editTravelProject();
+		prepareLayout();
 	}	
 
 
