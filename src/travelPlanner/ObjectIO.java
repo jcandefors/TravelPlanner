@@ -19,10 +19,10 @@ public class ObjectIO {
 	 * @param object The name of the object and the filename of the object to be loaded/restored.
 	 * @return The object to be loaded into "TravelPlanner"
 	 */
-	public static Object loadObject(String project, String title)throws IOException, ClassNotFoundException{
+	public static Object loadObject(String folder, String fileName)throws IOException, ClassNotFoundException{
 
 		// Read from disk using FileInputStream
-		FileInputStream fileIn = new FileInputStream(project + "/" + title + ".data");
+		FileInputStream fileIn = new FileInputStream("data/"+folder + "/" + fileName + ".data");
 		// Read object using ObjectInputStream
 		ObjectInputStream object_in = new ObjectInputStream(fileIn);
 		// Read an object
@@ -30,7 +30,7 @@ public class ObjectIO {
 		if (returnObject instanceof ArrayList<?> || returnObject instanceof HashMap ){
 			return returnObject;
 		}
-		throw new IOException("Mismatch during load of object: " + title + ". The object cannot be loaded");
+		throw new IOException("Mismatch during load of object: " + fileName + ". The object cannot be loaded");
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class ObjectIO {
 	 */
 	public static void saveObject(Object object, String folder, String filename)throws IOException{
 			// Write to disk with FileOutputStream
-			FileOutputStream fileout = new FileOutputStream(folder + "/" + filename + ".data");
+			FileOutputStream fileout = new FileOutputStream("data/"+ folder + "/" + filename + ".data");
 
 			// Write object with ObjectOutputStream
 			ObjectOutputStream travelObjectOut = new ObjectOutputStream(fileout);
