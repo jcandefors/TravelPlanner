@@ -1,7 +1,10 @@
 package travelPlanner;
 
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,29 +19,63 @@ import javax.swing.JLabel;
  *
  */
 
-public class TravelProject implements Serializable {
-	private ArrayList<String> projectInfo;
-	private LayoutHandler layoutHandler = null;
-	private String title;
-	private ArrayList<String> destinations;
+public class TravelProject{
+
+	private ArrayList<String> projectInfo; //serialized
+	private LayoutHandler layoutHandler;		
+	private String user;
+	private ArrayList<String> destinations;		//serialized
 	private String[] labels;
+
+
+
+	/**
+	 * Initial constructor of class TravelProject. Should only be called when user is created.
+	 * @param layoutHandler The layoutHandler used for laying out components in the frame.
+	 * @param title	The title of this project.
+	 */
+	public TravelProject(LayoutHandler layouthandler, String user, Boolean firstTime) {
+		this.layoutHandler = layoutHandler;
+		this.user = user;		
+		labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum"};
+		projectInfo = new ArrayList<String>();
+		destinations = new ArrayList<String>();
+		editTravelProject();
+		//File file = new File(user + "/File" );			TBC
+		//file.mkdir();
+		try{															//kanske sparas i editTravelProject() ??
+			ObjectIO.saveObject(projectInfo, user, "projectInfo");
+			ObjectIO.saveObject(destinations, user, "destinations");
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}
+	}	
+
 
 
 	/**
 	 * Constructor of class TravelProject.
-	 * @param layoutHandler
-	 * @param title
+	 * @param layoutHandler The layoutHandler used for laying out components in the frame.
+	 * @param title	The title of this project.
 	 */
-	public TravelProject(LayoutHandler layouthandler, String title) {
+	public TravelProject(LayoutHandler layouthandler, String user) {
 		this.layoutHandler = layoutHandler;
-		this.title = title;
-		destinations = new ArrayList<String>();
+		this.user = user;
 		labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum"};
+		try{
+			projectInfo = (ArrayList<String>) ObjectIO.loadObject(user, "projectInfo");
+			destinations = (ArrayList<String>) ObjectIO.loadObject(user, "destinations");
+		}catch (ClassNotFoundException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}
 		editTravelProject();
 	}	
 
-	public void prepareLayout(LayoutHandler layoutHandler){
-		this.layoutHandler = layoutHandler; // "new" current Layouthandler.
+
+
+	public void prepareLayout(){
 		layoutHandler.clearAll();
 		generalProjectLayout();
 		destinationLayout();
@@ -50,7 +87,7 @@ public class TravelProject implements Serializable {
 	 * Creates general components common for every TravelProject.
 	 */
 	public void generalProjectLayout(){
-		layoutHandler.updateTitle("Resenär: " + title);
+		layoutHandler.updateTitle("Resenär: " + user);
 		JLabel menuLabel = new JLabel("Destinationer:");
 		menuLabel.setSize(100, 30);
 		layoutHandler.addToMenuLow(menuLabel);
@@ -77,23 +114,24 @@ public class TravelProject implements Serializable {
 	public void destinationLayout(){
 		Iterator<String> iterator = destinations.iterator();
 		while (iterator.hasNext()){
-			layoutHandler.addToMenuLow(new DestinationButton(title, iterator.next()));
+			layoutHandler.addToMenuLow(new DestinationButton(user, iterator.next()));
 		}
 	}
 	/**
 	 * Creates a new EditTravelProject and then updates the data in the layout.
 	 */
 	public void editTravelProject(){
-		new EditTravelProject(title);			
-		prepareLayout(layoutHandler);	
+		new EditTravelProject(projectInfo, user);
+		//prepareLayout(layoutHandler);
+
 	}
-	
+
 	/**
 	 * Adds a destination to the projects list of destinations.
 	 */
-	
-	public void addDestination(String destination){		
-		destinations.add(destination);
+
+	public void addDestination(String destinationTitle){		
+		destinations.add(destinationTitle);
 	}
 
 
@@ -119,9 +157,14 @@ public class TravelProject implements Serializable {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if(this.actionType == 1){			
-				editTravelProject();		
+				editTravelProject();
+				try{
+					ObjectIO.saveObject(this, user, user);
+				}catch (IOException i){
+					ErrorHandler.printError(i, this.getClass().toString());
+				}
 			}else if(actionType == 2){
-				new Destination(layoutHandler, title);
+				new Destination(layoutHandler, user);
 
 			}
 		}

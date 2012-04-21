@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Destination implements Serializable{
+	private static final long serialVersionUID = -4109178658296408100L;
 	private String title;
 	private String travelProject;
 	private ArrayList<String> destinationInfo;

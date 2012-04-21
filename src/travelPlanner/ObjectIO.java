@@ -20,7 +20,7 @@ public class ObjectIO {
 	public static Object loadObject(String project, String title)throws IOException, ClassNotFoundException{
 
 		// Read from disk using FileInputStream
-		FileInputStream fileIn = new FileInputStream("/" + project + "/" + title + ".data");
+		FileInputStream fileIn = new FileInputStream(project + "/" + title + ".data");
 		// Read object using ObjectInputStream
 		ObjectInputStream object_in = new ObjectInputStream(fileIn);
 		// Read an object
@@ -39,7 +39,7 @@ public class ObjectIO {
 	 * @param fileName The name of the Destination/TravelProject which is set to the filename.
 	 * @return	Returns true if saved succesfull, else false.
 	 */
-	public static void saveDestinationObject(Object travelobject, String travelProject, String title)throws IOException{
+	public static void saveObject(Object travelobject, String travelProject, String title)throws IOException{
 			// Write to disk with FileOutputStream
 			FileOutputStream fileout = new FileOutputStream(travelProject + "/" + title + ".data");
 
