@@ -1,30 +1,31 @@
 package travelPlanner;
-import java.awt.*;
-import java.awt.event*;
-import javax.swing.*;
 
+public class Login {
+private UserHandler userhandler;
+private User user; //ev
 
-/**
- * This class will start a pop-Up window where it is possible to 
- * login to a program by typing in a username and a password that will be matched 
- * against the user register for the program.
- * The pop-Up window also contain a LINK to creating new users. 
- * 
- * @author ragnhild
- * @version 0.1
- *
- */
+public Login(){
 
-public class LogIn {
+//skapa userhandler
+//skapa user ev
+}
 
-private LogInWindow window;
+public void login(){
+//matcha användarnamn i userhandler
+// bearbeta resultat
 
-	public void login(){
-		
-	window = new LogInWindow();
-	window.
-		
-		
-		
-	}
+//om ok
+// skapa LayoutHandler(frame)
+// ladda projekt new TravelProject(username)
+
+//annars var kvar
+}
+
+public void createUser(){
+
+// popup med användarnamn och lösenordsfält
+// kolla userhandler match om finns
+// userhandler add.
+//skapa mapp med användarnamn och about.txt och index.txt.
+}
 }
