@@ -41,15 +41,15 @@ public class ObjectIO {
 	 * @param fileName The name of the Destination/TravelProject which is set to the filename.
 	 * @return	Returns true if saved succesfull, else false.
 	 */
-	public static void saveObject(Object travelobject, String travelProject, String title)throws IOException{
+	public static void saveObject(Object object, String folder, String filename)throws IOException{
 			// Write to disk with FileOutputStream
-			FileOutputStream fileout = new FileOutputStream(travelProject + "/" + title + ".data");
+			FileOutputStream fileout = new FileOutputStream(folder + "/" + filename + ".data");
 
 			// Write object with ObjectOutputStream
 			ObjectOutputStream travelObjectOut = new ObjectOutputStream(fileout);
 
 			// Write object out to disk
-			travelObjectOut.writeObject(travelobject);
+			travelObjectOut.writeObject(object);
 	}
 
 }

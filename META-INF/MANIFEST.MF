@@ -1,0 +1,107 @@
+Manifest-Version: 1.0
+Build-Jdk: 1.6.0_22
+Implementation-Vendor-Id: com.miglayout
+Built-By: Mike
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Implementation-Version: 3.7.4
+Implementation-Title: MiGLayout
+Specification-Version: 3.7.4
+Specification-Title: MiGLayout
+
+Name: net/miginfocom/layout/Grid.class
+SHA1-Digest: 6E8Io1hYL81H0zXF+YanwC0Yr8Q=
+
+Name: net/miginfocom/layout/Grid$FlowSizeSpec.class
+SHA1-Digest: k7u5CNRQfaCu4XIw+dfXMrebhEQ=
+
+Name: net/miginfocom/swing/MigLayout$1.class
+SHA1-Digest: ZGH7Xxw5NCEp2cBhK33BYZHDcfY=
+
+Name: net/miginfocom/layout/BoundSize$1.class
+SHA1-Digest: z97lpdh40kuW8PRRIZ2GJqgM0Ks=
+
+Name: net/miginfocom/layout/LayoutUtil.class
+SHA1-Digest: Gs4CAH8TzRz3cPUUvAJB/CWrgaM=
+
+Name: net/miginfocom/swing/MigLayout$2.class
+SHA1-Digest: YIpNwRbW+9mDWmVmzL9GmY39ql4=
+
+Name: net/miginfocom/layout/LayoutCallback.class
+SHA1-Digest: KAR7oiVsdIVFzYVILoPeMe7akmM=
+
+Name: net/miginfocom/layout/LinkHandler.class
+SHA1-Digest: iuJLrSer8hGKNRRBvJz1ynr5nzQ=
+
+Name: net/miginfocom/layout/ContainerWrapper.class
+SHA1-Digest: QBIKs7W11hfaQNgFzln5skrYQ6E=
+
+Name: net/miginfocom/layout/Grid$1.class
+SHA1-Digest: GHW5WyyFfZowtHe7EIIZQGijJdM=
+
+Name: net/miginfocom/layout/ComponentWrapper.class
+SHA1-Digest: rNqFpxvIaMoDBu9VdL6YU/Y/AY8=
+
+Name: net/miginfocom/layout/Grid$CompWrap.class
+SHA1-Digest: dmrsB/9KQDEGOnUyXiH545uZ98M=
+
+Name: net/miginfocom/layout/LC.class
+SHA1-Digest: Vi7IGiDM+Z2EsO+PxI5tZX/opwc=
+
+Name: net/miginfocom/layout/LayoutUtil$1.class
+SHA1-Digest: opKefm7kZRl7Yy2Pnm9A68vs9Jk=
+
+Name: net/miginfocom/swing/SwingContainerWrapper.class
+SHA1-Digest: +kwhMamDCJQK8Jp8R9nGQln2Pho=
+
+Name: net/miginfocom/layout/ConstraintParser.class
+SHA1-Digest: UJiVVXp7FlyLBygEP0YomoSAVC0=
+
+Name: net/miginfocom/layout/UnitConverter.class
+SHA1-Digest: oakWD9Vhb4gvTMckh3PVkccxq5Q=
+
+Name: net/miginfocom/swing/MigLayout$MyDebugRepaintListener.class
+SHA1-Digest: LpFzBXYvyudsCzFLXrEzIkWEMqg=
+
+Name: net/miginfocom/swing/SwingComponentWrapper.class
+SHA1-Digest: Ggtx9JIXcMN6ORlGui/caVC1dYc=
+
+Name: net/miginfocom/layout/InCellGapProvider.class
+SHA1-Digest: k4BEqZct+tj5K78fizKnzi1T/5s=
+
+Name: net/miginfocom/layout/DimConstraint.class
+SHA1-Digest: WY5yNbzdzoloT0jIL1Sc8cNZ78I=
+
+Name: net/miginfocom/layout/PlatformDefaults.class
+SHA1-Digest: bLdYGHYjxRnwd6ASzLvmO9kcjkI=
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: 09gN05tobgS/MdtqyTNQhOhB73M=
+
+Name: net/miginfocom/layout/UnitValue.class
+SHA1-Digest: 7M+hbdVPVVl0WFSUXPD3oQzGyBE=
+
+Name: net/miginfocom/layout/Grid$LinkedDimGroup.class
+SHA1-Digest: fc1JrXPoW76eOkN43wjxLPo7Rug=
+
+Name: net/miginfocom/layout/ResizeConstraint.class
+SHA1-Digest: x0J0IaGFQY4WPJfDX5pbKgRXkQw=
+
+Name: net/miginfocom/layout/UnitValue$1.class
+SHA1-Digest: jT01f0HMl2q8yh19KoC8cY4xmQo=
+
+Name: net/miginfocom/swing/MigLayout.class
+SHA1-Digest: 8atGul4S5DOHynNC0z0DakUL4xI=
+
+Name: net/miginfocom/layout/BoundSize.class
+SHA1-Digest: rKlLH9SDgSr+/w8Eom56bgq308w=
+
+Name: net/miginfocom/layout/Grid$Cell.class
+SHA1-Digest: +pR1sLUzOej2KXa2bRj9QE7CUw0=
+
+Name: net/miginfocom/layout/CC.class
+SHA1-Digest: N0fMoxrVyBGcBZ89ugC4u32rvOI=
+
+Name: net/miginfocom/layout/AC.class
+SHA1-Digest: Gfk1Y1lsgMI+Ac8eoNsuwaDDl6U=
+

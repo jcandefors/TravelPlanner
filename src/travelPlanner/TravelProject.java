@@ -30,53 +30,29 @@ public class TravelProject{
 
 
 	/**
-	 * Initial constructor of class TravelProject. Should only be called when user is created.
+	 * Constructor of class TravelProject. Should only be called when user is created.
 	 * @param layoutHandler The layoutHandler used for laying out components in the frame.
 	 * @param title	The title of this project.
+	 * @param firstTime True if new user and project to be created. Else false.
 	 */
-	public TravelProject(LayoutHandler layouthandler, String user, Boolean firstTime) {
-		this.layoutHandler = layoutHandler;
-		this.user = user;		
-		labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum"};
-		projectInfo = new ArrayList<String>();
-		destinations = new ArrayList<String>();
-		editTravelProject();
-		//File file = new File(user + "/File" );			TBC
-		//file.mkdir();
-		try{															//kanske sparas i editTravelProject() ??
-			ObjectIO.saveObject(projectInfo, user, "projectInfo");
-			ObjectIO.saveObject(destinations, user, "destinations");
-		}catch (IOException e){
-			ErrorHandler.printError(e, this.getClass().toString());
-		}
-	}	
-
-
-
-	/**
-	 * Constructor of class TravelProject.
-	 * @param layoutHandler The layoutHandler used for laying out components in the frame.
-	 * @param title	The title of this project.
-	 */
-	public TravelProject(LayoutHandler layouthandler, String user) {
+	public TravelProject(LayoutHandler layouthandler, String user, boolean firstTime) {
 		this.layoutHandler = layoutHandler;
 		this.user = user;
 		labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum"};
-		try{
-			projectInfo = (ArrayList<String>) ObjectIO.loadObject(user, "projectInfo");
-			destinations = (ArrayList<String>) ObjectIO.loadObject(user, "destinations");
-		}catch (ClassNotFoundException e){
-			ErrorHandler.printError(e, this.getClass().toString());
-		}catch (IOException e){
-			ErrorHandler.printError(e, this.getClass().toString());
+		if(firstTime){
+			new File(user).mkdir();			
+			projectInfo = new ArrayList<String>();
+			destinations = new ArrayList<String>();
+			editTravelProject();
+			saveDestinations();
+		}else{
+			loadTravelProjectData();
+			prepareLayout();
 		}
-		editTravelProject();
 	}	
 
-
-
 	public void prepareLayout(){
-		layoutHandler.clearAll();
+		//layoutHandler.clearAll();
 		generalProjectLayout();
 		destinationLayout();
 		projectInfoLayout();
@@ -121,9 +97,44 @@ public class TravelProject{
 	 * Creates a new EditTravelProject and then updates the data in the layout.
 	 */
 	public void editTravelProject(){
-		new EditTravelProject(projectInfo, user);
-		//prepareLayout(layoutHandler);
+		new EditTravelProject(this, projectInfo);		
+	}
 
+	public void updateEditInfo(ArrayList<String> editedProjectInfo){		
+		projectInfo = editedProjectInfo;
+		saveProjectInfo();
+	}
+
+	/**
+	 * Saves the projectInfo data to disk.
+	 */
+	public void saveProjectInfo(){
+		try{															
+			ObjectIO.saveObject(projectInfo, user, "projectInfo");
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}
+	}
+
+	public void saveDestinations(){
+		try{															
+			ObjectIO.saveObject(destinations, user, "destinations");
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}		
+	}
+	/**
+	 * Loads the data from disk.
+	 */
+	public void loadTravelProjectData(){
+		try{
+			projectInfo = (ArrayList<String>) ObjectIO.loadObject(user, "projectInfo");
+			destinations = (ArrayList<String>) ObjectIO.loadObject(user, "destinations");
+		}catch (ClassNotFoundException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}
 	}
 
 	/**
