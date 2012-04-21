@@ -43,6 +43,8 @@ public CreateNewUserWindow(JFrame frame){
 	createNewUserFrame.setVisible(true);					
 }
 
+
+
 private void  makeFrame(){
 	initialiseComponents();
 	
@@ -121,6 +123,7 @@ private void initialiseComponents(){
 //			createNewUserActionPerformed(e);
 //			}
 //			});	
+	
 	
 	//Create Fields
 	

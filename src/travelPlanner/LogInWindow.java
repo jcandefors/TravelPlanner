@@ -1,5 +1,6 @@
 package travelPlanner;
 import java.awt.Container;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,7 +17,7 @@ import javax.swing.SwingConstants;
  * This class will start a pop-Up window where it is possible to 
  * login to a program by typing in a username and a password that will be matched 
  * against the user register for the program.
- * The pop-Up window also contain a LINK for creating new users. 
+ * The pop-Up window also contain a button for creating new users. 
  * 
  * @author ragnhild
  * @version 0.1
@@ -35,8 +36,10 @@ public class LogInWindow {
 		private JButton logInButton;
 		private JButton createNewUserButton;
 		private final static String   PROGRAMNAME = "Reseplaneraren";
+		private static String PROBLEMFRAMETITLE = "Problem med inloggning";
 		private static String LOGININSTRUCTIONS = "<html>Välkommen till "+ PROGRAMNAME +".<br>Skriv in anvädnarnamn och lösenord <br> eller välj skapa ny användare</html>";
 		private static String EMPTYLOGINFIELDDIALOG = "Du måste fylla i både användarnamnfältet och lösenordsfältet för att logga in ";
+		private static String FAILEDLOGIN = "Kontrollera användarnamn och lösenord och försök på nytt "; 
 		private static String LOGIN = "Logga in";
 		private static String CREATENEWUSER = "Skapa ny användare";
 		private static String USERNAME = "Användarnamn";
@@ -56,37 +59,49 @@ public class LogInWindow {
 				loginFrame.pack();
 				loginFrame.setVisible(true);					
 			}
-//	private void logInButtonAction(){
-//		String username = userNameField.getSelectedText(); //TODO handle Exception
-//		String password = passwordField.getSelectedText();
-//		
-//		if(checkPasswordAndUsername(userName){
-//			PassWordHandler passWordHandler = new PassWordHandler();
-//			int passwordcode = passWordHandler.getHashCode(password);
-//				
-//		}
-//		
-//		else{
-//			JOptionPane dialog = new JOptionPane(EMPTYLOGINFIELDDIALOG, JOptionPane.INFORMATION_MESSAGE, JOptionPane.OK_OPTION);
-//	        dialog.showMessageDialo;//TODO
-//		}
-//	
-//	}
+		
+	private void logInButtonAction(){
+		String username = userNameField.getSelectedText(); //TODO handle Exception
+		String password = passwordField.getSelectedText();
+		
+		if(checkPasswordAndUsername(username, password)){ // If the username field and password field have been propely initiated
+			boolean succesfullLogin; 
+			succesfullLogin = actionHandler.logIn(username, password);
+			if(succesfullLogin){
+				loginFrame.setTitle(PROGRAMNAME);
+				new TravelProject(new LayoutHandler(loginFrame), username, false);
+			}
+			else{
+				JFrame frame = new JFrame();
+				JOptionPane.showMessageDialog(frame, FAILEDLOGIN, PROBLEMFRAMETITLE, JOptionPane.INFORMATION_MESSAGE);
+
+			}
+				
+			}
+				
+
+		
+		else{
+			JFrame frame = new JFrame();
+			JOptionPane.showMessageDialog(frame, FAILEDLOGIN, PROBLEMFRAMETITLE, JOptionPane.INFORMATION_MESSAGE);
+
+		}	
+	}
+	
 	// A method for checking that password nor userword is null och a empty string
 	
-//	private boolean checkPasswordAndUsername(String userName String password){
-//				
-//		if((userName==null)||(password == null)){
-//		
-//		return false;
-//		}
-//		if((userName.length() = 0)||(password.length()=0)){
-//		validVariabels = false;
-//		return false;
-//		}
-//		return true;
-//		
-//	}
+	private boolean checkPasswordAndUsername(String userName, String password){
+				
+		if((userName==null)||(password == null)){
+		
+		return false;
+		}
+		if((userName.length() == 0)||(password.length()== 0)){
+		return false;
+		}
+		return true;
+		
+	}
 	
 	/**
 	 * Intisialise all components for logInwindow		
@@ -114,7 +129,7 @@ public class LogInWindow {
 		//Initialise ActionListerners for buttons
 		logInButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-			//logInButtonAction();
+			logInButtonAction();
 			}
 			});
 		

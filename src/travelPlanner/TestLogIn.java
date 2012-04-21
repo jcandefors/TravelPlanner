@@ -15,6 +15,8 @@ import java.awt.Container;
 	import java.awt.*;
 	import java.awt.event.*;
 	import java.awt.image.*;
+import java.util.ArrayList;
+
 	import javax.swing.*;
 import javax.swing.border.*;
 
@@ -32,8 +34,11 @@ public class TestLogIn {
 	
 	public static void main(String[] args) {
 		JFrame programFrame = new JFrame("Test");
+		//ArrayList<UserData> tempRegister= new ArrayList<UserData>();
+		//String temp = "kalleanka";
+		//tempRegister.add(new UserData("test", temp.hashCode()));
 		programFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		CreateNewUserWindow program = new CreateNewUserWindow(programFrame);
+		new LogInWindow(programFrame);
 	}
    
 }
