@@ -1,3 +1,0 @@
-java.io.FileNotFoundException: null\London\about.txt (Det går inte att hitta sökvägen)
-java.io.FileNotFoundException: null\London\about.txt (Det går inte att hitta sökvägen)
-java.io.FileNotFoundException: null\Paris\about.txt (Det går inte att hitta sökvägen)

@@ -1,85 +1,172 @@
 package travelPlanner;
 
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
- * The class TravelProject is a subclass of the class Slide, meant to manage data 
- * for travel projects in the application "TravelPlanner" and create gui components from this data 
+ * The class TravelProject manages data for travelprojects in the application 
+ * "TravelPlanner" and create GUI-components from this data. 
  * for the user to view and use. 
  * @author Joakim Candefors
  *
  */
 
-public class TravelProject extends Slide {
+public class TravelProject{
 
-	protected ArrayList<String> destinations;	//holds the data loaded from the index.txt
+	private ArrayList<String> projectInfo; //serialized
+	private LayoutHandler layoutHandler;		
+	private String user;
+	private ArrayList<String> destinations;		//serialized
+	private String[] labels;
+
+
+
+	/**
+	 * Initial constructor of class TravelProject. Should only be called when user is created.
+	 * @param layoutHandler The layoutHandler used for laying out components in the frame.
+	 * @param title	The title of this project.
+	 */
+	public TravelProject(LayoutHandler layouthandler, String user, Boolean firstTime) {
+		this.layoutHandler = layoutHandler;
+		this.user = user;		
+		labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum"};
+		projectInfo = new ArrayList<String>();
+		destinations = new ArrayList<String>();
+		editTravelProject();
+		//File file = new File(user + "/File" );			TBC
+		//file.mkdir();
+		try{															//kanske sparas i editTravelProject() ??
+			ObjectIO.saveObject(projectInfo, user, "projectInfo");
+			ObjectIO.saveObject(destinations, user, "destinations");
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}
+	}	
+
 
 
 	/**
 	 * Constructor of class TravelProject.
-	 * @param layoutHandler
-	 * @param title
+	 * @param layoutHandler The layoutHandler used for laying out components in the frame.
+	 * @param title	The title of this project.
 	 */
-	public TravelProject(LayoutHandler layoutHandler, String title) {
-
-		super(layoutHandler,(title+"/"), title);
-		destinations = super.loadDataFromFile(super.indexFile);
-		destinationLayout();
-
+	public TravelProject(LayoutHandler layouthandler, String user) {
+		this.layoutHandler = layoutHandler;
+		this.user = user;
+		labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum"};
+		try{
+			projectInfo = (ArrayList<String>) ObjectIO.loadObject(user, "projectInfo");
+			destinations = (ArrayList<String>) ObjectIO.loadObject(user, "destinations");
+		}catch (ClassNotFoundException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}
+		editTravelProject();
 	}	
 
 
-	/**
-	 * Creates components (DestinationButtons) for all the destinations in the TravelProject.
-	 */
 
-	public void destinationLayout(){
-		
-		Iterator<String> iterator = destinations.iterator();
-		while (iterator.hasNext()){
-			layoutHandler.addToMenuLow(new DestinationButton(super.layoutHandler,title, iterator.next()));
-		}
-		// to be placed in the main layout area?
+	public void prepareLayout(){
+		layoutHandler.clearAll();
+		generalProjectLayout();
+		destinationLayout();
+		projectInfoLayout();
 	}
+
 
 	/**
 	 * Creates general components common for every TravelProject.
 	 */
 	public void generalProjectLayout(){
-		
-		//super.layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", typ 1));
-		//super.layoutHandler.addToMenuUp(new ProjectButton("Skapa destination", typ 2));
+		layoutHandler.updateTitle("Resenär: " + user);
+		JLabel menuLabel = new JLabel("Destinationer:");
+		menuLabel.setSize(100, 30);
+		layoutHandler.addToMenuLow(menuLabel);
+		layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", 1));
+		layoutHandler.addToMenuUp(new ProjectButton("Skapa destination", 2));
 	}
-	
+
 	/**
 	 * Creates components from about.txt (super.txtData) and adds them to the frame.
 	 */
 	public void projectInfoLayout(){
-		
-	}
-	
-	
-	
-	public class DestinationButton extends JButton{
-		private LayoutHandler layoutHandler;
-		private String travelProject; 
-
-		public DestinationButton(LayoutHandler layoutHandler, String travelProject, String destinationTitle){
-			
-			super(destinationTitle);
-			this.layoutHandler = layoutHandler;
-			this.travelProject = travelProject;
-			super.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) { openDestination();	} });	
-			
+		for(int index = 0; index < labels.length; index++){
+			layoutHandler.addToMain(new JLabel(labels[index]));
 		}
-		
-		public void openDestination(){
-			new travelPlanner.Destination(layoutHandler, travelProject, super.getText());		
+		Iterator<String> iterator = projectInfo.iterator();
+		while (iterator.hasNext()){
+			layoutHandler.addToMain(new JLabel(iterator.next()));
+		}
+	}
+
+	/**
+	 * Creates components (DestinationButton) for all the destinations in the TravelProject.
+	 */
+	public void destinationLayout(){
+		Iterator<String> iterator = destinations.iterator();
+		while (iterator.hasNext()){
+			layoutHandler.addToMenuLow(new DestinationButton(user, iterator.next()));
+		}
+	}
+	/**
+	 * Creates a new EditTravelProject and then updates the data in the layout.
+	 */
+	public void editTravelProject(){
+		new EditTravelProject(projectInfo, user);
+		//prepareLayout(layoutHandler);
+
+	}
+
+	/**
+	 * Adds a destination to the projects list of destinations.
+	 */
+
+	public void addDestination(String destinationTitle){		
+		destinations.add(destinationTitle);
+	}
+
+
+	/**
+	 * ProjectButton is a JButtons specifically for TravelProjects.
+	 */
+	public class ProjectButton extends JButton implements ActionListener{
+		private int actionType;
+
+		/**
+		 * Constructor of a project button.
+		 * @param text	The text of the ProjectButton.
+		 * @param actionType
+		 */
+		public ProjectButton(String text, int actionType){
+			super(text);
+			this.actionType = actionType;
+			super.addActionListener(this); 
+		}
+		/**
+		 * 		
+		 * @param e Action when button fired.
+		 */
+		public void actionPerformed(ActionEvent e) {
+			if(this.actionType == 1){			
+				editTravelProject();
+				try{
+					ObjectIO.saveObject(this, user, user);
+				}catch (IOException i){
+					ErrorHandler.printError(i, this.getClass().toString());
+				}
+			}else if(actionType == 2){
+				new Destination(layoutHandler, user);
+
+			}
 		}
 	}
 
