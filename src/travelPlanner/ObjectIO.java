@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 
 /**
  * This class is handling serialized objects. It saves and loads file to/from the file system to the application TravelPlanner.
@@ -27,7 +25,7 @@ public class ObjectIO {
 		ObjectInputStream object_in = new ObjectInputStream(fileIn);
 		// Read an object
 		Object returnObject = object_in.readObject();
-		if (returnObject instanceof ArrayList<?> || returnObject instanceof HashMap ){
+		if (returnObject instanceof ArrayList<?> || returnObject instanceof String[] ){
 			return returnObject;
 		}
 		throw new IOException("Mismatch during load of object: " + fileName + ". The object cannot be loaded");
