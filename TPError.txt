@@ -1,5 +1,1 @@
-Exception in thread "main" java.lang.NullPointerException
-	at travelPlanner.TravelProject.generalProjectLayout(TravelProject.java:66)
-	at travelPlanner.TravelProject.prepareLayout(TravelProject.java:56)
-	at travelPlanner.TravelProject.<init>(TravelProject.java:50)
-	at travelPlanner.Start.main(Start.java:24)
+class travelPlanner.TravelProject$ProjectButton

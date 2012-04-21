@@ -1,11 +1,9 @@
 package travelPlanner;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JButton;
@@ -21,11 +19,12 @@ import javax.swing.JLabel;
 
 public class TravelProject{
 
-	private ArrayList<String> projectInfo; //serialized
+	private String[] projectInfo; 				//serialized
 	private LayoutHandler layoutHandler;		
 	private String user;
 	private ArrayList<String> destinations;		//serialized
 	private String[] labels;
+	final int PROJECTINFOSIZE = 3;
 
 
 
@@ -35,13 +34,13 @@ public class TravelProject{
 	 * @param title	The title of this project.
 	 * @param firstTime True if new user and project to be created. Else false.
 	 */
-	public TravelProject(LayoutHandler layouthandler, String user, boolean firstTime) {
+	public TravelProject(LayoutHandler layoutHandler, String user, boolean firstTime) {
 		this.layoutHandler = layoutHandler;
 		this.user = user;
 		labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum"};
 		if(firstTime){
-			new File(user).mkdir();			
-			projectInfo = new ArrayList<String>();
+			new File("data/"+user).mkdir();			
+			projectInfo = new String[PROJECTINFOSIZE];
 			destinations = new ArrayList<String>();
 			editTravelProject();
 			saveDestinations();
@@ -52,7 +51,7 @@ public class TravelProject{
 	}	
 
 	public void prepareLayout(){
-		//layoutHandler.clearAll();
+		layoutHandler.clearAll();
 		generalProjectLayout();
 		destinationLayout();
 		projectInfoLayout();
@@ -65,7 +64,7 @@ public class TravelProject{
 	public void generalProjectLayout(){
 		layoutHandler.updateTitle("Resenär: " + user);
 		JLabel menuLabel = new JLabel("Destinationer:");
-		menuLabel.setSize(100, 30);
+		menuLabel.setSize(10, 30);
 		layoutHandler.addToMenuLow(menuLabel);
 		layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", 1));
 		layoutHandler.addToMenuUp(new ProjectButton("Skapa destination", 2));
@@ -78,9 +77,8 @@ public class TravelProject{
 		for(int index = 0; index < labels.length; index++){
 			layoutHandler.addToMain(new JLabel(labels[index]));
 		}
-		Iterator<String> iterator = projectInfo.iterator();
-		while (iterator.hasNext()){
-			layoutHandler.addToMain(new JLabel(iterator.next()));
+		for(int index = 0; index < PROJECTINFOSIZE; index++){
+			layoutHandler.addToMain(new JLabel(projectInfo[index]));
 		}
 	}
 
@@ -90,7 +88,7 @@ public class TravelProject{
 	public void destinationLayout(){
 		Iterator<String> iterator = destinations.iterator();
 		while (iterator.hasNext()){
-			layoutHandler.addToMenuLow(new DestinationButton(user, iterator.next()));
+			layoutHandler.addToMenuLow(new DestinationButton(layoutHandler, user, iterator.next()));
 		}
 	}
 	/**
@@ -99,14 +97,17 @@ public class TravelProject{
 	public void editTravelProject(){
 		new EditTravelProject(this, projectInfo);		
 	}
-
-	public void updateEditInfo(ArrayList<String> editedProjectInfo){		
+	/**
+	 * Takes the edited project information and applies it to current project and saves to disk. 
+	 * @param editedProjectInfo The array with the project information edited in EditTravelProject.
+	 */
+	public void updateEditInfo(String[] editedProjectInfo){		
 		projectInfo = editedProjectInfo;
 		saveProjectInfo();
 	}
 
 	/**
-	 * Saves the projectInfo data to disk.
+	 * Saves the project information data to disk.
 	 */
 	public void saveProjectInfo(){
 		try{															
@@ -115,7 +116,9 @@ public class TravelProject{
 			ErrorHandler.printError(e, this.getClass().toString());
 		}
 	}
-
+	/**
+	 * Saves the list of destinations to disk.
+	 */
 	public void saveDestinations(){
 		try{															
 			ObjectIO.saveObject(destinations, user, "destinations");
@@ -124,11 +127,11 @@ public class TravelProject{
 		}		
 	}
 	/**
-	 * Loads the data from disk.
+	 * Loads the project information data and destination list from disk.
 	 */
 	public void loadTravelProjectData(){
 		try{
-			projectInfo = (ArrayList<String>) ObjectIO.loadObject(user, "projectInfo");
+			projectInfo = (String[]) ObjectIO.loadObject(user, "projectInfo");
 			destinations = (ArrayList<String>) ObjectIO.loadObject(user, "destinations");
 		}catch (ClassNotFoundException e){
 			ErrorHandler.printError(e, this.getClass().toString());
@@ -144,7 +147,13 @@ public class TravelProject{
 	public void addDestination(String destinationTitle){		
 		destinations.add(destinationTitle);
 	}
-
+	/**
+	 * Returns the user of this project.
+	 * @return A string with the username owning this project.
+	 */
+	public String getUser(){
+	return user;
+	}
 
 	/**
 	 * ProjectButton is a JButtons specifically for TravelProjects.
@@ -169,13 +178,10 @@ public class TravelProject{
 		public void actionPerformed(ActionEvent e) {
 			if(this.actionType == 1){			
 				editTravelProject();
-				try{
-					ObjectIO.saveObject(this, user, user);
-				}catch (IOException i){
-					ErrorHandler.printError(i, this.getClass().toString());
-				}
+
 			}else if(actionType == 2){
-				new Destination(layoutHandler, user);
+				new Destination(layoutHandler, user, true);
+
 
 			}
 		}

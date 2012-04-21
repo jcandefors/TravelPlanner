@@ -20,9 +20,10 @@ public class Destination implements Serializable{
 	 * @param layoutHandler the layoutHandler to be used for laying out components.
 	 * @param title The name of the destination.
 	 */
-	public Destination(LayoutHandler layoutHandler, String travelProject) {		
-		this.travelProject = travelProject;
-		this.title = ""; //sätter användaren genom editDestination. 
+	public Destination(LayoutHandler layoutHandler, String travelProject, Boolean firstTime) {	
+		
+		//this.travelProject = travelProject.getTitle();
+		//this.title = ""; //sätter användaren genom editDestination. 
 		
 	}
 

@@ -28,6 +28,7 @@ public class LayoutHandler {
 	private JPanel main;
 	private JMenu topMenu;
 	private JLabel title;
+	private Dimension screenSize;
 
 	/**
 	 * Constructor of LayoutHandler
@@ -35,7 +36,8 @@ public class LayoutHandler {
 	 */
 	public LayoutHandler(JFrame frame){
 		this.frame = frame;		
-		contentPane = frame.getContentPane();		
+		contentPane = frame.getContentPane();	
+		screenSize = frame.getToolkit().getScreenSize();
 		background = new ImagePanel(new File("img/main.jpg"));
 		background.setPreferredSize(frame.getSize());
 		background.setLayout(new BorderLayout(2,2));
@@ -70,23 +72,23 @@ public class LayoutHandler {
 	 * Sets up the menu in the west area of the layout.
 	 */
 	public void setUpMenu(){		
-		JPanel menu = new JPanel(new FlowLayout(FlowLayout.CENTER,0,2));
-		menu.setPreferredSize(new Dimension(frame.getWidth()/6,frame.getHeight()-50));	
+		JPanel menu = new JPanel(new FlowLayout(FlowLayout.CENTER,2,2));
+		menu.setPreferredSize(new Dimension(screenSize.width/6,screenSize.height-50));	
 		menu.setOpaque(false);
 		menuUp = new JPanel();	
 		menuUp.setLayout(new BoxLayout(menuUp, BoxLayout.Y_AXIS));
 		menuUp.setOpaque(false);
-		menuUp.setPreferredSize(new Dimension(frame.getWidth()/6, frame.getHeight()/3));
+		menuUp.setPreferredSize(new Dimension(screenSize.width/6,screenSize.height*2/5));
 		menuUp.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		menuLow = new JPanel();
 		menuLow.setLayout(new BoxLayout(menuLow, BoxLayout.Y_AXIS));		
 		menuLow.setOpaque(false);
-		menuLow.setPreferredSize(new Dimension(frame.getWidth()/6, frame.getHeight()*2/3));
+		menuLow.setPreferredSize(new Dimension(screenSize.width/6,screenSize.height*3/5));
 		menuLow.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		menuLow.add(Box.createRigidArea(new Dimension(10, 10)));
 		menu.add(menuUp);
 		menu.add(menuLow);
-		background.add(menu,BorderLayout.WEST);	
+		background.add(menu, BorderLayout.WEST);	
 	}
 
 	/**
@@ -94,16 +96,15 @@ public class LayoutHandler {
 	 */
 	public void setUpMain(){
 		map = new JPanel(new FlowLayout());			//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
-		map.setPreferredSize(new Dimension(1600,300));
+		map.setPreferredSize(new Dimension(screenSize.width*5/6,screenSize.height/3));
 		map.setOpaque(false);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		main = new JPanel(new FlowLayout());		// set size perhaps?
 		main.setOpaque(false);
-		main.setPreferredSize(new Dimension(1600, 800));
+		main.setPreferredSize(new Dimension(screenSize.width*5/6,screenSize.height*2/3));
 		main.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		JPanel tempMain = new JPanel();
-		//tempMain.setLayout(new BoxLayout(tempMain, BoxLayout.Y_AXIS));
-		tempMain.setLayout(new FlowLayout(FlowLayout.CENTER,0,2));	
+		tempMain.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));
 		tempMain.setOpaque(false);
 		tempMain.add(map);
 		tempMain.add(main);

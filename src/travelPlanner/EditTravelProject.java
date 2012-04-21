@@ -4,20 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.ArrayList;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 
 
 public class EditTravelProject {
-	
+
 	private TravelProject travelProject;
 	private JFrame frame;
-	private ArrayList<String> projectInfo;
+	private String[] projectInfo;
 	private String[] labels;
 	private	ImagePanel panel;
 	private JTextField[] textFields; 
@@ -27,7 +25,7 @@ public class EditTravelProject {
 	 * 
 	 * @param title
 	 */
-	public EditTravelProject(TravelProject travelProject, ArrayList<String> projectInfo) {
+	public EditTravelProject(TravelProject travelProject, String[] projectInfo) {
 		this.travelProject = travelProject;
 		this.projectInfo =  projectInfo;
 		labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum:"};
@@ -55,9 +53,10 @@ public class EditTravelProject {
 		save.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent arg0) {	
 				saveProjectInfo();
-				frame.dispose();
 				travelProject.updateEditInfo(projectInfo);
+				frame.dispose();
 				travelProject.prepareLayout();
+
 			}
 		});
 		JButton cancel = new JButton("Avbryt");
@@ -78,11 +77,11 @@ public class EditTravelProject {
 
 		for(int index = 0; index < labels.length; index++){
 			panel.add(new JLabel(labels[index]), "cell 2 "+ index+1 + ",alignx right,aligny center");
-			}
+		}
 
 		for(int index = 0; index < labels.length; index++){
-			if(!projectInfo.isEmpty()){
-				textFields[index] = new JTextField(projectInfo.get(index));
+			if (projectInfo[index] != null){
+				textFields[index] = new JTextField(projectInfo[index]);
 			}else{
 				textFields[index] = new JTextField("");
 			}
@@ -91,11 +90,11 @@ public class EditTravelProject {
 	}
 
 	public void saveProjectInfo(){
-		for(int index= 0; index < projectInfo.size(); index++){
-			projectInfo.set(index, textFields[index].getText());			
+		for(int index= 0; index < projectInfo.length; index++){
+			projectInfo[index] = textFields[index].getText();			
 		}
 	}	
-	public ArrayList<String> getChanges(){
+	public String[] getChanges(){
 		return projectInfo;
 
 	}
