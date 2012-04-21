@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -25,7 +27,7 @@ public class ObjectIO {
 		ObjectInputStream object_in = new ObjectInputStream(fileIn);
 		// Read an object
 		Object returnObject = object_in.readObject();
-		if (returnObject instanceof Destination || returnObject instanceof TravelProject){
+		if (returnObject instanceof ArrayList<?> || returnObject instanceof HashMap ){
 			return returnObject;
 		}
 		throw new IOException("Mismatch during load of object: " + title + ". The object cannot be loaded");
