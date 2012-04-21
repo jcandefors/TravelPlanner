@@ -1,0 +1,101 @@
+Signature-Version: 1.0
+SHA1-Digest-Manifest: ZFjf53SB2eHMox9MD9CLbJN76f0=
+Created-By: 1.6.0 (IBM Corporation)
+SHA1-Digest-Manifest-Main-Attributes: Rb1owcB1qARbUab1HKwUPgGLWws=
+
+Name: net/miginfocom/layout/Grid.class
+SHA1-Digest: YVjFrp7sx5CjTwkdrb3Aleq7dWY=
+
+Name: net/miginfocom/layout/Grid$FlowSizeSpec.class
+SHA1-Digest: O6xtQcHLmkQ8vvf/bB+aTnEeojs=
+
+Name: net/miginfocom/layout/LayoutUtil.class
+SHA1-Digest: jIauk+1e+dQwCuFL/ObYSfaRdOE=
+
+Name: net/miginfocom/layout/BoundSize$1.class
+SHA1-Digest: GGG7eNcZhS17N6u3l+0avv4+cDE=
+
+Name: net/miginfocom/swing/MigLayout$1.class
+SHA1-Digest: 1dVFerKYjQ7O3FrEmcph9OnF0WY=
+
+Name: net/miginfocom/swing/MigLayout$2.class
+SHA1-Digest: aLGQZDYpXQdx8mUZhqzUIvgZgKk=
+
+Name: net/miginfocom/layout/LayoutCallback.class
+SHA1-Digest: v5486MDFU98HSd6lPz3NikaKbCE=
+
+Name: net/miginfocom/layout/LinkHandler.class
+SHA1-Digest: LgcxdwM+VWFKkNqap9Xasnml3Xg=
+
+Name: net/miginfocom/layout/ContainerWrapper.class
+SHA1-Digest: 9IFkrLHf9fTU4fHuVpoizr6rwVU=
+
+Name: net/miginfocom/layout/Grid$1.class
+SHA1-Digest: ZJqLEYhBJhSD9WS2pvs5xnXLiqg=
+
+Name: net/miginfocom/layout/ComponentWrapper.class
+SHA1-Digest: VfoLPkhn64xE3u7w+bqheAVufGQ=
+
+Name: net/miginfocom/layout/Grid$CompWrap.class
+SHA1-Digest: cmj2SG7Gt11yrnvN2qGhVY/STco=
+
+Name: net/miginfocom/layout/LC.class
+SHA1-Digest: z/wIYxuTqxk3R9WqHRQ+wBQAzJY=
+
+Name: net/miginfocom/layout/LayoutUtil$1.class
+SHA1-Digest: bVMXpMazxPXSB7VZt5OU0F4srGU=
+
+Name: net/miginfocom/swing/SwingContainerWrapper.class
+SHA1-Digest: rIBKE/xlPe0ncbFNYxgD7j3qWLw=
+
+Name: net/miginfocom/layout/ConstraintParser.class
+SHA1-Digest: W6Bk3er8OhFMYR7+L/ayaQfv52I=
+
+Name: net/miginfocom/layout/UnitConverter.class
+SHA1-Digest: NCcCSsGChNfki8XgaWH2SHX4BKw=
+
+Name: net/miginfocom/swing/MigLayout$MyDebugRepaintListener.class
+SHA1-Digest: z+1bH16M1WfD4j5/grXvmxL9e1s=
+
+Name: net/miginfocom/swing/SwingComponentWrapper.class
+SHA1-Digest: nO+Y43BY7u5p6MV6OIufOGZhudo=
+
+Name: net/miginfocom/layout/InCellGapProvider.class
+SHA1-Digest: IySsm0zOZUO5pgM26w1R/OPnz7E=
+
+Name: net/miginfocom/layout/DimConstraint.class
+SHA1-Digest: xBR+9vOP50sNLjJ5Kkpiy4jd2Rw=
+
+Name: net/miginfocom/layout/PlatformDefaults.class
+SHA1-Digest: sw+NCKJhkvco+j22+lwMCLEWpEE=
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: QdryQvJlVywlE0MGLuwYCkmkyWk=
+
+Name: net/miginfocom/layout/UnitValue.class
+SHA1-Digest: O2XxwhdRO3TuLr482hoIjQUnKuQ=
+
+Name: net/miginfocom/layout/Grid$LinkedDimGroup.class
+SHA1-Digest: OFTV8v99C1n9sKvW1aB+Txw+yH8=
+
+Name: net/miginfocom/layout/ResizeConstraint.class
+SHA1-Digest: ltMe1cGTqBQxKstaYM95pPgy7pI=
+
+Name: net/miginfocom/layout/UnitValue$1.class
+SHA1-Digest: bvPwR1svCqyUdXzQQnRKLnVPGqk=
+
+Name: net/miginfocom/layout/BoundSize.class
+SHA1-Digest: SKVXiTkJr5mMZ+jVtlo0A/BihvY=
+
+Name: net/miginfocom/swing/MigLayout.class
+SHA1-Digest: UbFGJQo8J2MSSWBsf9C51/Sn06U=
+
+Name: net/miginfocom/layout/CC.class
+SHA1-Digest: lZzgzSdBXkas85Q9373e1y0ItqM=
+
+Name: net/miginfocom/layout/Grid$Cell.class
+SHA1-Digest: AuAIysqDpQkEP8ZiRFOu7sSxe9s=
+
+Name: net/miginfocom/layout/AC.class
+SHA1-Digest: yv2E+X1eP3TUlUR0s4+eVO2rQb0=
+
