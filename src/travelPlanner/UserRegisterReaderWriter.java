@@ -24,9 +24,7 @@ public class UserRegisterReaderWriter {
 	 * users password code. Return 0 if the user does not exist in the
 	 * userregister
 	 * 
-	 * @throws IOException
-	 *             if the userregister could not be opend, read och closed
-	 *             properly.
+	 * 
 	 */
 
 	public int getPassWordCode(String username) {// TODO
