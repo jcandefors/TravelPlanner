@@ -86,6 +86,7 @@ public class DestinationButton extends JButton implements ActionListener{
 			dialog.add(destinationField);
 			dialog.add(create);
 			dialog.setVisible(true);
+			dialog.pack();
 
 		}		
 	}

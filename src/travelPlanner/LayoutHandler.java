@@ -35,9 +35,10 @@ public class LayoutHandler {
 	 * @param frame the main frame to be used to present on.
 	 */
 	public LayoutHandler(JFrame frame){
-		this.frame = frame;		
-		contentPane = frame.getContentPane();	
 		screenSize = frame.getToolkit().getScreenSize();
+		this.frame = frame;	
+		frame.setSize(screenSize.width*2/3, screenSize.height*2/3);
+		contentPane = frame.getContentPane();			
 		background = new ImagePanel(new File("img/main.jpg"));
 		background.setPreferredSize(frame.getSize());
 		background.setLayout(new BorderLayout(2,2));
@@ -99,16 +100,20 @@ public class LayoutHandler {
 		map.setPreferredSize(new Dimension(screenSize.width*5/6,screenSize.height/3));
 		map.setOpaque(false);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-		main = new JPanel(new FlowLayout());		// set size perhaps?
+		main = new JPanel(new GridLayout(0,2,3,3));		
 		main.setOpaque(false);
-		main.setPreferredSize(new Dimension(screenSize.width*5/6,screenSize.height*2/3));
-		main.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-		JPanel tempMain = new JPanel();
-		tempMain.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));
-		tempMain.setOpaque(false);
-		tempMain.add(map);
-		tempMain.add(main);
-		background.add(tempMain,BorderLayout.CENTER);
+		JPanel outerMain = new JPanel();
+		outerMain.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));
+		outerMain.setOpaque(false);
+		JPanel innerMain = new JPanel();
+		innerMain.setLayout(new FlowLayout(FlowLayout.LEFT));
+		innerMain.setOpaque(false);
+		innerMain.setPreferredSize(new Dimension(screenSize.width*5/6,screenSize.height*2/3));
+		innerMain.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));		
+		innerMain.add(main);
+		outerMain.add(map);
+		outerMain.add(innerMain);
+		background.add(outerMain,BorderLayout.CENTER);
 	}
 
 	/**

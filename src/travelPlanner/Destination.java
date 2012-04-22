@@ -3,6 +3,7 @@ package travelPlanner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,7 +31,8 @@ public class Destination extends Slide{
 		if(firstTime){
 			super.mainInfo = new String[MAININFOSIZE];
 			loadDestinations();
-			editDestination();			
+			editDestination();
+			addDestination(title);
 		}else{
 			super.loadData("mainInfo", "destinations");
 			prepareLayout();
@@ -51,7 +53,7 @@ public class Destination extends Slide{
 	 * Creates the general components for all Destinations. 
 	 */
 	public void generalDestinationLayout(){
-		layoutHandler.updateTitle("Destination: " + title);
+		layoutHandler.updateTitle("Destination: " + mainInfo[0]);
 		JLabel menuLabel = new JLabel("Destinationer:");
 		menuLabel.setSize(10, 30);				//TBC
 		layoutHandler.addToMenuLow(menuLabel);
@@ -84,15 +86,13 @@ public class Destination extends Slide{
 	}
 	
 	private void loadDestinations() {
+		try{
+			destinations = (ArrayList<String>) ObjectIO.loadObject(userName, "destinations");
+		}catch (ClassNotFoundException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}
 		
-		
-	}
-	/**
-	 * Sets the title to the users choice of destination.
-	 */
-	private void setTitle() {
-		title = mainInfo[1]; 
-	}
-
-
+	}	
 }
