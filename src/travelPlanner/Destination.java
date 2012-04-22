@@ -1,17 +1,14 @@
 package travelPlanner;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Destination extends Slide{
-	private static final long serialVersionUID = -4109178658296408100L;
-	private String title;
-	private ArrayList<String> destinationInfo;
-	private LayoutHandler layoutHandler = null;	
-	
-	private ArrayList<String> otherDestinations;
-	
 
+
+	protected final int MAININFOSIZE = 6;
 
 
 	/**
@@ -19,27 +16,30 @@ public class Destination extends Slide{
 	 * @param layoutHandler the layoutHandler to be used for laying out components.
 	 * @param title The name of the destination.
 	 */
-	public Destination(LayoutHandler layoutHandler, String user, Boolean firstTime) {	
+	public Destination(LayoutHandler layoutHandler, String user, String title, Boolean firstTime) {	
 		super(layoutHandler, user);
-		
-		//super.title = ""; //sätter användaren genom editDestination. 
-		
-		
-	}
+		super.title = title;
+		super.labels = new String[]{"Destination:","Inresedatum:","Utresedatum","Flygplats/station:","Bokningsnummer:", "Boendeinformation:"};
+		if(firstTime){
+			super.mainInfo = new String[MAININFOSIZE];
+			editDestination();
+		}else{
+			super.loadData("mainInfo", "destinations");
+			prepareLayout();
+		}
 
 
-/**
- * 
- */
-	public void prepareLayout(){
-		//destinationInfoLayout();...
 	}
+
 
 	/**
-	 * Creates all the components with travel info from the text file and calls the LayoutHandler to place them in the frame.
-	 */	
-	public void destinationInfoLayout(){
-
+	 * 
+	 */
+	public void prepareLayout(){
+		layoutHandler.clearAll();
+		generalDestinationLayout();
+		destinationLayout();
+		super.mainLayout();
 	}
 
 	/**
@@ -49,11 +49,25 @@ public class Destination extends Slide{
 
 	}
 
-/**
- * 
- */
-	public void listOtherDestinations(){
+	/**
+	 * Creates components (DestinationButton) for all the destinations in the TravelProject except for the current one.
+	 */
+	public void destinationLayout(){
+		Iterator<String> iterator = destinations.iterator();
+		while (iterator.hasNext()){
+			String nextDestination = iterator.next();
+			if(nextDestination != title){	
+				layoutHandler.addToMenuLow(new DestinationButton(layoutHandler, userName, nextDestination, DestinationButton.OPEN));
+			}
+		}
+	}
 
-		//listar andra destinationer än den man är vid och presenterar i menuLow.
+	/**
+	 * Creates a new EditDestination object which asks the user to edit the destiantion information 
+	 * and then updates the information in the layout.
+	 */
+	public void editDestination(){
+		new EditDestination(this, mainInfo);
+		saveMainInfo();
 	}
 }

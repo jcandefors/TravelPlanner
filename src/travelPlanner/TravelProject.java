@@ -1,5 +1,6 @@
 package travelPlanner;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,6 +19,8 @@ import javax.swing.JLabel;
 
 public class TravelProject extends Slide{
 
+	protected final int MAININFOSIZE = 3;
+	
 	/**
 	 * Constructor of class TravelProject. firstTime = true should only be called with when user is created.
 	 * @param layoutHandler The layoutHandler used for laying out components in the frame.
@@ -69,7 +72,7 @@ public class TravelProject extends Slide{
 	public void destinationLayout(){
 		Iterator<String> iterator = destinations.iterator();
 		while (iterator.hasNext()){
-			layoutHandler.addToMenuLow(new DestinationButton(layoutHandler, userName, iterator.next()));
+			layoutHandler.addToMenuLow(new DestinationButton(layoutHandler, userName, iterator.next(), DestinationButton.OPEN));
 		}
 	}
 	
@@ -94,6 +97,7 @@ public class TravelProject extends Slide{
 		 */
 		public ProjectButton(String text, int actionType){
 			super(text);
+			super.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			this.actionType = actionType;
 			super.addActionListener(this); 
 		}
@@ -106,7 +110,7 @@ public class TravelProject extends Slide{
 				editTravelProject();
 
 			}else if(actionType == 2){
-				new Destination(layoutHandler, userName, true);
+				new Destination(layoutHandler, userName, "", true);
 			}
 		}
 	}

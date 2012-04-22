@@ -9,8 +9,7 @@ public class Slide {
 
 	protected String[] mainInfo; 				//serialized
 	protected ArrayList<String> destinations;		//serialized
-	protected String[] labels;
-	protected final int MAININFOSIZE = 3;
+	protected String[] labels;	
 	protected LayoutHandler layoutHandler;
 	protected String userName;
 	protected String title;
@@ -23,10 +22,7 @@ public class Slide {
 	public Slide(LayoutHandler layoutHandler, String userName){
 		this.layoutHandler = layoutHandler;
 		this.userName = userName;
-
-
 	}
-
 
 	/**
 	 * Creates components from mainInfo and labels and adds them to the frame.
@@ -35,7 +31,7 @@ public class Slide {
 		for(int index = 0; index < labels.length; index++){
 			layoutHandler.addToMain(new JLabel(labels[index]));
 		}
-		for(int index = 0; index < MAININFOSIZE; index++){
+		for(int index = 0; index < mainInfo.length; index++){
 			layoutHandler.addToMain(new JLabel(mainInfo[index]));
 		}
 	}
