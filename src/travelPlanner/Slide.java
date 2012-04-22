@@ -1,32 +1,94 @@
 package travelPlanner;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.swing.JLabel;
+
 public class Slide {
 
+	protected String[] mainInfo; 				//serialized
+	protected ArrayList<String> destinations;		//serialized
+	protected String[] labels;
+	protected final int MAININFOSIZE = 3;
+	protected LayoutHandler layoutHandler;
+	protected String userName;
+	protected String title;
 
-	//Frågan är om vi ska använda arv till Destination och TravelProject.
-	
 	/**
-	 * Serializability of a class is enabled by the class implementing the java.io.Serializable interface. 
-	 * Classes that do not implement this interface will not have any of their state serialized or deserialized. 
-	 * All subtypes of a serializable class are themselves serializable. 
-	 * The serialization interface has no methods or fields and serves only to identify the semantics of being serializable.
-	 * To allow subtypes of non-serializable classes to be serialized, the subtype may assume responsibility for saving and 
-	 * restoring the state of the supertype's public, protected, and (if accessible) package fields. 
-	 * The subtype may assume this responsibility only if the class it extends has an accessible no-arg constructor 
-	 * to initialize the class's state. It is an error to declare a class Serializable if this is not the case. 
-	 * The error will be detected at runtime. 
+	 * Contructor of class Slide. 
+	 * @param layoutHandler The layoutHandler to used layout all components.
+	 * @param userName the username (and logic projectName).
 	 */
-	
-	
-	
-	
-	
-	
+	public Slide(LayoutHandler layoutHandler, String userName){
+		this.layoutHandler = layoutHandler;
+		this.userName = userName;
+
+
+	}
+
+
 	/**
-	 * Contructor of class Slide, the superclass of the "places" in the application "TravelPlanner". 
-	 * @param title The title of this "place"
+	 * Creates components from mainInfo and labels and adds them to the frame.
 	 */
-	public Slide(){
+	public void mainLayout(){
+		for(int index = 0; index < labels.length; index++){
+			layoutHandler.addToMain(new JLabel(labels[index]));
+		}
+		for(int index = 0; index < MAININFOSIZE; index++){
+			layoutHandler.addToMain(new JLabel(mainInfo[index]));
+		}
 	}
+
+	/**
+	 * Loads the Slide information data and destination list from disk.
+	 */
+	public void loadData(String filename1, String Filename2){
+		try{
+			mainInfo = (String[]) ObjectIO.loadObject(userName, title);
+			destinations = (ArrayList<String>) ObjectIO.loadObject(userName, "destinations");
+		}catch (ClassNotFoundException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}
 	}
-	
+
+	/**
+	 * Takes the edited information and applies it to current project or destination and saves to disk. 
+	 * @param editedProjectInfo The array with the main information edited in EditTravelProject or EditDestination.
+	 */
+	public void updateMainInfo(String[] editedMainInfo){		
+		mainInfo = editedMainInfo;
+		saveMainInfo();
+	}
+
+	/**
+	 * Adds a destination to the projects list of destinations.
+	 */
+	public void addDestination(String destinationTitle){		
+		destinations.add(destinationTitle);
+		saveDestinations();
+	}
+
+	/**
+	 * Saves the project information data to disk.
+	 */
+	public void saveMainInfo(){
+		try{															
+			ObjectIO.saveObject(mainInfo, userName, title);
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}
+	}
+	/**
+	 * Saves the list of destinations to disk.
+	 */
+	public void saveDestinations(){
+		try{															
+			ObjectIO.saveObject(destinations, userName, "destinations");
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}		
+	}
+}
