@@ -3,13 +3,12 @@ package travelPlanner;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Destination implements Serializable{
+public class Destination extends Slide{
 	private static final long serialVersionUID = -4109178658296408100L;
 	private String title;
-	private String travelProject;
 	private ArrayList<String> destinationInfo;
 	private LayoutHandler layoutHandler = null;	
-	private String[] labels;
+	
 	private ArrayList<String> otherDestinations;
 	
 
@@ -20,10 +19,11 @@ public class Destination implements Serializable{
 	 * @param layoutHandler the layoutHandler to be used for laying out components.
 	 * @param title The name of the destination.
 	 */
-	public Destination(LayoutHandler layoutHandler, String travelProject, Boolean firstTime) {	
+	public Destination(LayoutHandler layoutHandler, String user, Boolean firstTime) {	
+		super(layoutHandler, user);
 		
-		//this.travelProject = travelProject.getTitle();
-		//this.title = ""; //sätter användaren genom editDestination. 
+		//super.title = ""; //sätter användaren genom editDestination. 
+		
 		
 	}
 

@@ -17,7 +17,7 @@ public class ErrorHandler {
 	public static void printError(Exception e, String classname){
 		JFrame frame = new JFrame();
 		System.err.printf("%s%n", classname, e); //to be improved
-		JOptionPane.showMessageDialog(parentComponent, message, title, messageType, icon)
+		e.printStackTrace();					// might replace the above error print.	
 		JOptionPane.showMessageDialog(frame, "Ett fel har uppst�tt i programmet: "
 				+ e.getMessage() + ". V�nligen se felloggen f�r mer information.", "TravelPlanner Error" ,JOptionPane.WARNING_MESSAGE);
 
