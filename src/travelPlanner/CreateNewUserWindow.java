@@ -118,11 +118,11 @@ private void initialiseComponents(){
 	
 	//Initialise ActionListerners for buttons
 	
-//	createNewUserButton.addActionListener(new ActionListener(){
-//		public void actionPerformed(ActionEvent e){
-//			createNewUserActionPerformed(e);
-//			}
-//			});	
+	createNewUserButton.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			createNewUserActionPerformed(e);
+			}
+			});	
 	
 	
 	//Create Fields
