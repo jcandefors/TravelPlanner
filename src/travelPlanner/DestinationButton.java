@@ -1,8 +1,18 @@
 package travelPlanner;
+import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.InputVerifier;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  * 
@@ -14,7 +24,7 @@ public class DestinationButton extends JButton implements ActionListener{
 	private LayoutHandler layoutHandler;
 	private int actionType;
 	public static final int OPEN = 1;
-	public static final int NEW = 1;
+	public static final int NEW = 2;	
 
 	/**
 	 * Constructor of a destination-button. This component takes the user to the destination referenced in this button. 
@@ -29,9 +39,9 @@ public class DestinationButton extends JButton implements ActionListener{
 		this.actionType = actionType;
 		super.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		super.setBorderPainted(false);
-		if(actionType == 1){
-		super.setToolTipText("Öppna destinationen " + title);
-		}else if(actionType == 2){
+		if(actionType == OPEN){
+			super.setToolTipText("Öppna destinationen " + title);
+		}else if(actionType == NEW){
 			super.setToolTipText("Skapa en ny destination");
 		}
 		this.travelProject = travelProject;
@@ -39,11 +49,50 @@ public class DestinationButton extends JButton implements ActionListener{
 	}
 	public void actionPerformed(ActionEvent e) {
 		switch (actionType){
-			
+
 		case 1 : new Destination(layoutHandler, travelProject, super.getText(), false); //Open destination
 		break;
-		case 2 : new Destination(layoutHandler, travelProject, super.getText(), true);	//Create destination
-		}
-		
+		case 2 : new showCreateDialog();
+		}		
 	}	
+
+	private class showCreateDialog{
+		
+		JTextField destinationField;
+		
+		public showCreateDialog(){
+
+			JDialog dialog = new JDialog(layoutHandler.getFrame());
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setAlwaysOnTop(true);
+			dialog.setFocusable(true);		
+			dialog.setPreferredSize(new Dimension(300, 100));
+			dialog.setBackground(Color.BLUE);
+			dialog.setLayout(new GridLayout(2,2));
+			dialog.setTitle("Skapa Destination");
+			JButton create = new JButton("Skapa");
+			create.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
+				createDestination(destinationField.getText());}});
+			destinationField = new JTextField("destinationens namn");
+			destinationField.setInputVerifier(new InputVerifier() {
+				public boolean verify(JComponent destinationField) {
+					JTextField field = (JTextField) destinationField;
+					String input = field.getText();
+					if(!input.matches("destinationens namn") && input.length() > 1 && input.length()<25){
+						return true;}
+					return false;}
+			});
+			dialog.add(new JLabel("Destinationens titel:"));
+			dialog.add(destinationField);
+			dialog.add(create);
+			dialog.setVisible(true);
+
+		}		
+	}
+
+	private void createDestination(String destinationTitle) {
+
+		new Destination(layoutHandler, travelProject, destinationTitle, true);	//Create destination
+
+	}
 }

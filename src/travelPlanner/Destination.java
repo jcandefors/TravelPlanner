@@ -1,9 +1,16 @@
 package travelPlanner;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
+import travelPlanner.TravelProject.ProjectButton;
 
 public class Destination extends Slide{
 
@@ -22,15 +29,13 @@ public class Destination extends Slide{
 		super.labels = new String[]{"Destination:","Inresedatum:","Utresedatum","Flygplats/station:","Bokningsnummer:", "Boendeinformation:"};
 		if(firstTime){
 			super.mainInfo = new String[MAININFOSIZE];
-			editDestination();
+			loadDestinations();
+			editDestination();			
 		}else{
 			super.loadData("mainInfo", "destinations");
 			prepareLayout();
-		}
-
-
+			}
 	}
-
 
 	/**
 	 * 
@@ -46,7 +51,14 @@ public class Destination extends Slide{
 	 * Creates the general components for all Destinations. 
 	 */
 	public void generalDestinationLayout(){
-
+		layoutHandler.updateTitle("Destination: " + title);
+		JLabel menuLabel = new JLabel("Destinationer:");
+		menuLabel.setSize(10, 30);				//TBC
+		layoutHandler.addToMenuLow(menuLabel);
+		JButton editButton = new JButton("Redigera destination");
+		editButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {editDestination();}});
+		layoutHandler.addToMenuUp(editButton);
+		layoutHandler.addToMenuUp(new DestinationButton(layoutHandler,"Skapa destination", userName, 2));
 	}
 
 	/**
@@ -70,4 +82,17 @@ public class Destination extends Slide{
 		new EditDestination(this, mainInfo);
 		saveMainInfo();
 	}
+	
+	private void loadDestinations() {
+		
+		
+	}
+	/**
+	 * Sets the title to the users choice of destination.
+	 */
+	private void setTitle() {
+		title = mainInfo[1]; 
+	}
+
+
 }

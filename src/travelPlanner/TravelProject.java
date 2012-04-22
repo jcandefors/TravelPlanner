@@ -62,7 +62,7 @@ public class TravelProject extends Slide{
 		menuLabel.setSize(10, 30);				//TBC
 		layoutHandler.addToMenuLow(menuLabel);
 		layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", 1));
-		layoutHandler.addToMenuUp(new ProjectButton("Skapa destination", 2));
+		layoutHandler.addToMenuUp(new DestinationButton(layoutHandler,"Skapa destination", userName, 2));
 	}
 
 
@@ -108,9 +108,6 @@ public class TravelProject extends Slide{
 		public void actionPerformed(ActionEvent e) {
 			if(this.actionType == 1){			
 				editTravelProject();
-
-			}else if(actionType == 2){
-				new Destination(layoutHandler, userName, "", true);
 			}
 		}
 	}

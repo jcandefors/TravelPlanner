@@ -199,6 +199,13 @@ public class LayoutHandler {
 		background.setBackground(file);
 
 	}
+	/**
+	 * Returns the frame used by this layouthandler.
+	 * @return The frame used by this LayoutHandler.
+	 */
+	public JFrame getFrame(){
+		return frame;
+	}
 
 }	
 
