@@ -35,6 +35,24 @@ public class LogInActionHandler {
 			return false;
 		}
 	}
+	/**
+	 * Return true if the specified user never have logged in to the program before
+	 * return false if the user have logged in before or does not exist in the register
+	 */
+	public boolean getIsFirstTime(String username){
+		return userRegister.getFirstTimeStatus(username);
+				
+	}
+	/**
+	 * Return true if the user exist in the register otherwise false
+	 * @param username
+	 * @return result
+	 */
+	
+	public boolean setFirstTimeStatusToFalse(String username){
+	
+		return userRegister.setFirstTimeStatusToFalse(username);
+	}
 
 	/**
 	 * Save a new user with the specified username and password in to the

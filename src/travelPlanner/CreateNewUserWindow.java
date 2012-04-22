@@ -7,6 +7,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -29,11 +30,14 @@ public class CreateNewUserWindow {
 	private static String PASSWORD = "Lösenord";
 	private static String PASSWORDCOPY = "Repetera lösenord";
 	private final static String   PROGRAMNAME = "Reseplaneraren";
-	private static String INSTRUCTIONS = "<html>Välkommen till "+ PROGRAMNAME +".<br> För att skapa ny användare, <br> skriv in användarnamn och lösenord i fälten nedan<br> välj sedan skapa ny användare,<br> Godkännda tecken är siffror 0-9 och bokstäver A - O. <br> Lösenord och användarnman får innhålla min 5 max 8 tecken. </html>"; //TODO
+	private static String PROBLEMFRAMETITLE = "Problem";
+	private static String INSTRUCTIONS = "<html>Välkommen till "+ PROGRAMNAME +".<br> För att skapa ny användare, <br> skriv in användarnamn och lösenord i fälten nedan<br> välj sedan skapa ny användare,<br> Lösenord och användarnman får innhålla min" +PassWordHandler.getMinimalLengthOfPassword() + "och max" + PassWordHandler.getMaximalLengthOfPassword()+ "tecken. </html>"; //TODO FIXA ATT DET SKER GENOM ACTIONHANDLER
 	private static String QUITBUTTONTEXT = "Avbryt";
 	private static String CREATENEWUSER = "Skapa ny användare";
 	private static String WINDOWTEXT = "Skapa ny anvädnare till "+ PROGRAMNAME;
-	private static String EMPTYLOGINFIELDDIALOG = "Du måste fylla i både användarnamn och lösenordsfältet";
+	private static String EMPTYLOGINFIELDDIALOG = "Du måste fylla i både användarnamn och lösenordsfälten";
+	private static String MISSMATCHPASSWORDFIELDDIALOG = "Lösenorden matchade ej försök igen";
+	private static String NOTVALIDUSERNAMEPASSWORD = "Användarnamn upptaget alternativ ej godkänd längd på användarnamn / lösenord ";
 	
 public CreateNewUserWindow(JFrame frame){
 	createNewUserFrame = frame;
@@ -43,7 +47,55 @@ public CreateNewUserWindow(JFrame frame){
 	createNewUserFrame.setVisible(true);					
 }
 
+public void createNewUserButtonAction(){
+	
+	//pick up information
+	String username = userNameField.getSelectedText();
+	String password = passwordField.getSelectedText();
+	String passwordCopy = passwordCoypField.getSelectedText();
 
+	// Check that they are potential valid username and password Strings
+	
+	if(!(validInput(username, password, passwordCopy))){
+		JFrame frame = new JFrame();
+		JOptionPane.showMessageDialog(frame, EMPTYLOGINFIELDDIALOG, PROBLEMFRAMETITLE, JOptionPane.INFORMATION_MESSAGE);
+		return;
+
+	}
+	
+	//Check if the password match passwordcopy 
+
+	if(!(password.equals(passwordCopy))){
+		JFrame frame = new JFrame();
+		JOptionPane.showMessageDialog(frame, MISSMATCHPASSWORDFIELDDIALOG, PROBLEMFRAMETITLE, JOptionPane.INFORMATION_MESSAGE);
+		return;
+
+	}
+	if(actionHandler.createNewUser(username, password)){
+		//QUIT WINDOW TODO
+		
+	}
+	else{
+		JFrame frame = new JFrame();
+		JOptionPane.showMessageDialog(frame, NOTVALIDUSERNAMEPASSWORD,PROBLEMFRAMETITLE, JOptionPane.INFORMATION_MESSAGE);
+		return;
+	
+}
+}
+
+// A method for checking that password nor userword is null or a empty string
+
+private boolean validInput(String username, String password, String passwordCopy){
+			
+	if((username==null)||(password == null)||(passwordCopy == null)){
+	
+	return false;
+	}
+	if((username.length() == 0)||(password.length()== 0)||(passwordCopy.length() == 0)){
+	return false;
+	}
+	return true;
+}
 
 private void  makeFrame(){
 	initialiseComponents();
@@ -120,7 +172,7 @@ private void initialiseComponents(){
 	
 	createNewUserButton.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-			createNewUserActionPerformed(e);
+			crae
 			}
 			});	
 	

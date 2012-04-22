@@ -9,8 +9,8 @@ package travelPlanner;
  * 
  */
 public class PassWordHandler {
-	private static final int minimalLengthOfPassword = 5;
-	private static final int maximalLengthOfPassword = 8;
+	private static final int minimalLengthOfPassword = 5; 
+	private static final int maximalLengthOfPassword = 8; 
 //	public static final String allowedCharackter = " a_z, A-Z, 0-9";
 
 	/**
@@ -19,11 +19,11 @@ public class PassWordHandler {
 	public PassWordHandler() {
 
 	}
-	public int getMinimalLengthOfPassword(){
+	public static int getMinimalLengthOfPassword(){
 		return minimalLengthOfPassword;
 	}
 	
-	public int getMaximalLengthOfPassword(){
+	public static int getMaximalLengthOfPassword(){
 		return maximalLengthOfPassword;
 	}
 	

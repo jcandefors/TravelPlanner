@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 /**
  * This class will start a pop-Up window where it is possible to 
@@ -44,6 +45,7 @@ public class LogInWindow {
 		private static String CREATENEWUSER = "Skapa ny användare";
 		private static String USERNAME = "Användarnamn";
 		private static String PASSWORD = "Lösenord";
+		private static String CREATENEWUSERFRAMETITLE = "Skapa ny användare till: " + PROGRAMNAME; 
 		
 
 		/**
@@ -64,12 +66,18 @@ public class LogInWindow {
 		String username = userNameField.getSelectedText(); //TODO handle Exception
 		String password = passwordField.getSelectedText();
 		
-		if(checkPasswordAndUsername(username, password)){ // If the username field and password field have been propely initiated
+		if(checkPasswordAndUsername(username, password)){ // If the username field and password field have been properly initiated
+			//check if it is first time user is logged in to the program
+			boolean firstTime = actionHandler.getIsFirstTime(username);
+			
 			boolean succesfullLogin; 
 			succesfullLogin = actionHandler.logIn(username, password);
 			if(succesfullLogin){
 				loginFrame.setTitle(PROGRAMNAME);
-				new TravelProject(new LayoutHandler(loginFrame), username, false);
+				if(firstTime){
+					actionHandler.setFirstTimeStatusToFalse(username);
+				}
+				new TravelProject(new LayoutHandler(loginFrame), username, firstTime);
 			}
 			else{
 				JFrame frame = new JFrame();
@@ -83,12 +91,12 @@ public class LogInWindow {
 		
 		else{
 			JFrame frame = new JFrame();
-			JOptionPane.showMessageDialog(frame, FAILEDLOGIN, PROBLEMFRAMETITLE, JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(frame, EMPTYLOGINFIELDDIALOG, PROBLEMFRAMETITLE, JOptionPane.INFORMATION_MESSAGE);
 
 		}	
 	}
 	
-	// A method for checking that password nor userword is null och a empty string
+	// A method for checking that password nor userword is null or a empty string
 	
 	private boolean checkPasswordAndUsername(String userName, String password){
 				
@@ -102,7 +110,13 @@ public class LogInWindow {
 		return true;
 		
 	}
-	
+	public void createNewUserButtonAction(){
+		JFrame popUpCreateNewUser = new JFrame();
+		popUpCreateNewUser.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); //TODO check this up! 
+		popUpCreateNewUser.setTitle(CREATENEWUSERFRAMETITLE);
+		new CreateNewUserWindow(popUpCreateNewUser);
+		
+	}
 	/**
 	 * Intisialise all components for logInwindow		
 	 */
@@ -133,11 +147,11 @@ public class LogInWindow {
 			}
 			});
 		
-//		createNewUserButton.addActionListener(new ActionListener(){
-//			public void actionPerformed(ActionEvent e){
-//				createNewUserActionPerformed(e);
-//				}
-//				});	
+		createNewUserButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				createNewUserButtonAction();
+				}
+				});	
 		
 		//Create Fields
 		

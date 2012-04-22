@@ -32,8 +32,10 @@ import javax.swing.border.*;
 	 */
 public class TestLogIn {
 	
+	
+	
 	public static void main(String[] args) {
-		JFrame programFrame = new JFrame("Test");
+		JFrame programFrame = new JFrame();
 		//ArrayList<UserData> tempRegister= new ArrayList<UserData>();
 		//String temp = "kalleanka";
 		//tempRegister.add(new UserData("test", temp.hashCode()));

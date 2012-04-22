@@ -12,6 +12,7 @@ public class UserData {
 
 	private final String username;
 	private int passwordCode;
+	private boolean firstTime; //True iff the user never have logged in to the program 
 	
 	
 	/**
@@ -21,6 +22,7 @@ public class UserData {
 	public UserData(String username, int passwordCode){
 		this.username = username;	
 		this.passwordCode = passwordCode;
+		firstTime = true
 	}
 	/**
 	 * Change the password code to the specified code
@@ -45,4 +47,20 @@ public class UserData {
 	return passwordCode;
 	}
 	
+	/**
+	 * Return true iff the user never have logged in to the program otherwise false 
+	 */
+	
+	public boolean getfirstTime(){
+		return firstTime;
+	}
+
+	/**
+	 * Set the status of first time
+	 * The first time the user have logged in to the program set to false  
+	 */
+	
+	public void setFirstTime(boolean firstTime){
+	this.firstTime = firstTime;	
+	}
 }

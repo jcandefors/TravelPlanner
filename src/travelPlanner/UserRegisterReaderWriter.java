@@ -18,6 +18,7 @@ public class UserRegisterReaderWriter {
 	public UserRegisterReaderWriter() {
 
 	}
+	
 
 	/**
 	 * Check if the specified user exist in the userRegister and return the
@@ -58,6 +59,57 @@ public class UserRegisterReaderWriter {
 	}
 
 	/**
+	 * Return true if the specified user never have logged in to the program before
+	 * return false if the user have logged in before or does not exist in the register
+	 */
+	public boolean getFirstTimeStatus(String username){
+	UserData match = getUserData(username);
+	if(match == null){
+	return false;
+	}
+	else{
+	return match.getfirstTime();
+	}
+	}
+	
+	/**
+	 * Return true if the user exist in the register otherwise false
+	 * @param username
+	 * @return result
+	 */
+	public boolean setFirstTimeStatusToFalse(String username){
+		readInUserRegister();
+		
+		boolean foundMatch = false;
+		
+		int index = 0;
+
+		while (index < userRegister.size() && !foundMatch) {
+			
+			if (userRegister.get(index).getUsername().equals(username)) {
+				
+				userRegister.get(index).setFirstTime(false);
+				
+				foundMatch = true;
+			
+			} else {
+				index++;
+			}
+		}
+		if(foundMatch){
+			saveUserRegister();
+			return true;		
+				
+		}
+		else{
+		return false;
+		}
+		
+
+		}
+
+	
+	/**
 	 * Return true if the specified username exists in the userregister
 	 * 
 	 * @param username
@@ -65,22 +117,16 @@ public class UserRegisterReaderWriter {
 	 */
 
 	public boolean containUserName(String username) {
-		readInUserRegister();
-		boolean foundMatch = false;
-		UserData match;
-		int index = 0;
-
-		while (index < userRegister.size() && !foundMatch) {
-			match = userRegister.get(index);
-			if (match.getUsername().equals(username)) {
-				foundMatch = true;
-			} else {
-				index++;
-			}
-		}
-
-		return foundMatch;
+	if(getUserData(username) == null){
+		return false;
 	}
+	else{
+	
+		return true;
+	
+	}
+	}
+	
 
 	/**
 	 * Check if the user register contain the specified username, if not, the
@@ -149,6 +195,34 @@ public class UserRegisterReaderWriter {
 				ErrorHandler.printError(e, this.getClass().toString());
 			}		
 	}
-	}
 	
+
+    // A method for find and return a userdata from userRegister
+	//return null if no user data with the specified username exists in the register.
+	
+	private UserData getUserData(String username){
+		readInUserRegister();
+		boolean foundMatch = false;
+		UserData match = null;
+		int index = 0;
+
+		while (index < userRegister.size() && !foundMatch) {
+			match = userRegister.get(index);
+			if (match.getUsername().equals(username)) {
+				foundMatch = true;
+			} else {
+				index++;
+			}
+		}
+		if(foundMatch){
+
+		return match;
+		}
+		else{
+		match = null;
+		return match;
+		}
+		}
+	
+	}
 
