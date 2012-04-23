@@ -59,7 +59,10 @@ public class DestinationButton extends JButton implements ActionListener{
 		case 2 : new showCreateDialog();
 		}		
 	}	
-
+/**
+ * Class description
+ *
+ */
 	private class showCreateDialog{
 		JFrame dialogFrame;
 		JTextField destinationField;
@@ -79,10 +82,10 @@ public class DestinationButton extends JButton implements ActionListener{
 			JButton createButton = new JButton("Skapa");
 			createButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
 				String input = destinationField.getText();
-				if(input.length() > 1 && input.length()<25){
-					createDestination(input);
-				}else{
+				if(input.length() < 1 && input.length()>25){
 					JOptionPane.showMessageDialog(dialog, "Destinationsnamnet måste vara minst 1 tecken och max 25 tecken!");
+				}else{
+					createDestination(input);
 				}
 			}});
 			destinationField = new JTextField("destinationens namn");
@@ -91,13 +94,13 @@ public class DestinationButton extends JButton implements ActionListener{
 			dialog.add(createButton);
 			dialog.setVisible(true);
 			dialog.pack();
-			}		
-		}
-
+			}	
 		private void createDestination(String destinationTitle) {
 
 			new Destination(layoutHandler, travelProject, destinationTitle, true);	//Create destination
-			
-
+			dialogFrame.dispose();
 		}
+		}
+
+		
 	}
