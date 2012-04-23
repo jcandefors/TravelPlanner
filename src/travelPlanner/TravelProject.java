@@ -29,7 +29,7 @@ public class TravelProject extends Slide{
 	 */
 	public TravelProject(LayoutHandler layoutHandler, String userName, boolean firstTime) {
 		super(layoutHandler, userName);
-		super.title = userName;													//perhaps should be the title set in EditTravelProject.
+		super.title = userName;			
 		super.labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum"};
 		if(firstTime){
 			new File("data/"+userName).mkdir();

@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import travelPlanner.TravelProject.ProjectButton;
 
@@ -53,14 +54,22 @@ public class Destination extends Slide{
 	 * Creates the general components for all Destinations. 
 	 */
 	public void generalDestinationLayout(){
-		layoutHandler.updateTitle("Destination: " + mainInfo[0]);
+		layoutHandler.updateTitle("Destination: " + title);
 		JLabel menuLabel = new JLabel("Destinationer:");
 		menuLabel.setSize(10, 30);				//TBC
 		layoutHandler.addToMenuLow(menuLabel);
 		JButton editButton = new JButton("Redigera destination");
 		editButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {editDestination();}});
+		JButton removeButton = new JButton("Ta bort destination");
+		editButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {
+			int answer = JOptionPane.showConfirmDialog(null, "Vill du verkligen ta bort destinationen "+ title + "?",
+				    "Verifiera borttagning av destination",
+				    JOptionPane.YES_NO_OPTION);
+			if(answer == 0){
+			removeDestination();}}});
 		layoutHandler.addToMenuUp(editButton);
-		layoutHandler.addToMenuUp(new DestinationButton(layoutHandler,"Skapa destination", userName, 2));
+		layoutHandler.addToMenuUp(removeButton);
+		layoutHandler.addToMenuUp(new DestinationButton(layoutHandler, userName, "Skapa destination", 2));
 	}
 
 	/**
@@ -92,7 +101,15 @@ public class Destination extends Slide{
 			ErrorHandler.printError(e, this.getClass().toString());
 		}catch (IOException e){
 			ErrorHandler.printError(e, this.getClass().toString());
-		}
-		
+		}		
 	}	
+	/**
+	 * 
+	 */
+	private void removeDestination(){
+		destinations.remove(title);
+		File removeFile = new File(userName +"/" + title);
+		removeFile.delete(); 								//returns true if succeded - handle???
+		saveDestinations();
+	}
 }

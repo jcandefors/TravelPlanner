@@ -1,7 +1,9 @@
 package travelPlanner;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
@@ -11,7 +13,9 @@ import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -57,43 +61,43 @@ public class DestinationButton extends JButton implements ActionListener{
 	}	
 
 	private class showCreateDialog{
-		
+		JFrame dialogFrame;
 		JTextField destinationField;
-		
-		public showCreateDialog(){
+		JDialog dialog;
 
-			JDialog dialog = new JDialog(layoutHandler.getFrame());
+		public showCreateDialog(){
+			dialog = new JDialog(layoutHandler.getFrame());
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setAlwaysOnTop(true);
-			dialog.setFocusable(true);		
-			dialog.setPreferredSize(new Dimension(300, 100));
+			dialog.setFocusable(true);
+			dialog.setPreferredSize(new Dimension(290, 100));
+			dialog.setMaximumSize(new Dimension(300, 100));
 			dialog.setBackground(Color.BLUE);
-			dialog.setLayout(new GridLayout(2,2));
+			dialog.setLayout(new FlowLayout(FlowLayout.LEFT,2,2));
+			dialog.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 			dialog.setTitle("Skapa Destination");
-			JButton create = new JButton("Skapa");
-			create.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
-				createDestination(destinationField.getText());}});
+			JButton createButton = new JButton("Skapa");
+			createButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
+				String input = destinationField.getText();
+				if(input.length() > 1 && input.length()<25){
+					createDestination(input);
+				}else{
+					JOptionPane.showMessageDialog(dialog, "Destinationsnamnet måste vara minst 1 tecken och max 25 tecken!");
+				}
+			}});
 			destinationField = new JTextField("destinationens namn");
-			destinationField.setInputVerifier(new InputVerifier() {
-				public boolean verify(JComponent destinationField) {
-					JTextField field = (JTextField) destinationField;
-					String input = field.getText();
-					if(!input.matches("destinationens namn") && input.length() > 1 && input.length()<25){
-						return true;}
-					return false;}
-			});
 			dialog.add(new JLabel("Destinationens titel:"));
 			dialog.add(destinationField);
-			dialog.add(create);
+			dialog.add(createButton);
 			dialog.setVisible(true);
 			dialog.pack();
+			}		
+		}
 
-		}		
+		private void createDestination(String destinationTitle) {
+
+			new Destination(layoutHandler, travelProject, destinationTitle, true);	//Create destination
+			
+
+		}
 	}
-
-	private void createDestination(String destinationTitle) {
-
-		new Destination(layoutHandler, travelProject, destinationTitle, true);	//Create destination
-
-	}
-}

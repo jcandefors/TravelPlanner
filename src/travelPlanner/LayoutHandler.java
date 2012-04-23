@@ -100,7 +100,7 @@ public class LayoutHandler {
 		map.setPreferredSize(new Dimension(screenSize.width*5/6,screenSize.height/3));
 		map.setOpaque(false);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-		main = new JPanel(new GridLayout(0,2,3,3));		
+		main = new JPanel(new GridLayout(0,2,10,10));		
 		main.setOpaque(false);
 		JPanel outerMain = new JPanel();
 		outerMain.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));
