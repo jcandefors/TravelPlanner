@@ -29,7 +29,7 @@ public class TravelProject extends Slide{
 	 */
 	public TravelProject(LayoutHandler layoutHandler, String userName, boolean firstTime) {
 		super(layoutHandler, userName);
-		super.title = userName;													//perhaps should be the title set in EditTravelProject.
+		super.title = userName;			
 		super.labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum"};
 		if(firstTime){
 			new File("data/"+userName).mkdir();
@@ -62,7 +62,7 @@ public class TravelProject extends Slide{
 		menuLabel.setSize(10, 30);				//TBC
 		layoutHandler.addToMenuLow(menuLabel);
 		layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", 1));
-		layoutHandler.addToMenuUp(new ProjectButton("Skapa destination", 2));
+		layoutHandler.addToMenuUp(new DestinationButton(layoutHandler,userName,"Skapa destination", 2));
 	}
 
 
@@ -80,7 +80,7 @@ public class TravelProject extends Slide{
 	 * Creates a new EditTravelProject and then updates the data in the layout.
 	 */
 	public void editTravelProject(){
-		new EditTravelProject(this, mainInfo);		
+		new EditTravelProject(this, mainInfo);	//vilken skapar popup och kallar vid "spara" på updateMainInfo();	
 	}
 
 
@@ -99,6 +99,9 @@ public class TravelProject extends Slide{
 			super(text);
 			super.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			this.actionType = actionType;
+			if(actionType == 1){
+				super.setToolTipText("Redigera Reseprojekt");
+			}
 			super.addActionListener(this); 
 		}
 		/**
@@ -108,9 +111,6 @@ public class TravelProject extends Slide{
 		public void actionPerformed(ActionEvent e) {
 			if(this.actionType == 1){			
 				editTravelProject();
-
-			}else if(actionType == 2){
-				new Destination(layoutHandler, userName, "", true);
 			}
 		}
 	}

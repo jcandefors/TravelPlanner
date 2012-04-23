@@ -30,10 +30,11 @@ public class Slide {
 	public void mainLayout(){
 		for(int index = 0; index < labels.length; index++){
 			layoutHandler.addToMain(new JLabel(labels[index]));
-		}
-		for(int index = 0; index < mainInfo.length; index++){
 			layoutHandler.addToMain(new JLabel(mainInfo[index]));
 		}
+	//	for(int index = 0; index < mainInfo.length; index++){
+	//		layoutHandler.addToMain(new JLabel(mainInfo[index]));
+	//	}
 	}
 
 	/**
