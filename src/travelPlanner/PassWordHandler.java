@@ -1,5 +1,6 @@
 package travelPlanner;
 
+
 /**
  * This class handle passwords for logging in to a program. It could be used for
  * checking if a chosen password have the specified length, create a code
@@ -9,8 +10,8 @@ package travelPlanner;
  * 
  */
 public class PassWordHandler {
-	private static final int minimalLengthOfPassword = 5; 
-	private static final int maximalLengthOfPassword = 8; 
+	private static final int minimalLengthOfPassword = 3; 
+	private static final int maximalLengthOfPassword = 10; 
 //	public static final String allowedCharackter = " a_z, A-Z, 0-9";
 
 	/**

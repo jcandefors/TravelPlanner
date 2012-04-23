@@ -12,11 +12,11 @@ public class TravelPlanner extends JFrame{
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		// skapa frame
-		// skapa login
-		// login.login()
-
-	}
+//	public static void main(String[] args) {
+//		// skapa frame
+//		// skapa login
+//		// login.login()
+//
+//	}
 
 }
