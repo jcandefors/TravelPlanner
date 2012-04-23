@@ -1,9 +1,20 @@
 package travelPlanner;
 
+import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class Slide {
 
@@ -32,9 +43,6 @@ public class Slide {
 			layoutHandler.addToMain(new JLabel(labels[index]));
 			layoutHandler.addToMain(new JLabel(mainInfo[index]));
 		}
-	//	for(int index = 0; index < mainInfo.length; index++){
-	//		layoutHandler.addToMain(new JLabel(mainInfo[index]));
-	//	}
 	}
 
 	/**
@@ -88,4 +96,88 @@ public class Slide {
 			ErrorHandler.printError(e, this.getClass().toString());
 		}		
 	}
+
+	/**
+	 * 
+	 * @author Joakim Candefors
+	  */
+	public class DestinationButton extends JButton implements ActionListener{
+
+		private int actionType;
+		public static final int OPEN = 1;
+		public static final int NEW = 2;
+		private JTextField destinationField;
+		private JDialog dialog;
+
+		/**
+		 * Constructor of a destination-button. This component takes the user to the destination referenced in this button. 
+		 * @param layoutHandler A LayoutHandler to lay out this component in the frame.
+		 * @param travelProject	A the name of the travelProject the destination belongs to.
+		 * @param destinationTitle	The title of the destination.
+		 * @param actionType
+		 */
+		public DestinationButton(String title, int actionType){
+			super(title);			
+			this.actionType = actionType;
+			super.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			super.setBorderPainted(false);
+			if(actionType == OPEN){
+				super.setToolTipText("Öppna destinationen " + title);
+			}else if(actionType == NEW){
+				super.setToolTipText("Skapa en ny destination");
+			}			
+			super.addActionListener(this);
+		}
+		public void actionPerformed(ActionEvent e) {
+			switch (actionType){
+
+			case 1 : new Destination(layoutHandler, userName, super.getText(), false); 			//Open destination
+			break;
+			case 2 : showCreateDialog();														//create destination			
+			}
+
+			if(e.getActionCommand() == "Skapa"){
+				String input = destinationField.getText();
+				if(input.length() < 1 && input.length()>25){
+					JOptionPane.showMessageDialog(layoutHandler.getFrame(), "Destinationsnamnet måste vara minst 1 tecken och max 25 tecken.");						
+				}else if(destinations.contains(input)){
+					JOptionPane.showMessageDialog(layoutHandler.getFrame(), "Destinationsnamnet finns redan i reseprojektet.");
+				}else{
+					createDestination(input);
+				}					
+			}
+		}
+
+		public void showCreateDialog(){
+			JDialog dialog = new JDialog(layoutHandler.getFrame());
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setLocation(300, 300);
+			dialog.setAlwaysOnTop(true);
+			dialog.setFocusable(true);
+			dialog.setPreferredSize(new Dimension(290, 100));
+			dialog.setMaximumSize(new Dimension(300, 100));			//funkis?
+			dialog.setBackground(Color.BLUE);
+			dialog.setLayout(new FlowLayout(FlowLayout.LEFT,2,2));
+			dialog.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+			dialog.setTitle("Skapa Destination");
+			JTextField destinationField = new JTextField("destinationens namn");
+			JButton createButton = new JButton("Skapa");
+			createButton.addActionListener(this);
+			dialog.add(new JLabel("Destinationens titel:"));
+			dialog.add(destinationField);
+			dialog.add(createButton);
+			dialog.setVisible(true);
+			dialog.pack();
+		}	
+
+		private void createDestination(String destinationTitle){
+
+			new Destination(layoutHandler, userName, destinationTitle, true);	//Create destination
+			dialog.dispose();
+
+		}
+	}
+
+
 }
+

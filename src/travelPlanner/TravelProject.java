@@ -62,7 +62,7 @@ public class TravelProject extends Slide{
 		menuLabel.setSize(10, 30);				//TBC
 		layoutHandler.addToMenuLow(menuLabel);
 		layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", 1));
-		layoutHandler.addToMenuUp(new DestinationButton(layoutHandler,userName,"Skapa destination", 2));
+		layoutHandler.addToMenuUp(new DestinationButton("Skapa destination", 2));
 	}
 
 
@@ -72,7 +72,7 @@ public class TravelProject extends Slide{
 	public void destinationLayout(){
 		Iterator<String> iterator = destinations.iterator();
 		while (iterator.hasNext()){
-			layoutHandler.addToMenuLow(new DestinationButton(layoutHandler, userName, iterator.next(), DestinationButton.OPEN));
+			layoutHandler.addToMenuLow(new DestinationButton(iterator.next(), DestinationButton.OPEN));
 		}
 	}
 	

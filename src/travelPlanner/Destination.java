@@ -66,7 +66,7 @@ public class Destination extends Slide{
 			removeDestination();}}});
 		layoutHandler.addToMenuUp(editButton);
 		layoutHandler.addToMenuUp(removeButton);
-		layoutHandler.addToMenuUp(new DestinationButton(layoutHandler, userName, "Skapa destination", 2));
+		layoutHandler.addToMenuUp(new DestinationButton("Skapa destination", 2));
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class Destination extends Slide{
 		while (iterator.hasNext()){
 			String nextDestination = iterator.next();
 			if(nextDestination != title){	
-				layoutHandler.addToMenuLow(new DestinationButton(layoutHandler, userName, nextDestination, DestinationButton.OPEN));
+				layoutHandler.addToMenuLow(new DestinationButton(nextDestination, DestinationButton.OPEN));
 			}
 		}
 	}
