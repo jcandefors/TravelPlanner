@@ -63,6 +63,7 @@ public class TravelProject extends Slide{
 		layoutHandler.addToMenuLow(menuLabel);
 		layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", 1));
 		layoutHandler.addToMenuUp(new DestinationButton("Skapa destination", 2));
+		layoutHandler.addToMap(new MapLabel(destinations));
 	}
 
 

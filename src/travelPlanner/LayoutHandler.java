@@ -35,8 +35,8 @@ public class LayoutHandler {
 	 * @param frame the main frame to be used to present on.
 	 */
 	public LayoutHandler(JFrame frame){
-		screenSize = frame.getToolkit().getScreenSize();
 		this.frame = frame;	
+		screenSize = frame.getToolkit().getScreenSize();		
 		frame.setSize(screenSize.width*2/3, screenSize.height*2/3);
 		contentPane = frame.getContentPane();			
 		background = new ImagePanel(new File("img/main.jpg"));
@@ -46,7 +46,7 @@ public class LayoutHandler {
 		setUpTop();
 		setUpMenu();
 		setUpMain();
-		frame.pack();
+		//frame.pack();
 		frame.setVisible(true);
 	}
 

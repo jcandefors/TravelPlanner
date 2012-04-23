@@ -67,6 +67,7 @@ public class Destination extends Slide{
 		layoutHandler.addToMenuUp(editButton);
 		layoutHandler.addToMenuUp(removeButton);
 		layoutHandler.addToMenuUp(new DestinationButton("Skapa destination", 2));
+		layoutHandler.addToMap(new MapLabel(title));
 	}
 
 	/**
