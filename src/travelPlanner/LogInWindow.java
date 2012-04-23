@@ -92,10 +92,8 @@ public class LogInWindow {
 				if(firstTime){
 					actionHandler.setFirstTimeStatusToFalse(username);
 				}
-				//new TravelProject(new LayoutHandler(loginFrame), username, firstTime);
-				JFrame frame = new JFrame();
-				JOptionPane.showMessageDialog(frame, "Lyckades Logga in" , PROBLEMFRAMETITLE, JOptionPane.INFORMATION_MESSAGE);
-
+				new TravelProject(new LayoutHandler(loginFrame), username, firstTime);
+				
 			}
 			else{
 				JFrame frame = new JFrame();
