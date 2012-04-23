@@ -88,12 +88,14 @@ public class LogInWindow {
 			boolean succesfullLogin; 
 			succesfullLogin = actionHandler.logIn(username, password);
 			if(succesfullLogin){
-				loginFrame.setTitle(PROGRAMNAME);
+				JFrame frame= new JFrame();
+				frame.setTitle(PROGRAMNAME);
 				if(firstTime){
 					actionHandler.setFirstTimeStatusToFalse(username);
 				}
-				new TravelProject(new LayoutHandler(loginFrame), username, firstTime);
 				
+				new TravelProject(new LayoutHandler(frame), username, firstTime);
+				loginFrame.dispose();
 			}
 			else{
 				JFrame frame = new JFrame();
