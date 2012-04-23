@@ -1,6 +1,8 @@
 package travelPlanner;
 
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -176,11 +178,36 @@ public class UserRegisterReaderWriter {
 	private void readInUserRegister() {
 		try {
 			
-			userRegister = (ArrayList<UserData>) ObjectIO.loadObject("data",
+			userRegister = (ArrayList<UserData>) ObjectIO.loadObject("topSecret",
 					"userRegister");
-		} catch (ClassNotFoundException e) {
+		}
+		catch(FileNotFoundException e){
+			//User register have never been activated create a new register with the testUser
+			//username: kalleAnka
+			//password: filur123
+			
+			String password = "filur123";
+			
+			int passwordCode = password.hashCode();
+			UserData testUser = new UserData("kalleAnka", passwordCode);
+			
+			userRegister = new ArrayList<UserData>();
+			
+			userRegister.add(testUser);
+			try{
+				new File("data/topSecret").mkdirs();
+				ObjectIO.saveObject(userRegister, "topSecret", "userRegister");
+			}
+			catch (IOException ex) {
+				ErrorHandler.printError(ex, this.getClass().toString());
+			}	
+			
+		}
+		catch (ClassNotFoundException e) {
+								
 			ErrorHandler.printError(e, this.getClass().toString());
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			ErrorHandler.printError(e, this.getClass().toString());
 		}
 	}
@@ -189,7 +216,7 @@ public class UserRegisterReaderWriter {
 	
 	private void saveUserRegister(){
 		try {
-			ObjectIO.saveObject(userRegister, "data", "userRegister");
+			ObjectIO.saveObject(userRegister, "topSecret", "userRegister");
 		}
 		 catch (IOException e) {
 				ErrorHandler.printError(e, this.getClass().toString());

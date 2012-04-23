@@ -1,4 +1,7 @@
 package travelPlanner;
+import java.io.Serializable;
+
+
 
 /**
  * This class represent the data that is saved about a user in the user register,
@@ -8,8 +11,10 @@ package travelPlanner;
  *
  */
 
-public class UserData {
+public class UserData implements Serializable{
 
+	
+	private static final long serialVersionUID = -1082811726888267675L;
 	private final String username;
 	private int passwordCode;
 	private boolean firstTime; //True iff the user never have logged in to the program 
@@ -22,7 +27,7 @@ public class UserData {
 	public UserData(String username, int passwordCode){
 		this.username = username;	
 		this.passwordCode = passwordCode;
-		firstTime = true
+		firstTime = true;
 	}
 	/**
 	 * Change the password code to the specified code

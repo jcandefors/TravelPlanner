@@ -1,4 +1,7 @@
 package travelPlanner;
+
+
+
 import java.awt.Container;
 
 import java.awt.event.ActionEvent;
@@ -63,9 +66,21 @@ public class LogInWindow {
 			}
 		
 	private void logInButtonAction(){
-		String username = userNameField.getSelectedText(); //TODO handle Exception
-		String password = passwordField.getSelectedText();
+		// Load in input
 		
+		String username = userNameField.getText(); //TODO handle Exception
+		char[] passwordArray = passwordField.getPassword();
+		
+		
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < passwordArray.length; i++) {
+			sb.append(passwordArray[i]);
+		}
+		String password = sb.toString();
+
+		
+		//
 		if(checkPasswordAndUsername(username, password)){ // If the username field and password field have been properly initiated
 			//check if it is first time user is logged in to the program
 			boolean firstTime = actionHandler.getIsFirstTime(username);
@@ -77,7 +92,10 @@ public class LogInWindow {
 				if(firstTime){
 					actionHandler.setFirstTimeStatusToFalse(username);
 				}
-				new TravelProject(new LayoutHandler(loginFrame), username, firstTime);
+				//new TravelProject(new LayoutHandler(loginFrame), username, firstTime);
+				JFrame frame = new JFrame();
+				JOptionPane.showMessageDialog(frame, "Lyckades Logga in" , PROBLEMFRAMETITLE, JOptionPane.INFORMATION_MESSAGE);
+
 			}
 			else{
 				JFrame frame = new JFrame();
@@ -117,6 +135,8 @@ public class LogInWindow {
 		new CreateNewUserWindow(popUpCreateNewUser);
 		
 	}
+	
+	
 	/**
 	 * Intisialise all components for logInwindow		
 	 */

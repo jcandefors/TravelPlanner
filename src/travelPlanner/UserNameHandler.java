@@ -1,5 +1,6 @@
 package travelPlanner;
 
+
 /**
  * This class check that a username is valid.
  * 
@@ -8,8 +9,8 @@ package travelPlanner;
  */
 
 public class UserNameHandler {
-	private static final int minimalLengthOfUsernamne = 5;
-	private static final int maximalLengthOfUsername = 8;
+	private static final int minimalLengthOfUsernamne = 3;
+	private static final int maximalLengthOfUsername = 10;
 	
 	public UserNameHandler() {
 	}
