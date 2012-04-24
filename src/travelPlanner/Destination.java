@@ -1,14 +1,19 @@
 package travelPlanner;
 
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 
 public class Destination extends Slide{
@@ -44,7 +49,7 @@ public class Destination extends Slide{
 		layoutHandler.clearAll();
 		generalDestinationLayout();
 		destinationLayout();
-		super.mainLayout();
+		mainLayout();
 	}
 
 	/**
@@ -74,12 +79,28 @@ public class Destination extends Slide{
 	 * Creates components (DestinationButton) for all the destinations in the TravelProject except for the current one.
 	 */
 	public void destinationLayout(){
+		layoutHandler.addToMenuLow(Box.createRigidArea(new Dimension(20, 10)));
 		Iterator<String> iterator = destinations.iterator();
 		while (iterator.hasNext()){
 			String nextDestination = iterator.next();
 			if(nextDestination != title){	
 				layoutHandler.addToMenuLow(new DestinationButton(nextDestination, DestinationButton.OPEN));
 			}
+		}
+	}
+	
+	/**
+	 * Creates components from mainInfo and labels and adds them to the frame.
+	 */
+	public void mainLayout(){
+		
+		//example of adding a panel.
+		JPanel panel = new JPanel(new GridLayout(0,2));
+		for(int index = 0; index < labels.length; index++){
+			panel.add(new JLabel(labels[index]));
+			panel.add(new JLabel(mainInfo[index]));
+			
+			layoutHandler.addToMain(panel);
 		}
 	}
 

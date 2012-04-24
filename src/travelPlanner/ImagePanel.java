@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
@@ -45,11 +44,10 @@ public class ImagePanel extends JPanel{
 			g.drawImage(backgroundImage, 0, 0, null);
 		}
 		
-		public void scaleImage(Dimension frameSize){
-			
+		public void scaleImage(Dimension frameSize){			
 			int height= frameSize.height;
 			int width = frameSize.width;
-			backgroundImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+			backgroundImage = originalImage.getScaledInstance(width, height, Image.SCALE_FAST);
 		}
 		
 		

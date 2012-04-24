@@ -2,9 +2,13 @@
 package travelPlanner;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.io.File;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -27,11 +31,9 @@ public class LayoutHandler {
 	private JPanel menuUp;
 	private JPanel menuLow;
 	private JPanel map;
-	private JPanel main;
-	private JMenu topMenu;
+	private JPanel main;	
 	private JLabel title;
 	private Dimension frameSize;
-	private JPanel innerMain;
 
 	/**
 	 * Constructor of LayoutHandler
@@ -55,12 +57,23 @@ public class LayoutHandler {
 			public void componentMoved(ComponentEvent e) {}
 			@Override
 			public void componentShown(ComponentEvent e) {}			
-		});		
+		});
+		frame.addWindowStateListener(new WindowStateListener() {			
+			@Override
+			public void windowStateChanged(WindowEvent event) {
+				
+				if((event.getNewState() & JFrame.MAXIMIZED_BOTH) == JFrame.MAXIMIZED_BOTH){
+					Component resizedFrame = (Component) event.getSource();
+					frameSize = resizedFrame.getSize();
+					resizePanels();}
+				}
+				
+		});
 		contentPane = frame.getContentPane();			
 		background = new ImagePanel(new File("img/main.jpg"));
 		background.setPreferredSize(frameSize);
 		background.scaleImage(frameSize);
-		background.setLayout(new BorderLayout(2,2));
+		background.setLayout(new BorderLayout(3,3));
 		contentPane.add(background);
 		setUpTop();
 		setUpMenu();
@@ -73,19 +86,41 @@ public class LayoutHandler {
 	 * Sets up the top area in the top of the layout.
 	 */
 	public void setUpTop(){
-		top = new JPanel(new GridLayout(1, 5, 5, 5));
-		top.setBackground(Color.LIGHT_GRAY);		
-		topMenu = new JMenu("Meny");									//TBC needs action
+		top = new JPanel(new GridLayout(0, 5, 0, 0));
+		top.setBackground(Color.LIGHT_GRAY);
+		JMenuBar topMenuBar = new JMenuBar();
+		topMenuBar.setPreferredSize(new Dimension(40,20));
+		JMenu  topMenu = new JMenu("Meny");
 		topMenu.setMnemonic(KeyEvent.VK_A);
+		topMenuBar.add(topMenu);
 		JMenuItem menuItem = new JMenuItem("Avsluta", KeyEvent.VK_F4);
-		topMenu.add(menuItem);											//TBC - needs action
-		topMenu.add(new JMenuItem("Byt Anv�ndare"));
+													//TBC - needs action
+		JMenuItem menuItem_1 = new JMenuItem("Logga ut");
+		menuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				JFrame newFrame = new JFrame();
+				newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				newFrame.setLocationByPlatform(true);
+				new LogInWindow(newFrame);
+			}});
+		topMenu.add(menuItem_1);
+		menuItem.addActionListener(new ActionListener() {			
+			public void actionPerformed(ActionEvent arg0) {
+			int answer = JOptionPane.showConfirmDialog(frame, "Vill du verkligen avsluta?", "Avsluta TravelPlanner", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if (answer == 0){System.exit(0);}}});
+		topMenu.add(menuItem);
 		title = new JLabel();
-		title.setSize(100, 36);											//TBC size?
-		title.setFont(Font.getFont("Calibri"));
-		top.add(topMenu);
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setFont(new Font("DejaVu Sans", Font.PLAIN, 16));
+		top.add(topMenuBar);		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		top.add(horizontalStrut);
 		top.add(title);
-		background.add(top,BorderLayout.NORTH);	
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		top.add(horizontalStrut_1);
+		background.add(top,BorderLayout.NORTH);		
+		
 	}
 
 	/**
@@ -104,8 +139,7 @@ public class LayoutHandler {
 		menuLow.setLayout(new BoxLayout(menuLow, BoxLayout.Y_AXIS));		
 		menuLow.setOpaque(false);
 		menuLow.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height*3/5));
-		menuLow.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-		menuLow.add(Box.createRigidArea(new Dimension(10, 10)));
+		menuLow.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));		
 		leftMenu.add(menuUp);
 		leftMenu.add(menuLow);
 		background.add(leftMenu, BorderLayout.WEST);	
@@ -119,19 +153,16 @@ public class LayoutHandler {
 		map.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/5));
 		map.setOpaque(false);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-		main = new JPanel(new GridLayout(0,2,10,10));		
-		main.setOpaque(false);
 		JPanel outerMain = new JPanel();
 		outerMain.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));
 		outerMain.setOpaque(false);
-		innerMain = new JPanel();
-		innerMain.setLayout(new FlowLayout(FlowLayout.LEFT));
-		innerMain.setOpaque(false);
-		innerMain.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*3/5));
-		innerMain.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));		
-		innerMain.add(main);
+		main = new JPanel();
+		main.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
+		main.setOpaque(false);
+		main.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*3/5));
+		main.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));		
 		outerMain.add(map);
-		outerMain.add(innerMain);
+		outerMain.add(main);
 		background.add(outerMain,BorderLayout.CENTER);
 	}
 
@@ -237,15 +268,15 @@ public class LayoutHandler {
 	}
 
 	public void resizePanels(){
+		background.scaleImage(frameSize); 
+		background.setPreferredSize(new Dimension(frameSize.width, frameSize.height));
 		leftMenu.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height-50));		
 		menuUp.setPreferredSize(new Dimension(leftMenu.getWidth(),leftMenu.getHeight()/3));
 		menuLow.setPreferredSize(new Dimension(leftMenu.getWidth(),leftMenu.getHeight()*2/3));
-		innerMain.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/3));
+		main.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/3));
 		map.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height/3));
-		mapLabel.reSize(map.getSize());
-		
-		background.scaleImage(frameSize);
-		//frame.pack();
+		mapLabel.reSize(map.getSize());		
+		frame.revalidate();
 	}
 }	
 

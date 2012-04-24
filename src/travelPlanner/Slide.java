@@ -33,17 +33,7 @@ public class Slide {
 		this.layoutHandler = layoutHandler;
 		this.userName = userName;
 	}
-
-	/**
-	 * Creates components from mainInfo and labels and adds them to the frame.
-	 */
-	public void mainLayout(){
-		for(int index = 0; index < labels.length; index++){
-			layoutHandler.addToMain(new JLabel(labels[index]));
-			layoutHandler.addToMain(new JLabel(mainInfo[index]));
-		}
-	}
-
+	
 	/**
 	 * Loads the Slide information data and destination list from disk.
 	 */

@@ -46,7 +46,7 @@ public class MapLabel extends JLabel{
 	public boolean buildDestinationMap(String destination){
 		URL u = null; 
 		try{
-			URI uri = new URI("http", "maps.googleapis.com", "/maps/api/staticmap","size=640x400&maptype=roadmap/&zoom=4&scale=1&markers=size:mid|color:red|" + destination + "&format=gif&sensor=false" , null);
+			URI uri = new URI("http", "maps.googleapis.com", "/maps/api/staticmap","center="  + destination + "&size=640x300&maptype=roadmap/&zoom=4&scale=1&markers=size:mid|color:red|"+destination+"&format=gif&sensor=false" , null);
 			String url = uri.toASCIIString();
 			u = new URL(url);
 		}catch (MalformedURLException e) {
@@ -102,13 +102,18 @@ public class MapLabel extends JLabel{
 	 */
 	private URL buildURL(ArrayList<String> destinations){		
 		StringBuilder sb = new StringBuilder();
-		sb.append("size=640x480&maptype=roadmap/&zoom=4&scale=1&markers=size:mid|color:red");
+		sb.append("size=640x300&maptype=roadmap/&path=");
+		for(int i = 0; i< destinations.size(); i++){
+			sb.append(destinations.get(i) + "|");
+		}
+		sb.setLength(sb.length()-1);
+		sb.append("&markers=size:mid|color:red");
 		for(int i = 0; i< destinations.size(); i++){
 			sb.append("|" + destinations.get(i));
 		}
 		sb.append("&format=gif&sensor=false");
 		try{
-			URI uri = new URI("http", "maps.googleapis.com", "/maps/api/staticmap", sb.toString(), null);
+			URI uri = new URI("http", "maps.googleapis.com", "/maps/api/staticmap", sb.toString().replace(" ", "+"), null);
 			String url = uri.toASCIIString();
 			return new URL(url);
 		}catch (MalformedURLException e) {
@@ -123,6 +128,6 @@ public class MapLabel extends JLabel{
 
 	public void reSize(Dimension mapPanelsize){
 		Dimension imageSize = mapPanelsize;
-		image=image.getScaledInstance(imageSize.width, imageSize.height-10, Image.SCALE_SMOOTH);		
+		image=image.getScaledInstance(-1, (imageSize.height-15), Image.SCALE_FAST);		
 	}
 }
