@@ -1,8 +1,4 @@
 package travelPlanner;
-
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
