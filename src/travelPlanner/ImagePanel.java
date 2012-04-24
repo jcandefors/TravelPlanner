@@ -1,5 +1,6 @@
 package travelPlanner;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -16,7 +17,7 @@ import travelPlanner.ErrorHandler;
  *
  */
 public class ImagePanel extends JPanel{
-
+	private Image originalImage;
 	private Image backgroundImage;
 	
 /**
@@ -31,6 +32,7 @@ public class ImagePanel extends JPanel{
 		
 		try{
 			backgroundImage = ImageIO.read(file);
+			originalImage = backgroundImage;
 		}catch (IOException e){
 			ErrorHandler.printError(e, this.getClass().toString());
 		}   	
@@ -43,11 +45,11 @@ public class ImagePanel extends JPanel{
 			g.drawImage(backgroundImage, 0, 0, null);
 		}
 		
-		public void scaleImage(){
-			JFrame frame = new JFrame();
-			int height = frame.getToolkit().getScreenSize().height;
-			int width = frame.getToolkit().getScreenSize().width;
-			backgroundImage = backgroundImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+		public void scaleImage(Dimension frameSize){
+			
+			int height= frameSize.height;
+			int width = frameSize.width;
+			backgroundImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		}
 		
 		

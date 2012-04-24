@@ -2,12 +2,12 @@
 package travelPlanner;
 
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
-
-
 
 /**
  * The class LayoutHandler manages the layout of the slides in the application TravelPlanner.
@@ -21,7 +21,9 @@ public class LayoutHandler {
 	private JFrame frame;
 	private ImagePanel background;
 	private Container contentPane;
+	private MapLabel mapLabel;
 	private JPanel top;
+	private JPanel leftMenu;
 	private JPanel menuUp;
 	private JPanel menuLow;
 	private JPanel map;
@@ -29,6 +31,7 @@ public class LayoutHandler {
 	private JMenu topMenu;
 	private JLabel title;
 	private Dimension frameSize;
+	private JPanel innerMain;
 
 	/**
 	 * Constructor of LayoutHandler
@@ -39,10 +42,24 @@ public class LayoutHandler {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		frameSize = new Dimension(frame.getToolkit().getScreenSize().width*2/3,frame.getToolkit().getScreenSize().height*2/3);		
 		frame.setSize(frameSize);
+		frame.addComponentListener(new ComponentListener(){									
+			@Override
+			public void componentResized(ComponentEvent event) {
+				Component resizedFrame = (Component) event.getSource();
+				frameSize = resizedFrame.getSize();
+				resizePanels();
+			}
+			@Override
+			public void componentHidden(ComponentEvent e) {}
+			@Override
+			public void componentMoved(ComponentEvent e) {}
+			@Override
+			public void componentShown(ComponentEvent e) {}			
+		});		
 		contentPane = frame.getContentPane();			
 		background = new ImagePanel(new File("img/main.jpg"));
-		background.scaleImage();
 		background.setPreferredSize(frameSize);
+		background.scaleImage(frameSize);
 		background.setLayout(new BorderLayout(2,2));
 		contentPane.add(background);
 		setUpTop();
@@ -62,7 +79,7 @@ public class LayoutHandler {
 		topMenu.setMnemonic(KeyEvent.VK_A);
 		JMenuItem menuItem = new JMenuItem("Avsluta", KeyEvent.VK_F4);
 		topMenu.add(menuItem);											//TBC - needs action
-		topMenu.add(new JMenuItem("Byt Användare"));
+		topMenu.add(new JMenuItem("Byt Anvï¿½ndare"));
 		title = new JLabel();
 		title.setSize(100, 36);											//TBC size?
 		title.setFont(Font.getFont("Calibri"));
@@ -75,9 +92,9 @@ public class LayoutHandler {
 	 * Sets up the menu in the west area of the layout.
 	 */
 	public void setUpMenu(){		
-		JPanel menu = new JPanel(new FlowLayout(FlowLayout.CENTER,2,2));
-		menu.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height-50));	
-		menu.setOpaque(false);
+		leftMenu = new JPanel(new FlowLayout(FlowLayout.CENTER,2,2));
+		leftMenu.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height-50));	
+		leftMenu.setOpaque(false);
 		menuUp = new JPanel();	
 		menuUp.setLayout(new BoxLayout(menuUp, BoxLayout.Y_AXIS));
 		menuUp.setOpaque(false);
@@ -89,17 +106,17 @@ public class LayoutHandler {
 		menuLow.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height*3/5));
 		menuLow.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		menuLow.add(Box.createRigidArea(new Dimension(10, 10)));
-		menu.add(menuUp);
-		menu.add(menuLow);
-		background.add(menu, BorderLayout.WEST);	
+		leftMenu.add(menuUp);
+		leftMenu.add(menuLow);
+		background.add(leftMenu, BorderLayout.WEST);	
 	}
 
 	/**
 	 * Sets up the main area in the center of the layout.
 	 */
 	public void setUpMain(){
-		map = new JPanel(new FlowLayout());			//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
-		map.setPreferredSize(new Dimension(frameSize.width*5/6-2,frameSize.height/3));
+		map = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));			//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
+		map.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/5));
 		map.setOpaque(false);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		main = new JPanel(new GridLayout(0,2,10,10));		
@@ -107,10 +124,10 @@ public class LayoutHandler {
 		JPanel outerMain = new JPanel();
 		outerMain.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));
 		outerMain.setOpaque(false);
-		JPanel innerMain = new JPanel();
+		innerMain = new JPanel();
 		innerMain.setLayout(new FlowLayout(FlowLayout.LEFT));
 		innerMain.setOpaque(false);
-		innerMain.setPreferredSize(new Dimension(frameSize.width*5/6-2,frameSize.height*2/3));
+		innerMain.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*3/5));
 		innerMain.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));		
 		innerMain.add(main);
 		outerMain.add(map);
@@ -155,8 +172,13 @@ public class LayoutHandler {
 	 * @param component The component to be added.
 	 */
 	public void addToMap(Component component){
-
-		map.add(component);
+		if(component instanceof MapLabel){
+			mapLabel = (MapLabel) component;
+			mapLabel.reSize(map.getSize());
+			map.add(component);
+		}else{
+			map.add(component);
+		}		
 		map.revalidate();
 
 	}
@@ -204,8 +226,8 @@ public class LayoutHandler {
 
 	public void setBackground(File file){		
 		background.setBackground(file);
-
 	}
+	
 	/**
 	 * Returns the frame used by this layouthandler.
 	 * @return The frame used by this LayoutHandler.
@@ -214,6 +236,17 @@ public class LayoutHandler {
 		return frame;
 	}
 
+	public void resizePanels(){
+		leftMenu.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height-50));		
+		menuUp.setPreferredSize(new Dimension(leftMenu.getWidth(),leftMenu.getHeight()/3));
+		menuLow.setPreferredSize(new Dimension(leftMenu.getWidth(),leftMenu.getHeight()*2/3));
+		innerMain.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/3));
+		map.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height/3));
+		mapLabel.reSize(map.getSize());
+		
+		background.scaleImage(frameSize);
+		//frame.pack();
+	}
 }	
 
 

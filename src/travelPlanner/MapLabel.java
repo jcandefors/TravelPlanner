@@ -1,4 +1,5 @@
 package travelPlanner;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -17,12 +18,12 @@ import sun.awt.image.URLImageSource;
 public class MapLabel extends JLabel{
 	Image image = null;
 
-	//URL u = new URL("http://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=12&size=640x480&sensor=false");
 	/**
 	 * 
 	 * @param destinations
 	 */
 	public MapLabel(ArrayList<String> destinations){
+
 		if(!buildProjectMap(destinations)){
 			buildProjectMap(destinations);
 		}	
@@ -101,7 +102,7 @@ public class MapLabel extends JLabel{
 	 */
 	private URL buildURL(ArrayList<String> destinations){		
 		StringBuilder sb = new StringBuilder();
-		sb.append("size=640x400&maptype=roadmap/&zoom=4&scale=1&markers=size:mid|color:red");
+		sb.append("size=640x480&maptype=roadmap/&zoom=4&scale=1&markers=size:mid|color:red");
 		for(int i = 0; i< destinations.size(); i++){
 			sb.append("|" + destinations.get(i));
 		}
@@ -118,5 +119,10 @@ public class MapLabel extends JLabel{
 			System.out.println("Error!" + e );
 		}
 		return null;
+	}
+
+	public void reSize(Dimension mapPanelsize){
+		Dimension imageSize = mapPanelsize;
+		image=image.getScaledInstance(imageSize.width, imageSize.height-10, Image.SCALE_SMOOTH);		
 	}
 }
