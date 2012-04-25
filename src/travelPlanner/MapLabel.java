@@ -46,7 +46,7 @@ public class MapLabel extends JLabel{
 	public boolean buildDestinationMap(String destination){
 		URL u = null; 
 		try{
-			URI uri = new URI("http", "maps.googleapis.com", "/maps/api/staticmap","center="  + destination + "&size=640x300&maptype=roadmap/&zoom=4&scale=1&markers=size:mid|color:red|"+destination+"&format=gif&sensor=false" , null);
+			URI uri = new URI("http", "maps.googleapis.com", "/maps/api/staticmap","center="  + destination + "&size=640x350&maptype=roadmap/&zoom=4&scale=1&markers=size:mid|color:red|"+destination+"&format=gif&sensor=false" , null);
 			String url = uri.toASCIIString();
 			u = new URL(url);
 		}catch (MalformedURLException e) {
@@ -102,7 +102,7 @@ public class MapLabel extends JLabel{
 	 */
 	private URL buildURL(ArrayList<String> destinations){		
 		StringBuilder sb = new StringBuilder();
-		sb.append("size=640x300&maptype=roadmap/&path=");
+		sb.append("size=640x350&maptype=roadmap/&path=");
 		for(int i = 0; i< destinations.size(); i++){
 			sb.append(destinations.get(i) + "|");
 		}
