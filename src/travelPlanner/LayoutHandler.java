@@ -90,6 +90,8 @@ public class LayoutHandler {
 		top.setBackground(Color.LIGHT_GRAY);
 		JMenuBar topMenuBar = new JMenuBar();
 		topMenuBar.setPreferredSize(new Dimension(40,20));
+		topMenuBar.setBorder(null);
+		topMenuBar.setBackground(Color.LIGHT_GRAY);
 		JMenu  topMenu = new JMenu("Meny");
 		topMenu.setMnemonic(KeyEvent.VK_A);
 		topMenuBar.add(topMenu);
@@ -205,7 +207,7 @@ public class LayoutHandler {
 	public void addToMap(Component component){
 		if(component instanceof MapLabel){
 			mapLabel = (MapLabel) component;
-			mapLabel.reSize(map.getSize());
+			mapLabel.resizeImage(map.getSize());
 			map.add(component);
 		}else{
 			map.add(component);
@@ -275,7 +277,7 @@ public class LayoutHandler {
 		menuLow.setPreferredSize(new Dimension(leftMenu.getWidth(),leftMenu.getHeight()*2/3));
 		main.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/3));
 		map.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height/3));
-		mapLabel.reSize(map.getSize());		
+		mapLabel.resizeImage(map.getSize());		
 		frame.revalidate();
 	}
 }	

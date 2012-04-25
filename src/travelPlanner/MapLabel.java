@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import sun.awt.image.URLImageSource;
 
 public class MapLabel extends JLabel{
-	Image image = null;
+	Image mapImage = null;
 
 	/**
 	 * 
@@ -59,11 +59,11 @@ public class MapLabel extends JLabel{
 		try{
 			JFrame frame = new JFrame();		
 			URLConnection con = u.openConnection();
-			image = frame.getToolkit().createImage(new URLImageSource(u, con));
+			mapImage = frame.getToolkit().createImage(new URLImageSource(u, con));
 		}catch (IOException e){
 			ErrorHandler.printError(e, this.getClass().toString());
 		}
-		super.setIcon(new ImageIcon(image));
+		super.setIcon(new ImageIcon(mapImage));
 		//error check
 		if(this.getIcon() == null){
 			return false;
@@ -82,11 +82,11 @@ public class MapLabel extends JLabel{
 			JFrame frame = new JFrame();
 			URL u = buildURL(destinations);	
 			URLConnection con = u.openConnection();
-			image = frame.getToolkit().createImage(new URLImageSource(u, con));
+			mapImage = frame.getToolkit().createImage(new URLImageSource(u, con));
 		}catch (Exception e){
 			ErrorHandler.printError(e, this.getClass().toString());
 		}
-		super.setIcon(new ImageIcon(image));
+		super.setIcon(new ImageIcon(mapImage));
 		//error check
 		if(this.getIcon() == null){
 			return false;
@@ -126,8 +126,8 @@ public class MapLabel extends JLabel{
 		return null;
 	}
 
-	public void reSize(Dimension mapPanelsize){
-		Dimension imageSize = mapPanelsize;
-		image=image.getScaledInstance(-1, (imageSize.height-15), Image.SCALE_FAST);		
+	public void resizeImage(Dimension mapPanelsize){
+		Dimension panelSize = mapPanelsize;
+		mapImage=mapImage.getScaledInstance(-1, (panelSize.height-15), Image.SCALE_FAST);		
 	}
 }

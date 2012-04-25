@@ -12,23 +12,28 @@ import javax.swing.JPanel;
 import travelPlanner.ErrorHandler;
 
 /**
- * @author j
+ * 
+ * @author Joakim Candefors
  *
  */
 public class ImagePanel extends JPanel{
 	private Image originalImage;
 	private Image backgroundImage;
-	
-/**
- * Constructs a background panel.
- * @param file The file with the image to set as background.
- */
+
+	/**
+	 * Constructs a background panel.
+	 * @param file The file with the image to set as background.
+	 */
 	public ImagePanel(File file){		   
-			setBackground(file);
+		setBackground(file);
 	}
 	
+	/**
+	 * 
+	 * @param file
+	 */
 	public void setBackground(File file){
-		
+
 		try{
 			backgroundImage = ImageIO.read(file);
 			originalImage = backgroundImage;
@@ -37,18 +42,21 @@ public class ImagePanel extends JPanel{
 		}   	
 		paintComponent(backgroundImage.getGraphics());
 	}
+	/**
+	 * 
+	 * @Overide
+	 */	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			
-			g.drawImage(backgroundImage, 0, 0, null);
-		}
-		
-		public void scaleImage(Dimension frameSize){			
-			int height= frameSize.height;
-			int width = frameSize.width;
-			backgroundImage = originalImage.getScaledInstance(width, height, Image.SCALE_FAST);
-		}
-		
-		
+		g.drawImage(backgroundImage, 0, 0, null);
 	}
+
+	public void scaleImage(Dimension frameSize){			
+		int height= frameSize.height;
+		int width = frameSize.width;
+		backgroundImage = originalImage.getScaledInstance(width, height, Image.SCALE_FAST);
+	}
+
+
+}

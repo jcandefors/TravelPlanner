@@ -119,6 +119,7 @@ public class TravelProject extends Slide{
 		public ProjectButton(String text, int actionType){
 			super(text);
 			super.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			super.setBorderPainted(false);
 			this.actionType = actionType;
 			if(actionType == 1){
 				super.setToolTipText("Redigera Reseprojekt");

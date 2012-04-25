@@ -32,6 +32,7 @@ public class Destination extends Slide{
 		super.title = title;
 		super.labels = new String[]{"Destination:","Inresedatum:","Utresedatum","Flygplats/station:","Bokningsnummer:", "Boendeinformation:"};
 		if(firstTime){
+			new File(user+"/"+title).mkdir();
 			super.mainInfo = new String[MAININFOSIZE];
 			loadDestinations();
 			editDestination();
