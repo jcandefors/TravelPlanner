@@ -68,7 +68,7 @@ public class Destination extends Slide{
 				removeDestination();
 				toProject();}}});
 		JButton toProjectButton = new JButton("Till reseprojektet");
-		editButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {
+		toProjectButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {
 			toProject();
 		}});
 		layoutHandler.addToMenuUp(toProjectButton);

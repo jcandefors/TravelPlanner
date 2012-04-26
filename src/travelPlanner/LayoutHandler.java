@@ -215,39 +215,19 @@ public class LayoutHandler {
 		map.revalidate();
 
 	}
-
-	/**
-	 *  Removes all components from the menu panel.
-	 */
-	public void clearMenu(){
-
-		menuUp.removeAll();
-		menuLow.removeAll();
-
-	}
-	/**
-	 * Removes all components from the main panel.
-	 */
-	public void clearMain(){
-
-		main.removeAll();
-	}
-	/**
-	 * Removes all components from the map panel.
-	 */
-	public void clearMap(){
-
-		map.removeAll();
-	}
 	/**
 	 * Removes all components from all the panels.
 	 */
 	public void clearAll(){
 		menuUp.removeAll();
+		menuUp.revalidate();
 		menuLow.removeAll();
+		menuLow.revalidate();
 		main.removeAll();
+		main.revalidate();
 		map.removeAll();
-		frame.revalidate();
+		map.revalidate();
+		frame.repaint();
 	}
 	/**
 	 * Updates the title of the slide
