@@ -154,6 +154,7 @@ public class LayoutHandler {
 		map = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));			//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
 		map.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/5));
 		map.setOpaque(false);
+		map.setAlignmentX(map.CENTER_ALIGNMENT);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		JPanel outerMain = new JPanel();
 		outerMain.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));
@@ -219,14 +220,10 @@ public class LayoutHandler {
 	 * Removes all components from all the panels.
 	 */
 	public void clearAll(){
-		menuUp.removeAll();
-		menuUp.revalidate();
-		menuLow.removeAll();
-		menuLow.revalidate();
-		main.removeAll();
-		main.revalidate();
-		map.removeAll();
-		map.revalidate();
+		menuUp.removeAll();		
+		menuLow.removeAll();		
+		main.removeAll();		
+		map.removeAll();		
 		frame.repaint();
 	}
 	/**
