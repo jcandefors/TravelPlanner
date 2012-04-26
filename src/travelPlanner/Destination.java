@@ -32,8 +32,7 @@ public class Destination extends Slide{
 			new File("data/"+user+"/"+title).mkdir();
 			editDestination(firstTime);
 			addDestination(title);
-			prepareLayout();
-		}else{
+			}else{
 			prepareLayout();
 			}
 	}
@@ -61,7 +60,7 @@ public class Destination extends Slide{
 			editDestination(false);
 			}});
 		JButton removeButton = new JButton("Ta bort destination");												//kolla på!
-		editButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {
+		removeButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {
 			int answer = JOptionPane.showConfirmDialog(null, "Vill du verkligen ta bort destinationen "+ title + "?",
 				    "Verifiera borttagning av destination",
 				    JOptionPane.YES_NO_OPTION);
