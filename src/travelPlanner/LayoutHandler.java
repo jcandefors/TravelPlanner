@@ -247,6 +247,7 @@ public class LayoutHandler {
 		menuLow.removeAll();
 		main.removeAll();
 		map.removeAll();
+		frame.revalidate();
 	}
 	/**
 	 * Updates the title of the slide

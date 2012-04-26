@@ -27,14 +27,14 @@ public class Destination extends Slide{
 		super(layoutHandler, user);
 		super.title = title;
 		loadDestinations();
-		destinationWindow = new DestinationWindow(title, userName, userName, firstTime);
+		destinationWindow = new DestinationWindow(this, title, userName, userName, firstTime);
 		if(firstTime){
 			new File("data/"+user+"/"+title).mkdir();
 			editDestination(firstTime);
 			addDestination(title);
-			}else{
+		}else{
 			prepareLayout();
-			}
+		}
 	}
 
 	/**
@@ -58,14 +58,20 @@ public class Destination extends Slide{
 		JButton editButton = new JButton("Redigera destination");
 		editButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {
 			editDestination(false);
-			}});
+		}});
 		JButton removeButton = new JButton("Ta bort destination");												//kolla på!
 		removeButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {
 			int answer = JOptionPane.showConfirmDialog(null, "Vill du verkligen ta bort destinationen "+ title + "?",
-				    "Verifiera borttagning av destination",
-				    JOptionPane.YES_NO_OPTION);
+					"Verifiera borttagning av destination",
+					JOptionPane.YES_NO_OPTION);
 			if(answer == 0){
-			removeDestination();}}});
+				removeDestination();
+				toProject();}}});
+		JButton toProjectButton = new JButton("Till reseprojektet");
+		editButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {
+			toProject();
+		}});
+		layoutHandler.addToMenuUp(toProjectButton);
 		layoutHandler.addToMenuUp(editButton);
 		layoutHandler.addToMenuUp(removeButton);
 		layoutHandler.addToMenuUp(new DestinationButton("Skapa destination", 2));
@@ -80,19 +86,26 @@ public class Destination extends Slide{
 		Iterator<String> iterator = destinations.iterator();
 		while (iterator.hasNext()){
 			String nextDestination = iterator.next();
-			if(nextDestination != title){	
+			if(!nextDestination.matches(title)){	
 				layoutHandler.addToMenuLow(new DestinationButton(nextDestination, DestinationButton.OPEN));
 			}
 		}
 	}
-	
+
 	/**
 	 * Creates components from mainInfo and labels and adds them to the frame.
 	 */
 	public void mainLayout(){
-		
+
 		layoutHandler.addToMain(destinationWindow.getMainPanel());
-		
+
+	}
+
+	/**
+	 * Takes the user to the project view.
+	 */
+	private void toProject() {
+		new TravelProject(layoutHandler, userName, false);
 	}
 
 	/**
@@ -100,10 +113,9 @@ public class Destination extends Slide{
 	 * and then updates the information in the layout.
 	 */
 	public void editDestination(boolean firstTime){
-		destinationWindow.getEditDestinationPopUp(firstTime);
-		
-			}
-	
+		destinationWindow.getEditDestinationPopUp(firstTime);		
+	}
+
 	/**
 	 * 
 	 */

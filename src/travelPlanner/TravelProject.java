@@ -96,9 +96,9 @@ public class TravelProject extends Slide{
 		for(int index = 0; index < labels.length; index++){
 			panel.add(new JLabel(labels[index]));
 			panel.add(new JLabel(projectInfo[index]));
-			
-			layoutHandler.addToMain(panel);
 		}
+			layoutHandler.addToMain(panel);
+		
 	}
 	
 	/**

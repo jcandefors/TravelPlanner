@@ -7,6 +7,7 @@ package travelPlanner;
  */
 
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -28,6 +29,7 @@ public class DestinationWindow {
 	private final String travelProjectName;
 	private DestinationReaderWriter dataArchive;
 	private boolean firstTime;
+	private Destination destinationObject;
 
 	// Single Label texts
 	private static String ARRIVALTITLE = "Inresa";
@@ -36,6 +38,7 @@ public class DestinationWindow {
 	private static String QUITBUTTONTEXT = "Avbryt";
 	private static String SAVEBUTTONTEXT = "Spara";
 	private static String EDITDESTINATININSTRUCTION = "Fyll i fälten nedan. Välj Spara eller Avbryt";
+	private static String EDITDESTINATIONFRAMETITLE = "Redigera: ";
 
 	// Subheadlines strings
 	private ArrayList<String> ARRIVALSUBHEADLINES;
@@ -64,15 +67,16 @@ public class DestinationWindow {
 	 * @param travelProjectName
 	 */
 
-	public DestinationWindow(String destinationTitle, String username,
+	public DestinationWindow(Destination destinationObject, String destinationTitle, String username,
 			String travelProjectName, boolean firstTime) {
+		this.destinationObject = destinationObject;
 		this.destinationTitle = destinationTitle;
 		this.username = username;
 		this.travelProjectName = travelProjectName;
 		dataArchive = new DestinationReaderWriter(destinationTitle, username,
 				travelProjectName);
 		this.firstTime = firstTime;
-		editDestinationFrame = new JFrame("Redigera: "+destinationTitle);//TODO SLäng up i variabel
+		editDestinationFrame = new JFrame(EDITDESTINATIONFRAMETITLE+destinationTitle);//TODO SLäng up i variabel
 		editDestinationFrame.setAlwaysOnTop(true);
 		// Initalise instance variabels with saved data
 
@@ -193,7 +197,8 @@ public class DestinationWindow {
 	}
 
 	private void quitEditDestinationButtonAction() {
-		editDestinationFrame.dispose();
+		destinationObject.prepareLayout();
+		editDestinationFrame.dispose();	
 	}
 
 	// Declare a private Enum class for all accepted type of
@@ -210,6 +215,10 @@ public class DestinationWindow {
 
 	public void getEditDestinationPopUp(boolean firstTime) { // TODO
 		// Utvigda till ExistingDATA LOOP TODO!
+		
+		editDestinationFrame = new JFrame(EDITDESTINATIONFRAMETITLE+destinationTitle);
+		editDestinationFrame.setAlwaysOnTop(true);
+		editDestinationFrame.setLocationByPlatform(true);
 		if (firstTime) {
 			savefunction();
 		}
@@ -362,6 +371,7 @@ public class DestinationWindow {
 
 		// HeadLineLabel
 		JLabel headlineLabel = new JLabel(headlineOfBlock);
+		headlineLabel.setFont(new Font("Tahoma",Font.BOLD, 16));
 
 		// Fill Panel
 
@@ -371,8 +381,12 @@ public class DestinationWindow {
 
 		if (TypeOfPanel.VIEWING.equals(editOrView)) {
 			for (int i = 0; i < subHeadlinesLabels.size(); i++) {
-				returnPanel.add(subHeadlinesLabels.get(i), "gap unrelated");
-				returnPanel.add(dataLabels.get(i));
+				 JLabel labelToLayout1 = subHeadlinesLabels.get(i);
+				 labelToLayout1.setFont(new Font("Tahoma",Font.BOLD, 14));
+				 JLabel labelToLayout2 = dataLabels.get(i);
+				 labelToLayout2.setFont(new Font("Tahoma",Font.PLAIN, 14));
+				returnPanel.add(labelToLayout1, "gapright 10:10");
+				returnPanel.add(labelToLayout2, "gapright 10:10");
 			}
 		}
 		// Editing -> Fill with textfields
