@@ -35,8 +35,8 @@ public class ObjectIO {
 	/**
 	 * Saves the object as a ".data"-file in the project folder in the filesystem. 
 	 * Used primarily for saving destinations objects.
-	 * @param travelobject The object (Destination or TravelProject) that is to be saved to disk.
-	 * @param travelProject The travelproject name.
+	 * @param object The object that is to be saved to disk.
+	 * @param folder The folder path to the file, subfolders are separated by "/". No need to include final "/".
 	 * @param fileName The name of the Destination/TravelProject which is set to the filename.
 	 * @return	Returns true if saved succesfull, else false.
 	 */

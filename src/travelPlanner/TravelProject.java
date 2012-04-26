@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -24,7 +25,9 @@ import javax.swing.JPanel;
 
 public class TravelProject extends Slide{
 
-	protected final int MAININFOSIZE = 3;
+	private String[] projectInfo; 				//serialized
+	private final int PROJECTINFOSIZE = 3;
+	private String[] labels;
 	
 	/**
 	 * Constructor of class TravelProject. firstTime = true should only be called with when user is created.
@@ -34,16 +37,17 @@ public class TravelProject extends Slide{
 	 */
 	public TravelProject(LayoutHandler layoutHandler, String userName, boolean firstTime) {
 		super(layoutHandler, userName);
-		super.title = userName;			
-		super.labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum"};
+		super.title = userName;		
+		labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum"};
 		if(firstTime){
 			new File("data/"+userName).mkdir();
-			super.mainInfo = new String[MAININFOSIZE];
+			projectInfo = new String[PROJECTINFOSIZE];
 			super.destinations = new ArrayList<String>();
 			editTravelProject();
 			saveDestinations();
 		}else{
-			super.loadData("mainInfo", "destinations");
+			loadDestinations();
+			loadProjectInfo();
 			prepareLayout();
 		}
 	}	
@@ -91,17 +95,51 @@ public class TravelProject extends Slide{
 		panel.setOpaque(false);
 		for(int index = 0; index < labels.length; index++){
 			panel.add(new JLabel(labels[index]));
-			panel.add(new JLabel(mainInfo[index]));
+			panel.add(new JLabel(projectInfo[index]));
 			
 			layoutHandler.addToMain(panel);
 		}
 	}
 	
 	/**
+	 * Saves the project information data to disk.
+	 */
+	public void saveProjectInfo(){
+		try{															
+			ObjectIO.saveObject(projectInfo, userName, title);
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}
+	}
+	
+	/**
+	 * Takes the edited information and applies it to current project or destination and saves to disk. 
+	 * @param editedProjectInfo The array with the main information edited in EditTravelProject or EditDestination.
+	 */
+	public void updateProjectInfo(String[] editedProjectInfo){		
+		projectInfo = editedProjectInfo;
+		saveProjectInfo();
+	}
+
+	
+	/**
 	 * Creates a new EditTravelProject and then updates the data in the layout.
 	 */
 	public void editTravelProject(){
-		new EditTravelProject(this, mainInfo);	//vilken skapar popup och kallar vid "spara" på updateMainInfo();	
+		new EditTravelProject(this, projectInfo);	//vilken skapar popup och kallar vid "spara" på updateMainInfo();	
+	}
+	
+	/**
+	 * 
+	 */
+	public void loadProjectInfo(){
+		try{
+			projectInfo = (String[]) ObjectIO.loadObject(userName, title);
+			}catch (ClassNotFoundException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}catch (IOException e){
+			ErrorHandler.printError(e, this.getClass().toString());
+		}
 	}
 
 

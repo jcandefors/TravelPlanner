@@ -14,9 +14,7 @@ public class TravelPlanner extends JFrame{
 	public static void main(String[] args) {
 		ErrorHandler.setErrorOut();
 			JFrame programFrame = new JFrame();
-//			ArrayList<UserData> tempRegister= new ArrayList<UserData>();
-//			String temp = "kalleanka";
-//			tempRegister.add(new UserData("test", temp.hashCode()));/	
+			programFrame.setLocationByPlatform(true);
 		programFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		new LogInWindow(programFrame);
 	}	

@@ -17,9 +17,8 @@ import javax.swing.JTextField;
 
 public class Slide {
 
-	protected String[] mainInfo; 				//serialized
+	
 	protected ArrayList<String> destinations;		//serialized
-	protected String[] labels;	
 	protected LayoutHandler layoutHandler;
 	protected String userName;
 	protected String title;
@@ -35,11 +34,10 @@ public class Slide {
 	}
 	
 	/**
-	 * Loads the Slide information data and destination list from disk.
+	 * Loads the list of destinations from disk.
 	 */
-	public void loadData(String filename1, String Filename2){
+	public void loadDestinations(){
 		try{
-			mainInfo = (String[]) ObjectIO.loadObject(userName, title);
 			destinations = (ArrayList<String>) ObjectIO.loadObject(userName, "destinations");
 		}catch (ClassNotFoundException e){
 			ErrorHandler.printError(e, this.getClass().toString());
@@ -48,15 +46,7 @@ public class Slide {
 		}
 	}
 
-	/**
-	 * Takes the edited information and applies it to current project or destination and saves to disk. 
-	 * @param editedProjectInfo The array with the main information edited in EditTravelProject or EditDestination.
-	 */
-	public void updateMainInfo(String[] editedMainInfo){		
-		mainInfo = editedMainInfo;
-		saveMainInfo();
-	}
-
+	
 	/**
 	 * Adds a destination to the projects list of destinations.
 	 */
@@ -65,16 +55,6 @@ public class Slide {
 		saveDestinations();
 	}
 
-	/**
-	 * Saves the project information data to disk.
-	 */
-	public void saveMainInfo(){
-		try{															
-			ObjectIO.saveObject(mainInfo, userName, title);
-		}catch (IOException e){
-			ErrorHandler.printError(e, this.getClass().toString());
-		}
-	}
 	/**
 	 * Saves the list of destinations to disk.
 	 */

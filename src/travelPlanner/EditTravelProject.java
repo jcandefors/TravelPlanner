@@ -54,7 +54,7 @@ public class EditTravelProject {
 		save.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent arg0) {	
 				saveProjectInfo();
-				travelProject.updateMainInfo(projectInfo);
+				travelProject.updateProjectInfo(projectInfo);
 				frame.dispose();
 				travelProject.prepareLayout();
 

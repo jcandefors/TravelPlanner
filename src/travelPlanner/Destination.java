@@ -1,25 +1,21 @@
 package travelPlanner;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 
 public class Destination extends Slide{
 
 
 	protected final int MAININFOSIZE = 6;
+	private DestinationWindow destinationWindow;
 
 
 	/**
@@ -30,15 +26,14 @@ public class Destination extends Slide{
 	public Destination(LayoutHandler layoutHandler, String user, String title, Boolean firstTime) {	
 		super(layoutHandler, user);
 		super.title = title;
-		super.labels = new String[]{"Destination:","Inresedatum:","Utresedatum","Flygplats/station:","Bokningsnummer:", "Boendeinformation:"};
+		loadDestinations();
+		destinationWindow = new DestinationWindow(title, userName, userName, firstTime);
 		if(firstTime){
-			new File(user+"/"+title).mkdir();
-			super.mainInfo = new String[MAININFOSIZE];
-			loadDestinations();
-			editDestination();
+			new File("data/"+user+"/"+title).mkdir();
+			editDestination(firstTime);
 			addDestination(title);
+			prepareLayout();
 		}else{
-			super.loadData("mainInfo", "destinations");
 			prepareLayout();
 			}
 	}
@@ -62,8 +57,10 @@ public class Destination extends Slide{
 		menuLabel.setSize(10, 30);				//TBC
 		layoutHandler.addToMenuLow(menuLabel);
 		JButton editButton = new JButton("Redigera destination");
-		editButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {editDestination();}});
-		JButton removeButton = new JButton("Ta bort destination");
+		editButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {
+			editDestination(false);
+			}});
+		JButton removeButton = new JButton("Ta bort destination");												//kolla på!
 		editButton.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent arg0) {
 			int answer = JOptionPane.showConfirmDialog(null, "Vill du verkligen ta bort destinationen "+ title + "?",
 				    "Verifiera borttagning av destination",
@@ -95,40 +92,25 @@ public class Destination extends Slide{
 	 */
 	public void mainLayout(){
 		
-		//example of adding a panel.
-		JPanel panel = new JPanel(new GridLayout(0,2));
-		for(int index = 0; index < labels.length; index++){
-			panel.add(new JLabel(labels[index]));
-			panel.add(new JLabel(mainInfo[index]));
-			
-			layoutHandler.addToMain(panel);
-		}
+		layoutHandler.addToMain(destinationWindow.getMainPanel());
+		
 	}
 
 	/**
 	 * Creates a new EditDestination object which asks the user to edit the destiantion information 
 	 * and then updates the information in the layout.
 	 */
-	public void editDestination(){
-		new EditDestination(this, mainInfo);
-		saveMainInfo();
-	}
+	public void editDestination(boolean firstTime){
+		destinationWindow.getEditDestinationPopUp(firstTime);
+		
+			}
 	
-	private void loadDestinations() {
-		try{
-			destinations = (ArrayList<String>) ObjectIO.loadObject(userName, "destinations");
-		}catch (ClassNotFoundException e){
-			ErrorHandler.printError(e, this.getClass().toString());
-		}catch (IOException e){
-			ErrorHandler.printError(e, this.getClass().toString());
-		}		
-	}	
 	/**
 	 * 
 	 */
 	private void removeDestination(){
 		destinations.remove(title);
-		File removeFile = new File(userName +"/" + title);
+		File removeFile = new File("data/" + userName +"/" + title);
 		removeFile.delete(); 								//returns true if succeded - handle???
 		saveDestinations();
 	}
