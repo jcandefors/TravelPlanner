@@ -26,7 +26,7 @@ public class ObjectIO {
 		ObjectInputStream object_in = new ObjectInputStream(fileIn);
 		// Read an object
 		Object returnObject = object_in.readObject();
-		if (returnObject instanceof ArrayList<?> || returnObject instanceof String[] ){
+		if (returnObject instanceof ArrayList<?> || returnObject instanceof String[] || returnObject instanceof String){
 			return returnObject;
 		}
 		throw new IOException("Mismatch during load of object: " + fileName + ". The object cannot be loaded");

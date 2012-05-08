@@ -5,6 +5,7 @@ import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -97,9 +98,9 @@ public class Slide {
 		}
 		public void actionPerformed(ActionEvent e) {
 			switch (actionType){
-			case 1 : new Destination(layoutHandler, userName, super.getText(), false); 			//Open destination
+			case OPEN : new Destination(layoutHandler, userName, super.getText(), false); 			//Open destination
 			break;
-			case 2 : showCreateDialog();														//create destination			
+			case NEW : showCreateDialog();														//create destination			
 			}								
 		}
 

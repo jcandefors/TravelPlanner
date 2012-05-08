@@ -1,43 +1,50 @@
 package travelPlanner;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import sun.awt.image.GifImageDecoder;
 import sun.awt.image.URLImageSource;
 
 public class MapLabel extends JLabel{
-	Image mapImage = null;
+	private Image mapImage = null;
+	private final int TIMEOUT = 1000;
 
 	/**
 	 * 
 	 * @param destinations
 	 */
 	public MapLabel(ArrayList<String> destinations){
-
 		if(!buildProjectMap(destinations)){
-			buildProjectMap(destinations);
+			loadNoMap();
 		}	
 	}	
+
 	/**
 	 * 
 	 * @param destination
 	 */
 	public MapLabel(String destination){
-		if(!buildDestinationMap(destination)){
-			buildDestinationMap(destination);
-		}
 
+		if(!buildDestinationMap(destination)){
+			loadNoMap();
+		}
 	}
+
 	/**
 	 * 
 	 * @param destination
@@ -50,25 +57,22 @@ public class MapLabel extends JLabel{
 			String url = uri.toASCIIString();
 			u = new URL(url);
 		}catch (MalformedURLException e) {
-			System.out.println("Error!" + e );			
+			ErrorHandler.printError(e, this.getClass().toString());		
 		}catch (NumberFormatException e) {
-			System.out.println("Error!" + e );
+			ErrorHandler.printError(e, this.getClass().toString());
 		}catch (URISyntaxException e) {
-			System.out.println("Error!" + e );
+			ErrorHandler.printError(e, this.getClass().toString());
 		}			
 		try{
 			JFrame frame = new JFrame();		
 			URLConnection con = u.openConnection();
-			con.setReadTimeout(3000);									
+			con.setReadTimeout(TIMEOUT);									
 			mapImage = frame.getToolkit().createImage(new URLImageSource(u, con));
-		}catch (IOException e){
+		}catch (Exception e){
 			ErrorHandler.printError(e, this.getClass().toString());
-		}
-		super.setIcon(new ImageIcon(mapImage));
-		//error check
-		if(this.getIcon() == null){
 			return false;
 		}
+		super.setIcon(new ImageIcon(mapImage));
 		return true;	
 	}
 
@@ -83,16 +87,13 @@ public class MapLabel extends JLabel{
 			JFrame frame = new JFrame();
 			URL u = buildURL(destinations);	
 			URLConnection con = u.openConnection();
-			con.setReadTimeout(3000);								
+			con.setReadTimeout(TIMEOUT);								
 			mapImage = frame.getToolkit().createImage(new URLImageSource(u, con));
-		}catch (Exception e){
-			ErrorHandler.printError(e, this.getClass().toString());
-		}
-		super.setIcon(new ImageIcon(mapImage));
-		//error check
-		if(this.getIcon() == null){
+		}catch (Exception e){	
+			ErrorHandler.printError(e, this.getClass().toString());		
 			return false;
 		}
+		super.setIcon(new ImageIcon(mapImage));
 		return true;
 
 	}
@@ -119,17 +120,19 @@ public class MapLabel extends JLabel{
 			String url = uri.toASCIIString();
 			return new URL(url);
 		}catch (MalformedURLException e) {
-			System.out.println("Error!" + e );
+			ErrorHandler.printError(e, this.getClass().toString());
 		}catch (NumberFormatException e) {
-			System.out.println("Error!" + e );
+			ErrorHandler.printError(e, this.getClass().toString());
 		}catch (URISyntaxException e) {
-			System.out.println("Error!" + e );
+			ErrorHandler.printError(e, this.getClass().toString());
 		}
 		return null;
 	}
+	/**
+	 * Loads an error picture instead of the map.
+	 */
+	public void loadNoMap(){	
+		super.setIcon(new ImageIcon("img/map.png"));	
 
-	public void resizeImage(Dimension mapPanelsize){
-		Dimension panelSize = mapPanelsize;
-		mapImage=mapImage.getScaledInstance(-1, (panelSize.height-15), Image.SCALE_FAST);		
 	}
 }

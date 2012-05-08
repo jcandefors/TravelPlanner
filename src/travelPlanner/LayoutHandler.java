@@ -19,7 +19,6 @@ public class LayoutHandler {
 
 	private JFrame frame;
 	private JPanel background;
-	private JScrollPane scrollPane;	
 	private MapLabel mapLabel;
 	private JPanel top;	
 	private JPanel menuUp;
@@ -37,15 +36,10 @@ public class LayoutHandler {
 		this.frame = frame;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameSize = new Dimension(frame.getToolkit().getScreenSize().width*2/3,frame.getToolkit().getScreenSize().height*2/3);
-		frame.setSize(frameSize);
-		Container contentPane = frame.getContentPane();
+		frame.setSize(frameSize);		
 		background = new JPanel(new BorderLayout(4,4));
-
+		frame.setContentPane(background);
 		background.setPreferredSize(frameSize);
-		scrollPane = new JScrollPane(background);
-		scrollPane.setViewportBorder(BorderFactory.createBevelBorder(1));
-		scrollPane.setMinimumSize(frameSize);
-		contentPane.add(background);
 		setUpTop();
 		setUpMenu();
 		setUpMain();
@@ -101,19 +95,18 @@ public class LayoutHandler {
 	 * Sets up the menu in the west area of the layout.
 	 */
 	public void setUpMenu(){
-		ImagePanel leftMenu = new ImagePanel(new File("img/menu.png"));
-		leftMenu.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));
+		JPanel leftMenu = new JPanel(new FlowLayout(FlowLayout.CENTER,2,2));		
 		leftMenu.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height-50));
-		leftMenu.setOpaque(false);
+		leftMenu.setBackground(Color.white);
 		menuUp = new JPanel();
 		menuUp.setLayout(new BoxLayout(menuUp, BoxLayout.Y_AXIS));
 		menuUp.setOpaque(false);
-		menuUp.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height*2/5));
+		menuUp.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height*3/5));
 		menuUp.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		menuLow = new JPanel();
 		menuLow.setLayout(new BoxLayout(menuLow, BoxLayout.Y_AXIS));
 		menuLow.setOpaque(false);
-		menuLow.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height*3/5));
+		menuLow.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height*4/5));
 		menuLow.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		leftMenu.add(menuUp);
 		leftMenu.add(menuLow);
@@ -180,7 +173,6 @@ public class LayoutHandler {
 	public void addToMap(Component component){
 		if(component instanceof MapLabel){
 			mapLabel = (MapLabel) component;
-			mapLabel.resizeImage(map.getSize());
 			map.add(component);
 		}else{
 			map.add(component);
