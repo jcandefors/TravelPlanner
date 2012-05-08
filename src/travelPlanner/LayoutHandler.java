@@ -13,6 +13,8 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
+import com.sun.java.swing.plaf.motif.MotifBorders.BevelBorder;
+
 /**
  * The class LayoutHandler manages the layout of the slides in the application TravelPlanner.
  * It receives components from other classes and places them in the frame.
@@ -24,6 +26,7 @@ public class LayoutHandler {
 
 	private JFrame frame;
 	private ImagePanel background;
+	private JScrollPane scrollPane;
 	private Container contentPane;
 	private MapLabel mapLabel;
 	private JPanel top;
@@ -44,37 +47,43 @@ public class LayoutHandler {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		frameSize = new Dimension(frame.getToolkit().getScreenSize().width*2/3,frame.getToolkit().getScreenSize().height*2/3);		
 		frame.setSize(frameSize);
-		frame.addComponentListener(new ComponentListener(){									
-			@Override
-			public void componentResized(ComponentEvent event) {
-				Component resizedFrame = (Component) event.getSource();
-				frameSize = resizedFrame.getSize();
-				resizePanels();
-			}
-			@Override
-			public void componentHidden(ComponentEvent e) {}
-			@Override
-			public void componentMoved(ComponentEvent e) {}
-			@Override
-			public void componentShown(ComponentEvent e) {}			
-		});
-		frame.addWindowStateListener(new WindowStateListener() {			
-			@Override
-			public void windowStateChanged(WindowEvent event) {
-				
-				if((event.getNewState() & JFrame.MAXIMIZED_BOTH) == JFrame.MAXIMIZED_BOTH){
-					Component resizedFrame = (Component) event.getSource();
-					frameSize = resizedFrame.getSize();
-					resizePanels();}
-				}
-				
-		});
+//		frame.addComponentListener(new ComponentListener(){									
+//			@Override
+//			public void componentResized(ComponentEvent event) {
+//				Component resizedFrame = (Component) event.getSource();
+//				frameSize = resizedFrame.getSize();
+//				resizePanels();
+//			}
+//			@Override
+//			public void componentHidden(ComponentEvent e) {}
+//			@Override
+//			public void componentMoved(ComponentEvent e) {}
+//			@Override
+//			public void componentShown(ComponentEvent e) {}			
+//		});
+//		frame.addWindowStateListener(new WindowStateListener() {
+//			@Override
+//			public void windowStateChanged(WindowEvent event) {
+//				
+//				if((event.getNewState() & JFrame.MAXIMIZED_BOTH) == JFrame.MAXIMIZED_BOTH){
+//					
+//					Component resizedFrame = (Component) event.getSource();
+//					resizedFrame.revalidate();
+//					frameSize = resizedFrame.getSize();
+//					resizePanels();}
+//				}
+//				
+//		});
 		contentPane = frame.getContentPane();			
 		background = new ImagePanel(new File("img/main.jpg"));
+		
 		background.setPreferredSize(frameSize);
 		background.scaleImage(frameSize);
-		background.setLayout(new BorderLayout(3,3));
-		contentPane.add(background);
+		background.setLayout(new BorderLayout(4,4));
+		scrollPane = new JScrollPane(background);
+		scrollPane.setViewportBorder(BorderFactory.createBevelBorder(1));
+		scrollPane.setMinimumSize(frameSize);
+		contentPane.add(background);		
 		setUpTop();
 		setUpMenu();
 		setUpMain();
@@ -154,7 +163,7 @@ public class LayoutHandler {
 		map = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));			//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
 		map.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/5));
 		map.setOpaque(false);
-		map.setAlignmentX(map.CENTER_ALIGNMENT);
+		map.setAlignmentY(map.CENTER_ALIGNMENT);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		JPanel outerMain = new JPanel();
 		outerMain.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));
@@ -255,9 +264,10 @@ public class LayoutHandler {
 		menuLow.setPreferredSize(new Dimension(leftMenu.getWidth(),leftMenu.getHeight()*2/3));
 		main.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/3));
 		map.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height/3));
-		mapLabel.resizeImage(map.getSize());		
+		mapLabel.resizeImage(map.getSize());
 		frame.revalidate();
-	}
+		frame.repaint();
+		}
 }	
 
 
