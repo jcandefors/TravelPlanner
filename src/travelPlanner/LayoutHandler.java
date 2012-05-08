@@ -151,10 +151,10 @@ public class LayoutHandler {
 	 * Sets up the main area in the center of the layout.
 	 */
 	public void setUpMain(){
-		map = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));			//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
+		map = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));			//perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
 		map.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/5));
 		map.setOpaque(false);
-		map.setAlignmentX(map.CENTER_ALIGNMENT);
+		map.setAlignmentX(JPanel.CENTER_ALIGNMENT);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		JPanel outerMain = new JPanel();
 		outerMain.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));
@@ -256,7 +256,7 @@ public class LayoutHandler {
 		main.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/3));
 		map.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height/3));
 		mapLabel.resizeImage(map.getSize());		
-		frame.revalidate();
+		frame.repaint();
 	}
 }	
 
