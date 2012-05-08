@@ -3,16 +3,10 @@ package travelPlanner;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
 import java.io.File;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
-
-import com.sun.java.swing.plaf.motif.MotifBorders.BevelBorder;
 
 /**
  * The class LayoutHandler manages the layout of the slides in the application TravelPlanner.
@@ -24,12 +18,10 @@ import com.sun.java.swing.plaf.motif.MotifBorders.BevelBorder;
 public class LayoutHandler {
 
 	private JFrame frame;
-	private ImagePanel background;
-	private JScrollPane scrollPane;
-	private Container contentPane;
+	private JPanel background;
+	private JScrollPane scrollPane;	
 	private MapLabel mapLabel;
-	private JPanel top;
-	private JPanel leftMenu;
+	private JPanel top;	
 	private JPanel menuUp;
 	private JPanel menuLow;
 	private JPanel map;
@@ -46,39 +38,10 @@ public class LayoutHandler {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameSize = new Dimension(frame.getToolkit().getScreenSize().width*2/3,frame.getToolkit().getScreenSize().height*2/3);
 		frame.setSize(frameSize);
-		 frame.addComponentListener(new ComponentListener(){
-		 @Override
-		 public void componentResized(ComponentEvent event) {
-		 Component resizedFrame = (Component) event.getSource();
-		 frameSize = resizedFrame.getSize();
-		 resizePanels();
-		 }
-		 @Override
-		 public void componentHidden(ComponentEvent e) {}
-		 @Override
-		 public void componentMoved(ComponentEvent e) {}
-		 @Override
-		 public void componentShown(ComponentEvent e) {}
-		 });
-		 frame.addWindowStateListener(new WindowStateListener() {
-		 @Override
-		 public void windowStateChanged(WindowEvent event) {
-		
-		 if((event.getNewState() & JFrame.MAXIMIZED_BOTH) == JFrame.MAXIMIZED_BOTH){
-		
-		 Component resizedFrame = (Component) event.getSource();
-		 resizedFrame.repaint();
-		 frameSize = resizedFrame.getSize();
-		 resizePanels();}
-		 }
-		
-		 });
-		contentPane = frame.getContentPane();
-		background = new ImagePanel(new File("img/main.jpg"));
+		Container contentPane = frame.getContentPane();
+		background = new JPanel(new BorderLayout(4,4));
 
 		background.setPreferredSize(frameSize);
-		background.scaleImage(frameSize);
-		background.setLayout(new BorderLayout(4,4));
 		scrollPane = new JScrollPane(background);
 		scrollPane.setViewportBorder(BorderFactory.createBevelBorder(1));
 		scrollPane.setMinimumSize(frameSize);
@@ -103,9 +66,8 @@ public class LayoutHandler {
 		JMenu topMenu = new JMenu("Meny");
 		topMenu.setMnemonic(KeyEvent.VK_A);
 		topMenuBar.add(topMenu);
-		JMenuItem menuItem = new JMenuItem("Avsluta", KeyEvent.VK_F4);
-		//TBC - needs action
-		JMenuItem menuItem_1 = new JMenuItem("Logga ut");
+		
+		JMenuItem menuItem_1 = new JMenuItem("Logga ut"); 			//create log out-button
 		menuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
@@ -115,6 +77,8 @@ public class LayoutHandler {
 				new LogInWindow(newFrame);
 			}});
 		topMenu.add(menuItem_1);
+		
+		JMenuItem menuItem = new JMenuItem("Avsluta", KeyEvent.VK_F4);		// create exit-button
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int answer = JOptionPane.showConfirmDialog(frame, "Vill du verkligen avsluta?", "Avsluta TravelPlanner", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -122,7 +86,7 @@ public class LayoutHandler {
 		topMenu.add(menuItem);
 		title = new JLabel();
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		title.setFont(new Font("DejaVu Sans", Font.PLAIN, 16));
+		title.setFont(new Font("DejaVu Sans", Font.BOLD, 18));
 		top.add(topMenuBar);
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		top.add(horizontalStrut);
@@ -137,7 +101,8 @@ public class LayoutHandler {
 	 * Sets up the menu in the west area of the layout.
 	 */
 	public void setUpMenu(){
-		leftMenu = new JPanel(new FlowLayout(FlowLayout.CENTER,2,2));
+		ImagePanel leftMenu = new ImagePanel(new File("img/menu.png"));
+		leftMenu.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));
 		leftMenu.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height-50));
 		leftMenu.setOpaque(false);
 		menuUp = new JPanel();
@@ -162,11 +127,10 @@ public class LayoutHandler {
 		map = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0)); //perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
 		map.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/5));
 		map.setOpaque(false);
-		map.setAlignmentY(map.CENTER_ALIGNMENT);
+		map.setAlignmentY(JPanel.CENTER_ALIGNMENT);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-		JPanel outerMain = new JPanel();
-		outerMain.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));
-		outerMain.setOpaque(false);
+		ImagePanel outerMain = new ImagePanel(new File("img/mainmap.png"));
+		outerMain.setLayout(new FlowLayout(FlowLayout.CENTER,5,5));		
 		main = new JPanel();
 		main.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
 		main.setOpaque(false);
@@ -241,11 +205,7 @@ public class LayoutHandler {
 	public void updateTitle(String slideTitle){
 		title.setText(slideTitle);
 		title.revalidate();
-	}
-
-	public void setBackground(File file){
-		background.setBackground(file);
-	}
+	}	
 
 	/**
 	 * Returns the frame used by this layouthandler.
@@ -253,17 +213,5 @@ public class LayoutHandler {
 	 */
 	public JFrame getFrame(){
 		return frame;
-	}
-
-	public void resizePanels(){
-		background.scaleImage(frameSize);
-		background.setPreferredSize(new Dimension(frameSize.width, frameSize.height));
-		leftMenu.setPreferredSize(new Dimension(frameSize.width/6,frameSize.height-50));
-		menuUp.setPreferredSize(new Dimension(leftMenu.getWidth(),leftMenu.getHeight()/3));
-		menuLow.setPreferredSize(new Dimension(leftMenu.getWidth(),leftMenu.getHeight()*2/3));
-		main.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height*2/3));
-		map.setPreferredSize(new Dimension(frameSize.width*5/6,frameSize.height/3));
-		mapLabel.resizeImage(map.getSize());
-		frame.repaint();
 	}
 } 

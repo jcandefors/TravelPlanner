@@ -66,7 +66,7 @@ public class TravelProject extends Slide{
 	 * Creates general components common for every TravelProject.
 	 */
 	public void generalProjectLayout(){
-		layoutHandler.updateTitle("Resenär: " + title);
+		layoutHandler.updateTitle("Resenï¿½r: " + title);
 		JLabel menuLabel = new JLabel("Destinationer:");
 		menuLabel.setSize(10, 30);				//TBC
 		layoutHandler.addToMenuLow(menuLabel);
@@ -126,7 +126,7 @@ public class TravelProject extends Slide{
 	 * Creates a new EditTravelProject and then updates the data in the layout.
 	 */
 	public void editTravelProject(){
-		new EditTravelProject(this, projectInfo);	//vilken skapar popup och kallar vid "spara" på updateMainInfo();	
+		new EditTravelProject(this, projectInfo);	//vilken skapar popup och kallar vid "spara" pï¿½ updateMainInfo();	
 	}
 	
 	/**
