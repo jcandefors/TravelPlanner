@@ -25,7 +25,80 @@ public class DestinationReaderWriter {
  
         }
  
-       
+        
+        /**
+         * Return an ArrayList with DestinationHeadlines that represents the headlines that existed when the
+         * destination was created
+         */
+        public ArrayList<DestinationHeadline> getExistingDataTypes(){
+      	  
+      	  ArrayList<DestinationHeadline> existingDataTypes= new ArrayList<DestinationHeadline>();
+      	  
+      	  try{
+           	existingDataTypes = (ArrayList<DestinationHeadline>) ObjectIO.loadObject(username+"/"+destinationTitle , "existingDataTypes");
+           	}
+      	  	catch (ClassNotFoundException e){
+           		ErrorHandler.printError(e, this.getClass().toString());
+           		return null;
+           	}catch (IOException ex){
+           		ErrorHandler.printError(ex, this.getClass().toString());
+           		return null;
+           	}
+    
+                   return existingDataTypes;
+    
+        }
+         
+        /**
+         * Save an ArrayList with DestinationHeadlines that represents the headlines that existed when the
+         * destination was created
+         */
+        public void saveExistingDataTypes(ArrayList<DestinationHeadline> existingDataTypes){
+      	  
+      	  try{
+            	ObjectIO.saveObject(existingDataTypes, username + "/" + destinationTitle, "existingDataTypes");
+            	}
+      	  catch (IOException e){
+            		ErrorHandler.printError(e, this.getClass().toString());
+            	}
+                
+               
+        }
+        
+        /**
+         * Return a title corresponding to the specified destination headline
+         */
+      
+        public String getTitle(DestinationHeadline headline){
+        	String filename = getFileName(headline);
+        	String title;
+        	try{
+           	 title = (String) ObjectIO.loadObject(username+"/"+destinationTitle, filename + "_title");
+           	}catch (ClassNotFoundException e){
+           		ErrorHandler.printError(e, this.getClass().toString());
+           		return null;
+           	}catch (IOException ex){
+           		ErrorHandler.printError(ex, this.getClass().toString());
+           		return null;
+           	}
+    
+                   return title;
+    	
+        }
+        
+        /**
+         * Save a title corresponding to the specified destination headline
+         */
+        
+        public void saveTitle(DestinationHeadline headline, String title){
+        	String filename = getFileName(headline);       	
+        	try{
+        	ObjectIO.saveObject(title, username + "/" + destinationTitle, filename + "_title");
+        	}catch (IOException e){
+        		ErrorHandler.printError(e, this.getClass().toString());
+        	}
+            
+        }
        
         /**
          * Return an arrayList of String representing the subheadlines of the secified DestinationHeadline
@@ -33,14 +106,7 @@ public class DestinationReaderWriter {
        
         public ArrayList<String> getShortDestinationInformationHeadlines(
                         DestinationHeadline headline) {
-        	String filename = null;
-        	switch (headline){
-        	case ARRIVAL: filename = "Arrival";
-        	break;
-        	case DEPARTURE : filename = "Departure";
-        	break;
-        	case LIVING : filename = "Living";
-        	}
+        	String filename = getFileName(headline);
         	ArrayList<String> shortDestinationData;
         	try{
         	 shortDestinationData = (ArrayList<String>) ObjectIO.loadObject(username+"/"+destinationTitle, filename + "_headline");
@@ -60,14 +126,7 @@ public class DestinationReaderWriter {
          * specified DestinationHeadline
          */
         public void saveShortDestinationInformationHeadlines(ArrayList<String> headlinedata, DestinationHeadline headline){
-        	String filename = null;
-        	switch (headline){
-        	case ARRIVAL: filename = "Arrival";
-        	break;
-        	case DEPARTURE : filename = "Departure";
-        	break;
-        	case LIVING : filename = "Living";
-        	}
+        	String filename = getFileName(headline);       	
         	try{
         	ObjectIO.saveObject(headlinedata, username + "/" + destinationTitle, filename+"_headline");
         	}catch (IOException e){
@@ -75,27 +134,6 @@ public class DestinationReaderWriter {
         	}
                
         }
- 
-       
-//      /**
-//       * Return an ArrayList with DestinationHeadlines that represents the headlines that existed when the
-//       * destination was created
-//       */
-//      public ArrayList<DestinationHeadline> getExistingDataTypes(){
-//     
-//              return new ArrayList<DestinationHeadline>();
-//      }
-       
-//      /**
-//       * Save an ArrayList with DestinationHeadlines that represents the headlines that existed when the
-//       * destination was created
-//       */
-//      public void saveExistingDataTypes(ArrayList<DestinationHeadline> existingDataTypes){
-//     
-//             
-//      }
-//     
-       
  
        
         /**
@@ -112,14 +150,7 @@ public class DestinationReaderWriter {
  
         public ArrayList<String> getShortDestinationInformationData( DestinationHeadline headline) {
         	
-        	String filename = null;
-        	switch (headline){
-        	case ARRIVAL: filename = "Arrival";
-        	break;
-        	case DEPARTURE : filename = "Departure";
-        	break;
-        	case LIVING : filename = "Living";
-        	}
+        	String filename = getFileName(headline);       	
         	ArrayList<String> shortDestinationData;
         	try{
         	 shortDestinationData = (ArrayList<String>) ObjectIO.loadObject(username+"/"+destinationTitle, filename);
@@ -145,14 +176,7 @@ public class DestinationReaderWriter {
        
         public void saveShortDestinationInformationData(ArrayList<String> data, DestinationHeadline headline) {
         	
-        	String filename = null;
-        	switch (headline){
-        	case ARRIVAL: filename = "Arrival";
-        	break;
-        	case DEPARTURE : filename = "Departure";
-        	break;
-        	case LIVING : filename = "Living";
-        	}
+        	String filename = getFileName(headline);
         	try{
         	ObjectIO.saveObject(data, username + "/" + destinationTitle, filename);
         	}catch (IOException e){
@@ -161,19 +185,22 @@ public class DestinationReaderWriter {
  
                
         }
+        
+        private String getFileName(DestinationHeadline headline){
+        	String filename = null;
+        	
+        	switch (headline){
+        	case ARRIVAL: filename = "Arrival";
+        	break;
+        	case DEPARTURE : filename = "Departure";
+        	break;
+        	case LIVING : filename = "Living";
+        	}
+        	
+        	return filename;
+        	
+        }
        
        
-       
-//      /**
-//       * Return a string with the text that the user have saved under free notes about the specific
-//       * DestinationHeadling
-//       * @return
-//       */
-//     
-//      public String getMoreInformationText(DestinationHeadline headline){
-//     
-//      String returnString = "";
-//      return returnString;
-//     
-//      }
+ 
 }
