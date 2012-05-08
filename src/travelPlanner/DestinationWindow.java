@@ -1,22 +1,19 @@
 package travelPlanner;
 
-/** 
- * Destination produce GUI for viewing and editing Destination info 
- * 
- * 
- */
-
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import net.miginfocom.swing.MigLayout;
 
 public class DestinationWindow {
@@ -31,44 +28,38 @@ public class DestinationWindow {
 	private boolean firstTime;
 	private Destination destinationObject;
 
+	// All saved data about the specified destination
+
+	private ArrayList<DestinationHeadline> existingdataTypes;
+	private HashMap<DestinationHeadline, DestinationInfoParts> destinationData; // A
+	// HashMap
+	// that
+	// use headlines from existing dataTypes as Keys and instances of
+	// DestinationInfoParts as value.
+	// The destination Info parts hold the textfields and the destination
+	// subheadlines
+	// for each destination headline
+
 	// Single Label texts
-	private static String ARRIVALTITLE = "Inresa";
-	private static String DEPARTURETITLE = "Utresa";
-	private static String LIVINGTITLE = "Boende";
+
 	private static String QUITBUTTONTEXT = "Avbryt";
 	private static String SAVEBUTTONTEXT = "Spara";
-	private static String EDITDESTINATININSTRUCTION = "Fyll i fälten nedan. Välj Spara eller Avbryt";
+	private static String EDITDESTINATININSTRUCTION = "Fyll i f�lten nedan. V�lj Spara eller Avbryt";
 	private static String EDITDESTINATIONFRAMETITLE = "Redigera: ";
-
-	// Subheadlines strings
-	private ArrayList<String> ARRIVALSUBHEADLINES;
-	private ArrayList<String> DEPARTURESUBHAEDLINES;
-	private ArrayList<String> LIVINGSUBHEADLINES;
-
-	// Korrespondoning datastings
-	private ArrayList<String> ARRIVALDATA;
-	private ArrayList<String> DEPARTUREDATA;
-	private ArrayList<String> LIVINGDATA;
-
-	// Data
-	private ArrayList<JTextField> ARRIVALTEXTFIELDS;
-	private ArrayList<JTextField> DEPARTURETEXTFIELDS;
-	private ArrayList<JTextField> LIVINGTEXTFIELDS;
-
-	private ArrayList<DestinationHeadline> existingdata;
-	private final int TEXTFIELWIDTH = 25;
 
 	/**
 	 * Create a instance of Destination that primely could be used to get an
 	 * editDestination pop up, and Jpanel for viewing saved destination info
-	 * 
+	 *
 	 * @param destinationTitle
 	 * @param username
 	 * @param travelProjectName
 	 */
 
-	public DestinationWindow(Destination destinationObject, String destinationTitle, String username,
-			String travelProjectName, boolean firstTime) {
+	public DestinationWindow(Destination destinationObject,
+			String destinationTitle, String username, String travelProjectName,
+			boolean firstTime) {
+
 		this.destinationObject = destinationObject;
 		this.destinationTitle = destinationTitle;
 		this.username = username;
@@ -76,129 +67,93 @@ public class DestinationWindow {
 		dataArchive = new DestinationReaderWriter(destinationTitle, username,
 				travelProjectName);
 		this.firstTime = firstTime;
-		editDestinationFrame = new JFrame(EDITDESTINATIONFRAMETITLE+destinationTitle);//TODO SLäng up i variabel
-		editDestinationFrame.setAlwaysOnTop(true);
-		// Initalise instance variabels with saved data
+		editDestinationFrame = new JFrame(EDITDESTINATIONFRAMETITLE
+				+ destinationTitle);// TODO SL�ng up i variabel
+				editDestinationFrame.setAlwaysOnTop(true);
 
-		// ERSÄTT MED STORLOOP SOM LOOPAR EXISTING DATA TODO!
-		
-		ARRIVALTEXTFIELDS = new ArrayList<JTextField>();
-		DEPARTURETEXTFIELDS = new ArrayList<JTextField>();
-		LIVINGTEXTFIELDS = new ArrayList<JTextField>();
-		
+				// Initalise the hashmap destinationdata with saved data
 
-		if (firstTime) {
+				if (firstTime) {
+					// Initialise existingDataTypes
+					existingdataTypes = DestinationInfo
+							.getExistingDestinationInfoTypes();
 
-			ARRIVALSUBHEADLINES = DestinationInfo
-					.getDestinationInfoArrayList(DestinationHeadline.ARRIVAL);
+					for (int i = 0; i < existingdataTypes.size(); i++) { // Initialise
+						// the
+						// hashmap
+						// destinationd
+						// data
+						// with all avaliable datatyped as keys and there corresponding
+						// values
 
-			for (int i = 0; i < ARRIVALSUBHEADLINES.size(); i++) {
-				ARRIVALTEXTFIELDS.add(i, new JTextField("",TEXTFIELWIDTH));
-			}
-			ARRIVALDATA = new ArrayList<String>();
+						DestinationInfoParts value = new DestinationInfoParts(
+								DestinationInfo
+								.getTitle(existingdataTypes.get(i)));
 
-			DEPARTURESUBHAEDLINES = DestinationInfo
-					.getDestinationInfoArrayList(DestinationHeadline.DEPARTURE);
-			for (int i = 0; i < DEPARTURESUBHAEDLINES.size(); i++) {
-				DEPARTURETEXTFIELDS.add(i, new JTextField("",TEXTFIELWIDTH));
-			}
-			DEPARTUREDATA = new ArrayList<String>();
+						value.setSubHeadlines(DestinationInfo
+								.getDestinationInfoArrayList(existingdataTypes.get(i)));
 
-			LIVINGSUBHEADLINES = DestinationInfo
-					.getDestinationInfoArrayList(DestinationHeadline.LIVING);
-			for (int i = 0; i < LIVINGSUBHEADLINES.size(); i++) {
-				LIVINGTEXTFIELDS.add(i, new JTextField("",TEXTFIELWIDTH));
-			}
-			LIVINGDATA = new ArrayList<String>();
+						value.setTextfields(DestinationInfo
+								.getDestinationInfoArrayList(existingdataTypes.get(i)),
+								firstTime);
 
-		}
+						destinationData.put(existingdataTypes.get(i), value);
+					}
+				}
 
-		if (!(firstTime)) {
+				if (!(firstTime)) {
+					// Initialise existingDataTypes
+					existingdataTypes = dataArchive.getExistingDataTypes();
+					for (int i = 0; i < existingdataTypes.size(); i++) { // Load saved
+						// data in
+						// to the
+						// hashmap
+						// destination
+						// data
 
-			ARRIVALSUBHEADLINES = dataArchive
-					.getShortDestinationInformationHeadlines(DestinationHeadline.ARRIVAL);
-			DEPARTURESUBHAEDLINES = dataArchive
-					.getShortDestinationInformationHeadlines(DestinationHeadline.DEPARTURE);
-			LIVINGSUBHEADLINES = dataArchive
-					.getShortDestinationInformationHeadlines(DestinationHeadline.LIVING);
+						DestinationInfoParts value = new DestinationInfoParts(
+								DestinationInfo
+								.getTitle(existingdataTypes.get(i)));
 
-			ARRIVALDATA = dataArchive
-					.getShortDestinationInformationData(DestinationHeadline.ARRIVAL);
-			DEPARTUREDATA = dataArchive
-					.getShortDestinationInformationData(DestinationHeadline.DEPARTURE);
-			LIVINGDATA = dataArchive
-					.getShortDestinationInformationData(DestinationHeadline.LIVING);
+						value
+						.setSubHeadlines(dataArchive
+								.getShortDestinationInformationHeadlines(existingdataTypes
+										.get(i)));
+						value.setTextfields(dataArchive
+								.getShortDestinationInformationData(existingdataTypes
+										.get(i)), firstTime);
 
-			// Initiera TEXTFÄLT ARRAYS
+						destinationData.put(existingdataTypes.get(i), value);
 
-			for (int i = 0; i < DEPARTURESUBHAEDLINES.size(); i++) {
-				DEPARTURETEXTFIELDS
-						.add(i, new JTextField(DEPARTUREDATA.get(i),TEXTFIELWIDTH));
-			}
+						value.setDataOfHeadlines(dataArchive
+								.getShortDestinationInformationData(existingdataTypes
+										.get(i)));
 
-			for (int i = 0; i < ARRIVALSUBHEADLINES.size(); i++) {
-				ARRIVALTEXTFIELDS.add(i, new JTextField(ARRIVALDATA.get(i), TEXTFIELWIDTH));
-			}
-
-			for (int i = 0; i < LIVINGSUBHEADLINES.size(); i++) {
-				LIVINGTEXTFIELDS.add(i, new JTextField(LIVINGDATA.get(i),TEXTFIELWIDTH));
-			}
-
-		}
-
+					}
+				}
 	}
 
 	public void savefunction() {
-		// LOPPA EFTER EXISTINGDATA
+		for (int i = 0; i < existingdataTypes.size(); i++) { // save all text in
+			// existing
+			// textfields
 
-		updateShortInformationDataArrays(DestinationHeadline.ARRIVAL);
-		updateShortInformationDataArrays(DestinationHeadline.DEPARTURE);
-		updateShortInformationDataArrays(DestinationHeadline.LIVING);
-
-		// Save data
-		dataArchive.saveShortDestinationInformationData(ARRIVALDATA,
-				DestinationHeadline.ARRIVAL);
-		dataArchive.saveShortDestinationInformationData(DEPARTUREDATA,
-				DestinationHeadline.DEPARTURE);
-		dataArchive.saveShortDestinationInformationData(LIVINGDATA,
-				DestinationHeadline.LIVING);
-
-		// Save headlines
-		dataArchive.saveShortDestinationInformationHeadlines(
-				ARRIVALSUBHEADLINES, DestinationHeadline.ARRIVAL);
-		dataArchive.saveShortDestinationInformationHeadlines(DEPARTURESUBHAEDLINES,
-				DestinationHeadline.DEPARTURE);
-		dataArchive.saveShortDestinationInformationHeadlines(
-				LIVINGSUBHEADLINES, DestinationHeadline.LIVING);
-
-	}
-
-	public void updateShortInformationDataArrays(DestinationHeadline headline) {
-		// LOOPA EXISTINGDATA TODO!
-
-		switch (headline) {
-		case ARRIVAL:
-			for (int i = 0; i < ARRIVALTEXTFIELDS.size(); i++)
-				ARRIVALDATA.add(i, ARRIVALTEXTFIELDS.get(i).getText());
-			break;
-
-		case DEPARTURE:
-			for (int i = 0; i < DEPARTURETEXTFIELDS.size(); i++)
-				DEPARTUREDATA.add(i, DEPARTURETEXTFIELDS.get(i).getText());
-			break;
-
-		case LIVING:
-			for (int i = 0; i < LIVINGTEXTFIELDS.size(); i++)
-				LIVINGDATA.add(i, LIVINGTEXTFIELDS.get(i).getText());
-
-			break;
+			DestinationHeadline headline = existingdataTypes.get(i);
+			// Save title
+			dataArchive.saveTitle(headline, destinationData.get(headline)
+					.getTitle());
+			// save textfield text
+			dataArchive.saveShortDestinationInformationData(destinationData
+					.get(headline).getTextFieldsText(), headline);
+			// save subheadlines
+			dataArchive.saveShortDestinationInformationData(destinationData
+					.get(headline).getSubHeadlines(), headline);
 		}
-
 	}
 
 	private void quitEditDestinationButtonAction() {
 		destinationObject.prepareLayout();
-		editDestinationFrame.dispose();	
+		editDestinationFrame.dispose();
 	}
 
 	// Declare a private Enum class for all accepted type of
@@ -210,33 +165,36 @@ public class DestinationWindow {
 
 	/**
 	 * Return a frame for editing destination info.
-	 * 
+	 *
 	 */
 
-	public void getEditDestinationPopUp(boolean firstTime) { // TODO
-		// Utvigda till ExistingDATA LOOP TODO!
-		
-		editDestinationFrame = new JFrame(EDITDESTINATIONFRAMETITLE+destinationTitle);
+	public void getEditDestinationPopUp(boolean firstTime) {
+
+		editDestinationFrame = new JFrame(EDITDESTINATIONFRAMETITLE
+				+ destinationTitle);
 		editDestinationFrame.setAlwaysOnTop(true);
 		editDestinationFrame.setLocationByPlatform(true);
 		if (firstTime) {
 			savefunction();
 		}
 
-		ImagePanel background = new ImagePanel(new File("img/editDestBackground.jpg"));
+		ImagePanel background = new ImagePanel(new File(
+				"img/editDestBackground.jpg"));
 		background.add(buildDestinationInfoPanel(TypeOfPanel.EDITING));
 		editDestinationFrame.add(background);
 		editDestinationFrame.setLocationByPlatform(true);
 		editDestinationFrame.pack();
-		background.scaleImage(editDestinationFrame.getSize());		//rescale image to fit frame size.
+		background.scaleImage(editDestinationFrame.getSize()); // rescale image
+		// to fit frame
+		// size.
 		editDestinationFrame.setVisible(true);
-		
+
 	}
 
 	/**
 	 * Return a panel adjusted to fit in Travelplanners mainarea. The panel view
 	 * all saved data about the destination.
-	 * 
+	 *
 	 * @return
 	 */
 
@@ -252,7 +210,7 @@ public class DestinationWindow {
 	/**
 	 * Return a panel with box layouot that containing subPanels representing
 	 * all available DestinationHeadlines
-	 * 
+	 *
 	 * @param typeOfPanel
 	 *            : specialise if the panel should be adjusted for editing or
 	 *            viewing destination data.
@@ -263,16 +221,11 @@ public class DestinationWindow {
 		JPanel returnPanel = new JPanel(new MigLayout("wrap 1"));
 		returnPanel.setOpaque(false);
 
-		returnPanel.add(buildDestinationInfoBlock(DestinationHeadline.ARRIVAL,
-				typeOfPanel));
-		returnPanel.add(buildDestinationInfoBlock(
-				DestinationHeadline.DEPARTURE, typeOfPanel));
-		returnPanel.add(buildDestinationInfoBlock(DestinationHeadline.LIVING,
-				typeOfPanel));
-
+		for (int i = 0; i < existingdataTypes.size(); i++) {
+			returnPanel.add(buildDestinationInfoBlock(existingdataTypes.get(i),
+					typeOfPanel));
+		}
 		if (typeOfPanel.equals(TypeOfPanel.EDITING)) {
-			// TODO ADDA SAVE OCH AVBRYTKNAPPAR...
-
 			JButton saveButtonEditDestion = new JButton(SAVEBUTTONTEXT);
 			saveButtonEditDestion.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -288,10 +241,10 @@ public class DestinationWindow {
 					quitEditDestinationButtonAction();
 				}
 			});
-			
+
 			JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 5));
 			bottom.add(saveButtonEditDestion);
-			bottom.add(quitButtonEditDestination);		
+			bottom.add(quitButtonEditDestination);
 			bottom.setOpaque(false);
 			returnPanel.add(bottom);
 
@@ -303,7 +256,7 @@ public class DestinationWindow {
 	/**
 	 * Return a panel with the specified Headline, and components associated
 	 * with this Headline.
-	 * 
+	 *
 	 * @param headline
 	 *            Specify which kind of information that will be present in the
 	 *            panel
@@ -311,7 +264,7 @@ public class DestinationWindow {
 	 *            specify if the data should be presented in editable textFields
 	 *            or static Labels
 	 * @return
-	 * 
+	 *
 	 */
 	private JPanel buildDestinationInfoBlock(DestinationHeadline headline,
 			TypeOfPanel editOrView) {
@@ -319,36 +272,11 @@ public class DestinationWindow {
 		JPanel returnPanel = new JPanel(new MigLayout("wrap 4"));
 		returnPanel.setOpaque(false);
 
-		ArrayList<String> headlinesOfShortInformation = null; 
-		ArrayList<String> dataOfShortInformation = null ;
-		ArrayList<JTextField> textFieldsWithShortInformation = null; 
+		ArrayList<String> headlinesOfShortInformation = destinationData.get(headline).getSubHeadlines();
+		ArrayList<JTextField> textFieldsWithShortInformation = destinationData.get(headline).getTextFields();
+		ArrayList<String> dataOfShortInformation = destinationData.get(headline).getSubheadlinesData();
 
-		// Initialise headline for the block
-
-		String headlineOfBlock = null;
-
-		switch (headline) {
-		case ARRIVAL:
-			headlineOfBlock = ARRIVALTITLE;
-			headlinesOfShortInformation = ARRIVALSUBHEADLINES;
-			dataOfShortInformation = ARRIVALDATA;
-			textFieldsWithShortInformation = ARRIVALTEXTFIELDS;
-			break;
-
-		case DEPARTURE:
-			headlineOfBlock = DEPARTURETITLE;
-			headlinesOfShortInformation = DEPARTURESUBHAEDLINES;
-			dataOfShortInformation = DEPARTUREDATA;
-			textFieldsWithShortInformation = DEPARTURETEXTFIELDS;
-			break;
-
-		case LIVING:
-			headlineOfBlock = LIVINGTITLE;
-			headlinesOfShortInformation = LIVINGSUBHEADLINES;
-			dataOfShortInformation = LIVINGDATA;
-			textFieldsWithShortInformation = LIVINGTEXTFIELDS;
-			break;
-		}
+		String headlineOfBlock = destinationData.get(headline).getTitle();
 
 		// Initialise Arrays with Labels representing subHeadlines and Arrays of
 		// Labels representing corresponding data
@@ -371,7 +299,7 @@ public class DestinationWindow {
 
 		// HeadLineLabel
 		JLabel headlineLabel = new JLabel(headlineOfBlock);
-		headlineLabel.setFont(new Font("Tahoma",Font.BOLD, 16));
+		headlineLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		// Fill Panel
 
@@ -381,10 +309,10 @@ public class DestinationWindow {
 
 		if (TypeOfPanel.VIEWING.equals(editOrView)) {
 			for (int i = 0; i < subHeadlinesLabels.size(); i++) {
-				 JLabel labelToLayout1 = subHeadlinesLabels.get(i);
-				 labelToLayout1.setFont(new Font("Tahoma",Font.BOLD, 14));
-				 JLabel labelToLayout2 = dataLabels.get(i);
-				 labelToLayout2.setFont(new Font("Tahoma",Font.PLAIN, 14));
+				JLabel labelToLayout1 = subHeadlinesLabels.get(i);
+				labelToLayout1.setFont(new Font("Tahoma", Font.BOLD, 14));
+				JLabel labelToLayout2 = dataLabels.get(i);
+				labelToLayout2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				returnPanel.add(labelToLayout1, "gapright 10:10");
 				returnPanel.add(labelToLayout2, "gapright 10:10");
 			}
@@ -402,57 +330,4 @@ public class DestinationWindow {
 		return returnPanel;
 
 	}
-
 }
-
-// BLANDAT SKRÄP
-
-// // More info Button action
-//
-// private void moreInfoButtonAction(DestinationHeadline typeOfInformation){
-// JFrame MoreInfoFrame = new JFrame();
-// String moreInfoString =
-// dataArchive.getMoreInformationText(typeOfInformation);
-// JOptionPane.showMessageDialog(MoreInfoFrame,moreInfoString,
-// "Mer information", JOptionPane.INFORMATION_MESSAGE); //TODO fixa
-// hårdkodningen på mer inforamtion
-// }
-//
-
-// switch (editOrWiev){
-// case EDITING:
-// moreInfo = new JButton(MOREINFOTITLE);
-//			
-// break;
-// case VIEWING:
-// viewOrEdit = new JLabel();
-// break;
-// }
-//
-
-// Components for typeOfPanel: Viewing
-
-// JFrame MoreInfoFrame = new JFrame();
-// JButton moreInfoButton = new JButton(MOREINFOTITLE + headlineOfBlock);
-
-// TODO button actionlistener
-
-// moreInfoButton.addActionListener(new ActionListener() {
-// public void actionPerformed(ActionEvent e) {
-// moreInfoButtonAction(headline);
-// }
-// });
-// //
-// components for typeOfPanel Editing,
-// JLabel moreInfoLabel = new JLabel(MOREINFOTITLE + headlineOfBlock);
-
-// initalise JtextArea
-
-// JTextArea moreInfoTextArea = new JTextArea(moreInfoText);
-// moreInfoTextArea.setLineWrap(true);
-
-// Fill panel
-
-// initialise
-
-// Layout Panel

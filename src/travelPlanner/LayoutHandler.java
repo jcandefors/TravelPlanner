@@ -36,7 +36,7 @@ public class LayoutHandler {
 		this.frame = frame;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameSize = new Dimension(frame.getToolkit().getScreenSize().width*2/3,frame.getToolkit().getScreenSize().height*2/3);
-		frame.setSize(frameSize);		
+		//frame.setSize(frameSize);
 		background = new JPanel(new BorderLayout(4,4));
 		frame.setContentPane(background);
 		background.setPreferredSize(frameSize);
@@ -123,7 +123,8 @@ public class LayoutHandler {
 		map.setAlignmentY(JPanel.CENTER_ALIGNMENT);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		ImagePanel outerMain = new ImagePanel(new File("img/mainmap.png"));
-		outerMain.setLayout(new FlowLayout(FlowLayout.CENTER,5,5));		
+		outerMain.setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
+		outerMain.setMaximumSize(new Dimension(1200,1080));
 		main = new JPanel();
 		main.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
 		main.setOpaque(false);
