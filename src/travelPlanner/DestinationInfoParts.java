@@ -63,7 +63,7 @@ public class DestinationInfoParts {
 	/**
 	 * Return the data corresponding to the subheadlines
 	 */
-	public ArrayList<String> getSubheadlinesData(){
+	public ArrayList<String> getDataOfSubheadlines(){
 		return dataOfsubHeadlines;
 	}
 	

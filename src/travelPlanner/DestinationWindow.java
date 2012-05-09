@@ -71,8 +71,9 @@ public class DestinationWindow {
 				+ destinationTitle);
 				editDestinationFrame.setAlwaysOnTop(true);
 				
-				// Initalise the hashmap destinationdata with saved data
-
+		destinationData = new HashMap<DestinationHeadline, DestinationInfoParts>();
+						
+				// Initalise the hashmap destinationdata with saved data		
 				if (firstTime) {
 					// Initialise existingDataTypes
 					existingdataTypes = DestinationInfo
@@ -139,6 +140,8 @@ public class DestinationWindow {
 			// textfields
 
 			DestinationHeadline headline = existingdataTypes.get(i);
+			//Save existing Datatypes
+			dataArchive.saveExistingDataTypes(existingdataTypes);			
 			// Save title
 			dataArchive.saveTitle(headline, destinationData.get(headline)
 					.getTitle());
@@ -274,7 +277,7 @@ public class DestinationWindow {
 
 		ArrayList<String> headlinesOfShortInformation = destinationData.get(headline).getSubHeadlines();
 		ArrayList<JTextField> textFieldsWithShortInformation = destinationData.get(headline).getTextFields();
-		ArrayList<String> dataOfShortInformation = destinationData.get(headline).getSubheadlinesData();
+		ArrayList<String> dataOfShortInformation = destinationData.get(headline).getDataOfSubheadlines();
 
 		String headlineOfBlock = destinationData.get(headline).getTitle();
 
