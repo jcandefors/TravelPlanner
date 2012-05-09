@@ -67,10 +67,11 @@ public class TravelProject extends Slide{
 	 * Creates general components common for every TravelProject.
 	 */
 	public void generalProjectLayout(){
-		layoutHandler.updateTitle("Resenï¿½r: " + title);
+		layoutHandler.updateTitle("Resenär: " + title);
 		JLabel menuLabel = new JLabel("Destinationer:");
 		menuLabel.setSize(10, 30);				//TBC
 		layoutHandler.addToMenuLow(menuLabel);
+		layoutHandler.addToMenuUp(Box.createRigidArea(new Dimension(20, 10)));
 		layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", 1));
 		layoutHandler.addToMenuUp(new DestinationButton("Skapa destination", 2));
 		layoutHandler.addToMap(new MapLabel(destinations));
