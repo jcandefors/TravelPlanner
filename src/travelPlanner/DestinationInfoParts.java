@@ -27,6 +27,10 @@ public class DestinationInfoParts {
 
 	public DestinationInfoParts(String title) {
 		this.title = title;
+		subHeadlines = new ArrayList<String>();
+		dataOfsubHeadlines = new ArrayList<String>();
+		textFields = new ArrayList<JTextField>();
+		
 	}
 
 	/**
@@ -37,7 +41,17 @@ public class DestinationInfoParts {
 		subHeadlines = data;
 	}
 	
-	
+    /**
+     * Return the subheadlines for this destinationheadline
+     *
+     * @return
+     */
+
+    public ArrayList<String> getSubHeadlines() {
+            return subHeadlines;
+
+    }
+    
 	/**
 	 * Save the specified list data to the subheadlines of this
 	 * dastination headline.
@@ -57,7 +71,7 @@ public class DestinationInfoParts {
 	/**
 	 * Create a list of JTextfields with the same length as data. If firtstTime
 	 * is true the textfields will be filled with empty string else the
-	 * specified data in "data" will be shoved in the textfields.
+	 * specified data in "data" will be showed in the textfields.
 	 */
 
 	public void setTextfields(ArrayList<String> data, boolean firstTime) {
@@ -66,25 +80,17 @@ public class DestinationInfoParts {
 			for (int i = 0; i < data.size(); i++) {
 				textFields.add(i, new JTextField("", TEXTFIELWIDTH));
 				dataOfsubHeadlines.add("");
+			}			
+
 			}
-		} else {
-			for (int i = 0; i < data.size(); i++) {
-				textFields.add(i, new JTextField(data.get(i), TEXTFIELWIDTH));
-			}
-		}
-	}
-
-	/**
-	 * Return the subheadlines for this destinationheadline
-	 * 
-	 * @return
-	 */
-
-	public ArrayList<String> getSubHeadlines() {
-		return subHeadlines;
-
-	}
-
+		else {
+            for (int i = 0; i < data.size(); i++) {
+                    textFields.add(i, new JTextField(data.get(i), TEXTFIELWIDTH));
+            }
+    }
+}
+			
+		
 	/**
 	 * Return the text typed in to the textFields of this destination headline
 	 * 

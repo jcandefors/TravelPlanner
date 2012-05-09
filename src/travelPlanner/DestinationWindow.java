@@ -44,7 +44,7 @@ public class DestinationWindow {
 
 	private static String QUITBUTTONTEXT = "Avbryt";
 	private static String SAVEBUTTONTEXT = "Spara";
-	private static String EDITDESTINATININSTRUCTION = "Fyll i fälten nedan. Välj Spara eller Avbryt";
+	private static String EDITDESTINATININSTRUCTION = "Fyll i fï¿½lten nedan. Vï¿½lj Spara eller Avbryt";
 	private static String EDITDESTINATIONFRAMETITLE = "Redigera: ";
 
 	/**
@@ -68,9 +68,9 @@ public class DestinationWindow {
 				travelProjectName);
 		this.firstTime = firstTime;
 		editDestinationFrame = new JFrame(EDITDESTINATIONFRAMETITLE
-				+ destinationTitle);// TODO SLäng up i variabel
+				+ destinationTitle);
 				editDestinationFrame.setAlwaysOnTop(true);
-
+				
 				// Initalise the hashmap destinationdata with saved data
 
 				if (firstTime) {
