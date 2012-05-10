@@ -36,7 +36,8 @@ public class LayoutHandler {
 		this.frame = frame;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		screenSize = new Dimension(frame.getToolkit().getScreenSize());
-		frameSize = new Dimension(frame.getToolkit().getScreenSize().width*2/3,frame.getToolkit().getScreenSize().height*2/3);
+		frame.setLocation(screenSize.width*1/6, screenSize.height*1/6);		
+		frameSize = new Dimension(screenSize.width*2/3,screenSize.height*2/3);
 		background = new JPanel(new BorderLayout(0,0));
 		frame.setContentPane(background);
 		background.setPreferredSize(frameSize);
@@ -118,13 +119,13 @@ public class LayoutHandler {
 	 */
 	public void setUpMain(){
 		map = new ImagePanel(new File("img/mappanel.png"));
-		map.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 30));
+		map.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 35));
 		map.setPreferredSize(new Dimension(screenSize.width*5/6,360));
 		map.setAlignmentY(JPanel.CENTER_ALIGNMENT);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		JPanel outerMain = new JPanel(new FlowLayout(FlowLayout.CENTER,4,2));
 		main = new ImagePanel(new File("img/mainmap.png"));
-		main.setLayout(new FlowLayout(FlowLayout.CENTER,30,40));
+		main.setLayout(new FlowLayout(FlowLayout.CENTER,50,50));
 		main.setPreferredSize(new Dimension(screenSize.width*5/6,screenSize.height*3/5));
 		main.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		outerMain.add(map);

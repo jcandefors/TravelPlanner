@@ -1,5 +1,6 @@
 package travelPlanner;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -69,7 +70,7 @@ public class DestinationWindow {
 		this.firstTime = firstTime;
 		editDestinationFrame = new JFrame(EDITDESTINATIONFRAMETITLE
 				+ destinationTitle);
-				editDestinationFrame.setAlwaysOnTop(true);
+				
 				
 		destinationData = new HashMap<DestinationHeadline, DestinationInfoParts>();
 						
@@ -182,7 +183,8 @@ public class DestinationWindow {
 		editDestinationFrame = new JFrame(EDITDESTINATIONFRAMETITLE
 				+ destinationTitle);
 		editDestinationFrame.setAlwaysOnTop(true);
-		editDestinationFrame.setLocationByPlatform(true);
+		Dimension screenSize = editDestinationFrame.getToolkit().getScreenSize();
+		editDestinationFrame.setLocation(screenSize.width/4,screenSize.height/4);			
 		if (firstTime) {
 			savefunction();
 		}
@@ -191,11 +193,8 @@ public class DestinationWindow {
 				"img/editDestBackground.jpg"));
 		background.add(buildDestinationInfoPanel(TypeOfPanel.EDITING));
 		editDestinationFrame.add(background);
-		editDestinationFrame.setLocationByPlatform(true);
 		editDestinationFrame.pack();
-		background.scaleImage(editDestinationFrame.getSize()); // rescale image
-		// to fit frame
-		// size.
+		editDestinationFrame.setResizable(false);
 		editDestinationFrame.setVisible(true);
 
 	}

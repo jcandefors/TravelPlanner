@@ -26,10 +26,10 @@ public class EditTravelProject {
 	 * 
 	 * @param title
 	 */
-	public EditTravelProject(TravelProject travelProject, String[] projectInfo) {
+	public EditTravelProject(TravelProject travelProject, String[] projectInfo, String[] labels) {
 		this.travelProject = travelProject;
 		this.projectInfo =  projectInfo;
-		labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum:"};
+		this.labels = labels;
 		panel = new ImagePanel(new File("img/EditProject.jpg"));
 		textFields = new JTextField[labels.length]; 
 		createPopUp();

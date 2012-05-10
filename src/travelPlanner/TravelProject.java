@@ -27,7 +27,7 @@ import javax.swing.JPanel;
 public class TravelProject extends Slide{
 
 	private String[] projectInfo; 				//serialized
-	private final int PROJECTINFOSIZE = 3;
+	private final int PROJECTINFOSIZE = 4;
 	private String[] labels;
 	
 	/**
@@ -39,7 +39,7 @@ public class TravelProject extends Slide{
 	public TravelProject(LayoutHandler layoutHandler, String userName, boolean firstTime) {
 		super(layoutHandler, userName);
 		super.title = userName;		
-		labels = new String[]{"Reseprojekt:","Startdatum:","Slutdatum"};
+		labels = new String[]{"Reseprojekt:","Hemstad", "Startdatum:","Slutdatum"};
 		if(firstTime){
 			new File("data/"+userName).mkdir();
 			projectInfo = new String[PROJECTINFOSIZE];
@@ -67,7 +67,7 @@ public class TravelProject extends Slide{
 	 * Creates general components common for every TravelProject.
 	 */
 	public void generalProjectLayout(){
-		layoutHandler.updateTitle("Resenär: " + title);
+		layoutHandler.updateTitle("Resenï¿½r: " + title);
 		JLabel menuLabel = new JLabel("Destinationer:");
 		menuLabel.setSize(10, 30);				//TBC
 		layoutHandler.addToMenuLow(menuLabel);
@@ -133,7 +133,7 @@ public class TravelProject extends Slide{
 	 * Creates a new EditTravelProject and then updates the data in the layout.
 	 */
 	public void editTravelProject(){
-		new EditTravelProject(this, projectInfo);	//vilken skapar popup och kallar vid "spara" pï¿½ updateMainInfo();	
+		new EditTravelProject(this, projectInfo, labels);	//vilken skapar popup och kallar vid "spara" pï¿½ updateMainInfo();	
 	}
 	
 	/**
