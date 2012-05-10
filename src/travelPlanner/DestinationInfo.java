@@ -1,6 +1,15 @@
 package travelPlanner;
 
 import java.util.ArrayList;
+/**
+ * This class represents all text information about different Destination headlines (For example Living Arrival and 
+ * Departure).
+ * This class and the enum class destination headline are the only one that have to be changed if
+ * you want to add a new Destination headline.
+ * To modify the subheadlines or remove a Destination headline only this class have to be modified.
+ * @author ragnhild
+ *
+ */
 
 public class DestinationInfo {
 
@@ -8,6 +17,12 @@ public class DestinationInfo {
 	private static String ARRIVALTITLE = "Inresa";
 	private static String DEPARTURETITLE = "Utresa";
 	private static String LIVINGTITLE = "Boende";
+	
+	private static String ARRIVALFILENAME = "Arrival";
+	private static String DEPARTUREFILENAME = "Departure";
+	private static String LIVINGFILENAME = "Living";
+	
+	
 	private final static String ARRIVALDATE = "Ankomstdatum";
 	private final static String DEPARTUREDATE = "Avgångsdatum";
 	private final static String DEPARTURETIME = "Avgångstid";
@@ -17,6 +32,8 @@ public class DestinationInfo {
 	private final static String STATIONAIRPORT = "Station/Flygplats";
 	private final static String ADDRESS = "Adress";
 	private final static String COVERNAME = "Täcknamn";
+	
+	
 
 	// Arrays
 	private final static String[] Living = new String[] { NAME, ADDRESS,
@@ -25,6 +42,9 @@ public class DestinationInfo {
 			ARRIVALTIME, REFERENSNUMBER, STATIONAIRPORT };
 	private final static String[] Departure = new String[] { DEPARTUREDATE,
 			DEPARTURETIME, REFERENSNUMBER, STATIONAIRPORT };
+	//private final static String [] Sights = new String {
+		
+
 
 	public DestinationInfo() {
 
@@ -87,8 +107,33 @@ public class DestinationInfo {
 		return returnTitle;
 
 	}
+	
+	/**
+	 * Return a filename corresponding to the specified destination headline
+	 */
+	public static String getFilename(DestinationHeadline headline) {
+		String returnTitle = null;
+		
+		switch (headline) {
+		case ARRIVAL:
+			returnTitle = ARRIVALFILENAME;
+			break;
+
+		case DEPARTURE:
+			returnTitle = DEPARTUREFILENAME;
+			break;
+
+		case LIVING:
+			returnTitle = LIVINGFILENAME;
+			break;
+		}
+		return returnTitle;
+
+	}
+	
 	/**
 	 * Return an Array with the existing DestinationHeadlines
+	 * If a new Destination headline is added or a old one removed this list have to be modified.
 	 * @return
 	 */
 

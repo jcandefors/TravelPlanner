@@ -44,7 +44,7 @@ public class DestinationWindow {
 
 	private static String QUITBUTTONTEXT = "Avbryt";
 	private static String SAVEBUTTONTEXT = "Spara";
-	private static String EDITDESTINATININSTRUCTION = "Fyll i f�lten nedan. V�lj Spara eller Avbryt";
+	private static String EDITDESTINATININSTRUCTION = "Fyll i fälten nedan. Välj Spara eller Avbryt";
 	private static String EDITDESTINATIONFRAMETITLE = "Redigera: ";
 
 	/**
@@ -134,6 +134,10 @@ public class DestinationWindow {
 				}
 	}
 
+/**
+ * Save all data that the user have typed in to the textfield down to disk
+ * 	
+ */
 	public void savefunction() {
 		for (int i = 0; i < existingdataTypes.size(); i++) { // save all text in
 			// existing
@@ -146,10 +150,12 @@ public class DestinationWindow {
 			dataArchive.saveTitle(headline, destinationData.get(headline)
 					.getTitle());
 			// save textfield text
-			dataArchive.saveShortDestinationInformationData(destinationData
-					.get(headline).getTextFieldsText(), headline);
+			ArrayList<String> textfieldText = destinationData
+			.get(headline).getTextFieldsText();
+			
+			dataArchive.saveShortDestinationInformationData(textfieldText, headline);					
 			// save subheadlines
-			dataArchive.saveShortDestinationInformationData(destinationData
+			dataArchive.saveShortDestinationInformationHeadlines(destinationData
 					.get(headline).getSubHeadlines(), headline);
 		}
 	}
@@ -262,9 +268,10 @@ public class DestinationWindow {
 	 *
 	 * @param headline
 	 *            Specify which kind of information that will be present in the
-	 *            panel
+	 *            panel (For example A headline Living with subheadlines adress name of hotel and the test that
+	 *            the user have typed in about each subheadline.
 	 * @param editOrView
-	 *            specify if the data should be presented in editable textFields
+	 *            specify if the data that the user have typed in should be presented in editable textFields
 	 *            or static Labels
 	 * @return
 	 *

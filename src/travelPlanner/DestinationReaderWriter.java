@@ -167,7 +167,8 @@ public class DestinationReaderWriter {
  
         /**
          * Save an ArrayList with strings representing saved short information
-         * data associated with the specified DestinationHeadline.
+         * data( the text that the user have typed in)
+         * associated with the specified DestinationHeadline.
          * @param shortInformationDestinationdata
          * @param headline
          * @return
@@ -187,16 +188,7 @@ public class DestinationReaderWriter {
         }
         
         private String getFileName(DestinationHeadline headline){
-        	String filename = null;
-        	
-        	switch (headline){
-        	case ARRIVAL: filename = "Arrival";
-        	break;
-        	case DEPARTURE : filename = "Departure";
-        	break;
-        	case LIVING : filename = "Living";
-        	}
-        	
+        	String filename = DestinationInfo.getFilename(headline);
         	return filename;
         	
         }

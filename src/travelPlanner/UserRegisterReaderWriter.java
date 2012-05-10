@@ -155,25 +155,7 @@ public class UserRegisterReaderWriter {
 		
 	}
 
-	// /**
-	// * Check if the user register contains the specified username, if so, the
-	// username and responding password
-	// * code is removed from the user register.
-	// * Return true if the user was succesfully removed from the userregister
-	// otherwice false.
-	// *
-	// * @throws IOException if the userregister could not be opened, written
-	// to, read or closed properly
-	// *
-	// */
-	// public boolean removeUser(String username){
-	// return true;
-	//
-	//
-	// }
-
-	// A method for reading in userRegister.data
-
+	
 	
 	private void readInUserRegister() {
 		try {

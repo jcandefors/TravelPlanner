@@ -93,6 +93,7 @@ public class DestinationInfoParts {
 		
 	/**
 	 * Return the text typed in to the textFields of this destination headline
+	 * And update the data that correspond to each subheadline with the text that have been typed in
 	 * 
 	 * @return
 	 */
@@ -101,10 +102,20 @@ public class DestinationInfoParts {
 
 		for (int i = 0; i < textFields.size(); i++) {
 			returnList.add(i, textFields.get(i).getText());
-		}
+		}	
+		setDataOfHeadlines(returnList);
 		return returnList;
 
 	}
+	/**
+	 * Upate the data corresponding to subheadlines with the text typed in the textfields
+	 */
+	public void updateDataOfSubheadlines(){
+		ArrayList<String> updatedData = getTextFieldsText();
+		dataOfsubHeadlines = updatedData;
+		
+	}
+	
 
 
 /**
