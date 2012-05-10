@@ -24,14 +24,14 @@ public class DestinationInfo {
 	
 	
 	private final static String ARRIVALDATE = "Ankomstdatum";
-	private final static String DEPARTUREDATE = "AvgÃ¥ngsdatum";
-	private final static String DEPARTURETIME = "AvgÃ¥ngstid";
+	private final static String DEPARTUREDATE = "Avgångsdatum";
+	private final static String DEPARTURETIME = "Avgångstid";
 	private final static String REFERENSNUMBER = "Bokningsnummer";
 	private final static String NAME = "Namn";
 	private final static String ARRIVALTIME = "Ankomsttid";
 	private final static String STATIONAIRPORT = "Station/Flygplats";
 	private final static String ADDRESS = "Adress";
-	private final static String COVERNAME = "TÃ¤cknamn";
+	private final static String COVERNAME = "Täcknamn";
 	
 	
 

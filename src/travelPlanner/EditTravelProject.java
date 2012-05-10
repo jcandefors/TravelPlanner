@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 
@@ -31,7 +30,7 @@ public class EditTravelProject {
 		this.travelProject = travelProject;
 		this.projectInfo =  projectInfo;
 		this.labels = labels;
-		panel = new ImagePanel(new File("img/EditProject.jpg"));
+		panel = new ImagePanel("img/EditProject.jpg");
 		textFields = new JTextField[labels.length]; 
 		createPopUp();
 

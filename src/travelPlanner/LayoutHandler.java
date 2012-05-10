@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
@@ -97,7 +96,7 @@ public class LayoutHandler {
 	 * Sets up the menu in the west area of the layout.
 	 */
 	public void setUpMenu(){
-		ImagePanel leftMenu = new ImagePanel(new File("img/menu.png"));
+		ImagePanel leftMenu = new ImagePanel("img/menu.png");
 		leftMenu.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));		
 		leftMenu.setPreferredSize(new Dimension(frameSize.width/5, frameSize.height-50));
 		menuUp = new JPanel();
@@ -119,14 +118,14 @@ public class LayoutHandler {
 	 * Sets up the main area in the center of the layout.
 	 */
 	public void setUpMain(){
-		map = new ImagePanel(new File("img/mappanel.png"));
+		map = new ImagePanel("img/mappanel.png");
 		map.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 30));
 		Dimension screenSize = new Dimension(frame.getToolkit().getScreenSize());
 		map.setPreferredSize(new Dimension(screenSize.width*5/6,360));
 		map.setAlignmentY(JPanel.CENTER_ALIGNMENT);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		JPanel outerMain = new JPanel(new FlowLayout(FlowLayout.CENTER,4,2));
-		main = new ImagePanel(new File("img/mainmap.png"));
+		main = new ImagePanel("img/mainmap.png");
 		main.setLayout(new FlowLayout(FlowLayout.CENTER,50,50));
 		main.setPreferredSize(new Dimension(screenSize.width*5/6,screenSize.height*3/5));
 		main.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));

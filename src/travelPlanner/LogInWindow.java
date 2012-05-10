@@ -47,14 +47,14 @@ public class LogInWindow {
 		private JButton createNewUserButton;
 		private final static String   PROGRAMNAME = "Reseplaneraren";
 		private static String PROBLEMFRAMETITLE = "Problem med inloggning";
-		private static String LOGININSTRUCTIONS = "<html>V√§lkommen till "+ PROGRAMNAME +".<br>Skriv in anv√§dnarnamn och l√∂senord <br> eller v√§lj skapa ny anv√§ndare</html>";
-		private static String EMPTYLOGINFIELDDIALOG = "Du m√•ste fylla i b√•de anv√§ndarnamnf√§ltet och l√∂senordsf√§ltet f√∂r att logga in ";
-		private static String FAILEDLOGIN = "Kontrollera anv√§ndarnamn och l√∂senord och f√∂rs√∂k p√• nytt "; 
+		private static String LOGININSTRUCTIONS = "<html>V‰lkommen till "+ PROGRAMNAME +".<br>Skriv in anv‰ndarnamn och lˆsenord <br> eller v‰lj skapa ny anv‰ndare</html>";
+		private static String EMPTYLOGINFIELDDIALOG = "Du mÂste fylla i bÂde anv‰ndarnamnf‰ltet och lˆsenordsf‰ltet fˆr att logga in ";
+		private static String FAILEDLOGIN = "Kontrollera anv‰ndarnamn och lˆsenord och fˆrsˆk pÂ nytt "; 
 		private static String LOGIN = "Logga in";
-		private static String CREATENEWUSER = "Skapa ny anv√§ndare";
-		private static String USERNAME = "Anv√§ndarnamn";
-		private static String PASSWORD = "L√∂senord";
-		private static String CREATENEWUSERFRAMETITLE = "Skapa ny anv√§ndare till: " + PROGRAMNAME; 
+		private static String CREATENEWUSER = "Skapa ny anv‰ndare";
+		private static String USERNAME = "Anv‰ndarnamn";
+		private static String PASSWORD = "Lˆsenord";
+		private static String CREATENEWUSERFRAMETITLE = "Skapa ny anv‰ndare till: " + PROGRAMNAME; 
 		
 
 		/**

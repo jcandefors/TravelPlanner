@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -45,7 +44,7 @@ public class DestinationWindow {
 
 	private static String QUITBUTTONTEXT = "Avbryt";
 	private static String SAVEBUTTONTEXT = "Spara";
-	private static String EDITDESTINATININSTRUCTION = "Fyll i f√§lten nedan. V√§lj Spara eller Avbryt";
+	private static String EDITDESTINATININSTRUCTION = "Fyll i f‰lten nedan. V‰lj Spara eller Avbryt";
 	private static String EDITDESTINATIONFRAMETITLE = "Redigera: ";
 
 	/**
@@ -189,8 +188,7 @@ public class DestinationWindow {
 			savefunction();
 		}
 
-		ImagePanel background = new ImagePanel(new File(
-				"img/editDestBackground.jpg"));
+		ImagePanel background = new ImagePanel("img/editDestBackground.jpg");
 		background.add(buildDestinationInfoPanel(TypeOfPanel.EDITING));
 		editDestinationFrame.add(background);
 		editDestinationFrame.pack();

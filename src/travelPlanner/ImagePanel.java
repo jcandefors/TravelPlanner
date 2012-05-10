@@ -3,8 +3,9 @@ package travelPlanner;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -22,20 +23,20 @@ public class ImagePanel extends JPanel{
 
 	/**
 	 * Constructs a background panel.
-	 * @param file The file with the image to set as background.
+	 * @param fileName The file name for the image to set as background of the panel.
 	 */
-	public ImagePanel(File file){		   
-		setBackground(file);
+	public ImagePanel(String fileName){		   
+		setBackground(fileName);
 	}
 	
 	/**
 	 * 
 	 * @param file
 	 */
-	public void setBackground(File file){
-
+	public void setBackground(String fileName){
+			InputStream input = getClass().getResourceAsStream(fileName);
 		try{
-			backgroundImage = ImageIO.read(file);
+			backgroundImage = ImageIO.read(input);
 			originalImage = backgroundImage;
 		}catch (IOException e){
 			ErrorHandler.printError(e, this.getClass().toString());
