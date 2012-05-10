@@ -23,13 +23,15 @@ import sun.awt.image.URLImageSource;
 public class MapLabel extends JLabel{
 	private Image mapImage = null;
 	private final int TIMEOUT = 1000;
+	private String hometown;
 
 	/**
 	 * 
 	 * @param destinations
 	 */
-	public MapLabel(ArrayList<String> destinations){
-		if(!buildProjectMap(destinations)){
+	public MapLabel(String hometown, ArrayList<String> destinations){
+		this.hometown = hometown;
+		if(!buildProjectMap( destinations)){
 			loadNoMap();
 		}	
 	}	
@@ -106,11 +108,14 @@ public class MapLabel extends JLabel{
 	private URL buildURL(ArrayList<String> destinations){		
 		StringBuilder sb = new StringBuilder();
 		sb.append("size=640x300&maptype=roadmap/&path=");
+		if(hometown != null){ sb.append(hometown+"|");}
 		for(int i = 0; i< destinations.size(); i++){
 			sb.append(destinations.get(i) + "|");
 		}
+		if(hometown != null){ sb.append(hometown+"|");}
 		sb.setLength(sb.length()-1);
 		sb.append("&markers=size:mid|color:red");
+		if(hometown != null){ sb.append("|" + hometown);}
 		for(int i = 0; i< destinations.size(); i++){
 			sb.append("|" + destinations.get(i));
 		}

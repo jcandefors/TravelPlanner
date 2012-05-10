@@ -74,7 +74,7 @@ public class TravelProject extends Slide{
 		layoutHandler.addToMenuUp(Box.createRigidArea(new Dimension(20, 10)));
 		layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", 1));
 		layoutHandler.addToMenuUp(new DestinationButton("Skapa destination", 2));
-		layoutHandler.addToMap(new MapLabel(destinations));
+		layoutHandler.addToMap(new MapLabel(projectInfo[1],destinations));
 	}
 
 
