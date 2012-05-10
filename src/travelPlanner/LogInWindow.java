@@ -2,19 +2,25 @@ package travelPlanner;
 
 
 
+import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FocusTraversalPolicy;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 /**
@@ -61,7 +67,12 @@ public class LogInWindow {
 				actionHandler = new LogInActionHandler();
 				loginFrame.setTitle("Log in to: " + PROGRAMNAME);
 				makeLogInFrame();
+				setTaborder();
+				UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
+				  Dimension screenSize = loginFrame.getToolkit().getScreenSize();
+	               loginFrame.setLocation(screenSize.width/4,screenSize.height/4);  
 				loginFrame.pack();
+				loginFrame.setResizable(false);
 				loginFrame.setVisible(true);					
 			}
 		
@@ -154,6 +165,7 @@ public class LogInWindow {
 		
 		//Create Buttons
 		logInButton = new JButton();
+
 		createNewUserButton = new JButton();
 		
 		// Initialise text in Buttons
@@ -178,6 +190,15 @@ public class LogInWindow {
 		userNameField = new JTextField();
 		passwordField = new JPasswordField(10);
 			
+	}
+	private void setTaborder(){
+
+		IndexedFocusTraversalPolicy policy = new IndexedFocusTraversalPolicy();
+		policy.addIndexedComponent(userNameField);
+		policy.addIndexedComponent(passwordField);
+		policy.addIndexedComponent(logInButton);
+		policy.addIndexedComponent(createNewUserButton);
+		loginFrame.setFocusTraversalPolicy(policy);
 	}
 
 	private void makeLogInFrame(){
@@ -223,7 +244,67 @@ public class LogInWindow {
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					 .addComponent(createNewUserButton))
 					);
+		loginFrame.setLocationByPlatform(true);
 						    		    
+	}
+	/**
+	 * A class that make it possible to list the taborder for the components
+	 * 
+	 * @author http://gaps-blog.blogspot.se/2008/12/controlling-tabindex-in-java-swing.html and
+	 * Ragnhild
+	 */
+	
+	private class IndexedFocusTraversalPolicy extends 
+	  FocusTraversalPolicy {
+
+	   private ArrayList<Component> components = 
+	      new ArrayList<Component>();
+
+	   public void addIndexedComponent(Component component) {
+	        components.add(component);
+	   }
+
+	   @Override
+	   public Component getComponentAfter(Container aContainer, 
+	               Component aComponent) {
+	        int atIndex = components.indexOf(aComponent);
+	        int nextIndex = (atIndex + 1) % components.size();
+	        return components.get(nextIndex);
+	   }
+
+	   @Override
+	   public Component getComponentBefore(Container aContainer,
+	         Component aComponent) {
+	        int atIndex = components.indexOf(aComponent);
+	        int nextIndex = (atIndex + components.size() - 1) %
+	                components.size();
+	        return components.get(nextIndex);
+	   }
+
+	   @Override
+	   public Component getFirstComponent(Container aContainer) {
+	        return components.get(0);
+	   }
+	   
+	   @Override
+	   public Component getLastComponent(Container aContainer){
+	   
+	   if(components.size()== 0){
+	    
+		   return null;
+	   }
+	   else{
+	int indexOfLast  = components.size()-1;
+	   
+	   return components.get(indexOfLast);
+	   }
+	   }
+	 
+	   @Override 
+	   public Component getDefaultComponent(Container aContainer){
+		   return getFirstComponent(aContainer);
+	   }
+	   
 	}
 	
 }
