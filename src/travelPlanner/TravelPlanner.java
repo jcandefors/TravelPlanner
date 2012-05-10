@@ -5,7 +5,7 @@ import javax.swing.WindowConstants;
 
 /**
  * This is the main class of the application TravelPlanner
- * @author j
+ * @author Ragnhild Karlsson
  *
  */
 public class TravelPlanner extends JFrame{

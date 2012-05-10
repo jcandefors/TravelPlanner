@@ -1,6 +1,7 @@
 package travelPlanner;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -9,19 +10,25 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+/**
+ * The class of the destinations in the application TravelPlanner. Destinations are responsible to hold and handle destination information
+ *  to be used to create components displayed to the user via the LayoutHandler. * 
+ * @author Joakim Candefors
+  */
 
 public class Destination extends Slide {
 
 	protected final int MAININFOSIZE = 6;
 	private DestinationWindow destinationWindow;
+	private final String EDITDESTINATIONTEXT = "Redigera destination", REMOVEBUTTONTEXT = "Ta bort destination", REMOVEPROMPTTEXT = "Vill du verkligen ta bort destinationen ", 
+			REMOVEPROMPTTITLE = "Verifiera borttagning av destination", CREATEBUTTONTEXT = "Skapa destination", DESTINATIONSLABELTEXT = "Destinationer:";
 
 	/**
 	 * Constructor of class Destination
 	 * 
-	 * @param layoutHandler
-	 *            the layoutHandler to be used for laying out components.
-	 * @param title
-	 *            The name of the destination.
+	 * @param layoutHandler The layoutHandler to be used for laying out components.
+	 * @param user The user connected with this destination.
+	 * @param title The name of the destination.
 	 */
 	public Destination(LayoutHandler layoutHandler, String user, String title,
 			Boolean firstTime) {
@@ -40,7 +47,7 @@ public class Destination extends Slide {
 	}
 
 	/**
-	 * 
+	 * Calls help methods to prepare components and send them LayoutHandler for layout. 
 	 */
 	public void prepareLayout() {
 		layoutHandler.clearAll();
@@ -55,19 +62,17 @@ public class Destination extends Slide {
 	public void generalDestinationLayout() {
 		layoutHandler.addToMenuUp(Box.createRigidArea(new Dimension(20, 10)));
 		layoutHandler.updateTitle("Destination: " + title);
-		JButton editButton = new JButton("Redigera destination");
+		JButton editButton = new JButton(EDITDESTINATIONTEXT);
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				editDestination(false);
 			}
 		});
-		JButton removeButton = new JButton("Ta bort destination"); // kolla på!
+		JButton removeButton = new JButton(REMOVEBUTTONTEXT);
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int answer = JOptionPane.showConfirmDialog(null,
-						"Vill du verkligen ta bort destinationen " + title
-								+ "?", "Verifiera borttagning av destination",
-						JOptionPane.YES_NO_OPTION);
+						REMOVEPROMPTTEXT + title + "?", REMOVEPROMPTTITLE, JOptionPane.YES_NO_OPTION);
 				if (answer == 0) {
 					removeDestination();
 					toProject();
@@ -84,7 +89,7 @@ public class Destination extends Slide {
 		layoutHandler.addToMenuUp(editButton);
 		layoutHandler.addToMenuUp(removeButton);
 		layoutHandler
-				.addToMenuUp(new DestinationButton("Skapa destination", 2));
+				.addToMenuUp(new DestinationButton(CREATEBUTTONTEXT, 2));
 		layoutHandler.addToMap(new MapLabel(title));
 	}
 
@@ -93,10 +98,10 @@ public class Destination extends Slide {
 	 * TravelProject except for the current one.
 	 */
 	public void destinationLayout() {
-		JLabel menuLabel = new JLabel("Destinationer:");
-		menuLabel.setSize(10, 30); // TBC
-		layoutHandler.addToMenuLow(menuLabel);
 		layoutHandler.addToMenuLow(Box.createRigidArea(new Dimension(20, 10)));
+		JLabel menuLabel = new JLabel(DESTINATIONSLABELTEXT);
+		menuLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		layoutHandler.addToMenuLow(menuLabel);
 		Iterator<String> iterator = destinations.iterator();
 		while (iterator.hasNext()) {
 			String nextDestination = iterator.next();
@@ -117,7 +122,7 @@ public class Destination extends Slide {
 	}
 
 	/**
-	 * Takes the user to the project view.
+	 * Takes the user to the project slide.
 	 */
 	private void toProject() {
 		new TravelProject(layoutHandler, userName, false);
@@ -125,14 +130,14 @@ public class Destination extends Slide {
 
 	/**
 	 * Creates a new EditDestination object which asks the user to edit the
-	 * destiantion information and then updates the information in the layout.
+	 * destination information and then updates the information in the layout.
 	 */
 	public void editDestination(boolean firstTime) {
 		destinationWindow.getEditDestinationPopUp(firstTime);
 	}
 
 	/**
-	 * 
+	 * Removes the destination from the travelproject and its associated files from the disk.
 	 */
 	private void removeDestination() {
 		destinations.remove(title);

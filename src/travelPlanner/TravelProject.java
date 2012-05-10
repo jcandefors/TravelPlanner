@@ -17,13 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * The class TravelProject manages data for travelprojects in the application 
- * "TravelPlanner" and create GUI-components from this data. 
- * for the user to view and use. 
+ * The class TravelProject manages data for travel projects in the application 
+ * "TravelPlanner". It holds data and create GUI-components from this data for the user to view and use. 
  * @author Joakim Candefors
- *
  */
-
 public class TravelProject extends Slide{
 
 	private String[] projectInfo; 				//serialized
@@ -31,12 +28,12 @@ public class TravelProject extends Slide{
 	private final int hometown = 1;
 	private String[] labels;
 	private final String PROJECTTITLE = "Resenär: ", EDITPROJECTBUTTONTEXT = "Redigera reseprojekt", CREATEBUTTONTEXT = "Skapa destination",
-	DESTINATIONLABELTEXT = "Destinationer:";
-	
+			DESTINATIONLABELTEXT = "Destinationer:";
+
 	/**
-	 * Constructor of class TravelProject. firstTime = true should only be called with when user is created.
+	 * Constructor of class TravelProject. firstTime = true should only be called with when travelproject is created.
 	 * @param layoutHandler The layoutHandler used for laying out components in the frame.
-	 * @param title	The title of this project.
+	 * @param userName The user name associated with this project.
 	 * @param firstTime true if new user and project to be created. Else false.
 	 */
 	public TravelProject(LayoutHandler layoutHandler, String userName, boolean firstTime) {
@@ -55,7 +52,7 @@ public class TravelProject extends Slide{
 			prepareLayout();
 		}
 	}	
-	
+
 	/**
 	 * Calls the layout help methods to create and send components to layoutHandler for layout.
 	 */
@@ -71,7 +68,7 @@ public class TravelProject extends Slide{
 	 */
 	public void generalProjectLayout(){
 		layoutHandler.updateTitle(PROJECTTITLE + title);
-		
+
 		layoutHandler.addToMenuUp(Box.createRigidArea(new Dimension(20, 10)));
 		layoutHandler.addToMenuUp(new ProjectButton(EDITPROJECTBUTTONTEXT, 1));
 		layoutHandler.addToMenuUp(new DestinationButton(CREATEBUTTONTEXT, 2));
@@ -80,7 +77,9 @@ public class TravelProject extends Slide{
 
 
 	/**
-	 * Creates components (DestinationButton) for all the destinations in the TravelProject.
+	 * Prepares the list of destinations shown in the lower menu of the slide.
+	 * Creates components (DestinationButton) for all the destinations in the TravelProject and 
+	 * send these to the LayoutHandler.
 	 */
 	public void destinationLayout(){
 		layoutHandler.addToMenuLow(Box.createRigidArea(new Dimension(20, 10)));
@@ -92,15 +91,15 @@ public class TravelProject extends Slide{
 			layoutHandler.addToMenuLow(new DestinationButton(iterator.next(), DestinationButton.OPEN));
 		}
 	}
-	
+
 	/**
-	 * Creates components from mainInfo and labels and adds them to the frame.
+	 * Creates components from labels and projectInfo and sends them to LayoutHandler to be placed in the frame.
 	 */
 	public void mainLayout(){
 		JPanel panel = new JPanel(new GridLayout(0,2,20,8));
 		panel.setOpaque(false);
 		for(int index = 0; index < labels.length; index++){
-			
+
 			JLabel tempLabel1 = new JLabel(labels[index]);
 			tempLabel1.setFont(new Font("Tahoma", Font.BOLD, 16));
 			panel.add(tempLabel1);
@@ -108,10 +107,10 @@ public class TravelProject extends Slide{
 			tempLabel2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			panel.add(tempLabel2);
 		}
-			layoutHandler.addToMain(panel);
-		
+		layoutHandler.addToMain(panel);
+
 	}
-	
+
 	/**
 	 * Saves the project information data to disk.
 	 */
@@ -122,31 +121,31 @@ public class TravelProject extends Slide{
 			ErrorHandler.printError(e, this.getClass().toString());
 		}
 	}
-	
+
 	/**
-	 * Takes the edited information and applies it to current project or destination and saves to disk. 
-	 * @param editedProjectInfo The array with the main information edited in EditTravelProject or EditDestination.
+	 * Takes the edited information and applies it to current project and saves to disk. 
+	 * @param editedProjectInfo The array with the project information edited in EditTravelProject.
 	 */
 	public void updateProjectInfo(String[] editedProjectInfo){		
 		projectInfo = editedProjectInfo;
 		saveProjectInfo();
 	}
 
-	
+
 	/**
-	 * Creates a new EditTravelProject and then updates the data in the layout.
+	 * Creates a new EditTravelProject.
 	 */
 	public void editTravelProject(){
-		new EditTravelProject(this, projectInfo, labels);	//vilken skapar popup och kallar vid "spara" pï¿½ updateMainInfo();	
+		new EditTravelProject(this, projectInfo, labels);
 	}
-	
+
 	/**
-	 * 
+	 * Loads the project info from disk.
 	 */
 	public void loadProjectInfo(){
 		try{
 			projectInfo = (String[]) ObjectIO.loadObject(userName, title);
-			}catch (ClassNotFoundException e){
+		}catch (ClassNotFoundException e){
 			ErrorHandler.printError(e, this.getClass().toString());
 		}catch (IOException e){
 			ErrorHandler.printError(e, this.getClass().toString());

@@ -1,6 +1,5 @@
 package travelPlanner;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
@@ -13,38 +12,38 @@ import javax.swing.JPanel;
 import travelPlanner.ErrorHandler;
 
 /**
- * 
+ * ImagePanel is a JPanel with an image drawn as background of the panel.
  * @author Joakim Candefors
  *
  */
 public class ImagePanel extends JPanel{
-	private Image originalImage;
+
 	private Image backgroundImage;
 
 	/**
-	 * Constructs a background panel.
-	 * @param fileName The file name for the image to set as background of the panel.
+	 * Constructs a ImagePanel.
+	 * @param fileName The filename for the image to set as background of the panel.
 	 */
 	public ImagePanel(String fileName){		   
 		setBackground(fileName);
 	}
 	
 	/**
-	 * 
-	 * @param file
+	 * Sets the background of the panel from the filename given.
+	 * @param fileName The path and filename for the image to be used as background.
 	 */
 	public void setBackground(String fileName){
 			InputStream input = getClass().getResourceAsStream(fileName);
 		try{
 			backgroundImage = ImageIO.read(input);
-			originalImage = backgroundImage;
+			
 		}catch (IOException e){
 			ErrorHandler.printError(e, this.getClass().toString());
 		}   	
 		paintComponent(backgroundImage.getGraphics());
 	}
 	/**
-	 * 
+	 * Paints the background image on the panel.
 	 * @Overide
 	 */	
 	public void paintComponent(Graphics g) {
@@ -52,12 +51,5 @@ public class ImagePanel extends JPanel{
 
 		g.drawImage(backgroundImage, 0, 0, null);
 	}
-
-	public void scaleImage(Dimension frameSize){			
-		int height= frameSize.height;
-		int width = frameSize.width;
-		backgroundImage = originalImage.getScaledInstance(width, height, Image.SCALE_FAST);
-	}
-
 
 }

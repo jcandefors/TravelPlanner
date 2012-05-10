@@ -9,7 +9,7 @@ import javax.swing.border.EtchedBorder;
 
 /**
  * The class LayoutHandler manages the layout of the slides in the application TravelPlanner.
- * It receives components from other classes and places them in the frame.
+ * It receives components from the classes Destination and TravelProject and places them in the frame.
  *
  * @author Joakim Candefors
  *
@@ -29,8 +29,9 @@ public class LayoutHandler {
 	EXITBUTTONTEXT = "Avsluta", LOGOUTBUTTONTEXT = "Logga ut", MENUBUTTONTEXT = "Meny"; 
 
 	/**
-	 * Constructor of LayoutHandler
-	 * @param frame the main frame to be used to present on.
+	 * Constructor of class LayoutHandler. Sets up the frame with panels in a border layout consisting of 3 areas, top in north, 
+	 * upper and lower menu in west and map and main in the center.
+	 * @param frame the main frame to be used.
 	 */
 	public LayoutHandler(JFrame frame){
 		this.frame = frame;
@@ -49,7 +50,7 @@ public class LayoutHandler {
 	}
 
 	/**
-	 * Sets up the top area in the top of the layout.
+	 * Sets up the top area in the north of the layout.
 	 */
 	public void setUpTop(){
 		top = new JPanel(new GridLayout(0, 5, 0, 0));
@@ -93,7 +94,7 @@ public class LayoutHandler {
 	}
 
 	/**
-	 * Sets up the menu in the west area of the layout.
+	 * Sets up the menus in the west area of the layout.
 	 */
 	public void setUpMenu(){
 		ImagePanel leftMenu = new ImagePanel("img/menu.png");
@@ -115,7 +116,7 @@ public class LayoutHandler {
 	}
 
 	/**
-	 * Sets up the main area in the center of the layout.
+	 * Sets up the main and map area in the center of the layout.
 	 */
 	public void setUpMain(){
 		map = new ImagePanel("img/mappanel.png");
@@ -135,7 +136,7 @@ public class LayoutHandler {
 	}
 
 	/**
-	 * Adds component to the upper menu area of the layout.
+	 * Adds component to the upper menu.
 	 * @param component The component to be added.
 	 */
 	public void addToMenuUp(Component component){
@@ -145,7 +146,7 @@ public class LayoutHandler {
 	}
 
 	/**
-	 * Adds component to the lower menu area of the layout.
+	 * Adds component to the lower menu.
 	 * @param component The component to be added.
 	 */
 	public void addToMenuLow(Component component){
@@ -156,7 +157,7 @@ public class LayoutHandler {
 	}
 
 	/**
-	 * Adds component to the main area of the layout.
+	 * Adds component to the main area in the center of the layout.
 	 * @param component The component to be added.
 	 */
 	public void addToMain(Component component){
@@ -167,7 +168,7 @@ public class LayoutHandler {
 	}
 
 	/**
-	 * Adds component to the main area of the layout.
+	 * Adds component to the map area in the center of the layout.
 	 * @param component The component to be added.
 	 */
 	public void addToMap(Component component){
@@ -176,7 +177,8 @@ public class LayoutHandler {
 
 	}
 	/**
-	 * Removes all components from all the panels.
+	 * Removes all added components from all the panels except top.
+	 * This removes all components added to the panels.
 	 */
 	public void clearAll(){
 		menuUp.removeAll();
@@ -185,6 +187,7 @@ public class LayoutHandler {
 		map.removeAll();
 		frame.repaint();
 	}
+	
 	/**
 	 * Updates the title of the slide
 	 * @param slideTitle
@@ -195,7 +198,7 @@ public class LayoutHandler {
 	}	
 
 	/**
-	 * Returns the frame used by this layouthandler.
+	 * Returns the frame used by this LayoutHandler.
 	 * @return The frame used by this LayoutHandler.
 	 */
 	public JFrame getFrame(){

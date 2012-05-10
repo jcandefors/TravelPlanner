@@ -9,14 +9,15 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
- * This class is handling serialized objects. It saves and loads file to/from the file system to the application TravelPlanner.
+ * This class is handling serialized objects. It saves and loads files to/from the file system to the application TravelPlanner.
  */
 public class ObjectIO {
 
 	/**
-	 * Loads the object into runtime "TravelPlanner" from a ".data"-file in the project folder in the filesystem.
-	 * @param object The name of the object and the filename of the object to be loaded/restored.
-	 * @return The object to be loaded into "TravelPlanner"
+	 * Loads the object into runtime TravelPlanner from a ".data"-file in the project folder in the file system.
+	 * @param folder The name of the folder that holds the file.
+	 * @param fileName The filename of the object to be loaded/restored.
+	 * @return The object to be loaded into TravelPlanner
 	 */
 	public static Object loadObject(String folder, String fileName)throws IOException, ClassNotFoundException{
 
@@ -34,12 +35,10 @@ public class ObjectIO {
 	}
 
 	/**
-	 * Saves the object as a ".data"-file in the project folder in the filesystem. 
-	 * Used primarily for saving destinations objects.
+	 * Saves the object as a ".data"-file in the project folder in the file system. 
 	 * @param object The object that is to be saved to disk.
 	 * @param folder The folder path to the file, subfolders are separated by "/". No need to include final "/".
 	 * @param fileName The name of the Destination/TravelProject which is set to the filename.
-	 * @return	Returns true if saved succesfull, else false.
 	 */
 	public static void saveObject(Object object, String folder, String filename)throws IOException{
 			// Write to disk with FileOutputStream

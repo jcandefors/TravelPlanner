@@ -13,8 +13,7 @@ import javax.swing.JLabel;
 import sun.awt.image.URLImageSource;
 
 /**
- * 
- * 
+ * MapLabel is a JLabel with an icon of a image loaded from the GoogleMaps static API.
  * @author Joakim Candefors
  */
 public class MapLabel extends JLabel{
@@ -24,8 +23,8 @@ public class MapLabel extends JLabel{
 	private final String TOOLTIP = "Maps provided by Google.";
 
 	/**
-	 * 
-	 * @param destinations
+	 * Constructor of class MapLabel for project maps. Builds a URL and map with all the destinations in the project.
+	 *@param destinations An array list of all the destinations in the travel project.
 	 */
 	public MapLabel(String hometown, ArrayList<String> destinations){
 		super.setToolTipText(TOOLTIP);
@@ -36,8 +35,8 @@ public class MapLabel extends JLabel{
 	}	
 
 	/**
-	 * 
-	 * @param destination
+	 * Constructor of class MapLabel for destination maps. Creates a URL and map of the destination.
+	 * @param destination The destination to be centered on the map.
 	 */
 	public MapLabel(String destination){
 		super.setToolTipText(TOOLTIP);
@@ -47,9 +46,9 @@ public class MapLabel extends JLabel{
 	}
 
 	/**
-	 * 
-	 * @param destination
-	 * @return
+	 * Builds a destination map consisting of a single destination.
+	 * @param destination The destination to be centered on the map.
+	 * @return true if succeeded, else false.
 	 */
 	public boolean buildDestinationMap(String destination){
 		URL u = null; 
@@ -79,9 +78,9 @@ public class MapLabel extends JLabel{
 
 
 	/**
-	 * 
-	 * @param destinations
-	 * @return
+	 * Builds a project map consisting of multiple destinations.
+	 * @param destinations The destinations in the travelproject to placed on the map as a path.
+	 * @return true if succeeded, else false.
 	 */
 	public boolean buildProjectMap(ArrayList<String> destinations){
 		try{
@@ -100,9 +99,9 @@ public class MapLabel extends JLabel{
 	}
 
 	/**
-	 * 
-	 * @param destinations
-	 * @return
+	 * Builds the URL with all the destinations as path-members and markers.
+	 * @param destinations The destinations in the travel project to placed on the map as a path.
+	 * @return The URL to be used to connect and get the image.
 	 */
 	private URL buildURL(ArrayList<String> destinations){		
 		StringBuilder sb = new StringBuilder();
@@ -132,6 +131,7 @@ public class MapLabel extends JLabel{
 		}
 		return null;
 	}
+	
 	/**
 	 * Loads an error picture instead of the map.
 	 */

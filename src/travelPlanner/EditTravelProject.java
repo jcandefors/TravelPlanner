@@ -10,7 +10,11 @@ import java.awt.event.ActionListener;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 
-
+/**
+ * EditTravelProject is used to edit the travel project information via a popup presented to the user.
+ * @author Joakim Candefors
+ *
+ */
 public class EditTravelProject {
 
 	private TravelProject travelProject;
@@ -23,8 +27,10 @@ public class EditTravelProject {
 
 
 	/**
-	 * 
-	 * @param title
+	 * Constructor of EditTravelProject
+	 * @param travelProject The project which is edited.
+	 * @param projectInfo An array with the information about the project.
+	 * @param labels An array with all the labels for the project information.
 	 */
 	public EditTravelProject(TravelProject travelProject, String[] projectInfo, String[] labels) {
 		this.travelProject = travelProject;
@@ -36,6 +42,9 @@ public class EditTravelProject {
 
 	}
 
+	/**
+	 * Constructs a popup to be displayed to the user.
+	 */
 	public void createPopUp(){
 
 		frame = new JFrame(FRAMETITLE);
@@ -73,7 +82,9 @@ public class EditTravelProject {
 
 
 	}
-
+/**
+ * Fills the pop up with the labels and possible previous data to be edited. 
+ */
 	public void fillPanel(){
 
 		for(int index = 0; index < labels.length; index++){
@@ -90,11 +101,19 @@ public class EditTravelProject {
 		}
 	}
 
+	/**
+	 * Saves the users input in the textfields to the array.
+	 */
 	public void saveProjectInfo(){
 		for(int index= 0; index < projectInfo.length; index++){
 			projectInfo[index] = textFields[index].getText();			
 		}
 	}	
+	
+	/**
+	 * Returns the changes made to the travelProject.
+	 * @return An array with the travel project information.
+	 */
 	public String[] getChanges(){
 		return projectInfo;
 

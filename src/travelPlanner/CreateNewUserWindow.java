@@ -25,14 +25,14 @@ public class CreateNewUserWindow {
 	private JLabel passWordCopyLabel;
 	private JButton createNewUserButton;
 	private JButton quitButton;
-	private static String USERNAME = "Anv√§ndarnamn";
-	private static String PASSWORD = "L√∂senord";
-	private static String PASSWORDCOPY = "Repetera l√∂senord";
+	private static String USERNAME = "Anv‰ndarnamn";
+	private static String PASSWORD = "Lˆsenord";
+	private static String PASSWORDCOPY = "Repetera lˆsenord";
 	private final static String PROGRAMNAME = "Reseplaneraren";
 	private static String PROBLEMFRAMETITLE = "Problem";
-	private static String INSTRUCTIONS = "<html>V√§lkommen till "
+	private static String INSTRUCTIONS = "<html>V‰lkommen till "
 			+ PROGRAMNAME
-			+ ".<br> F√∂r att skapa ny anv√§ndare, <br> skriv in anv√§ndarnamn och l√∂senord i f√§lten nedan<br> v√§lj sedan skapa ny anv√§ndare,<br> L√∂senord och anv√§ndarnman f√•r innh√•lla min"
+			+ ".<br> Fˆr att skapa ny anv‰ndare, <br> skriv in anv‰ndarnamn och lˆsenord i f‰lten nedan<br> v‰lj sedan skapa ny anv‰ndare,<br> Lˆsenord och anv‰ndarnman fÂr innhÂlla min"
 			+ PassWordHandler.getMinimalLengthOfPassword() + "och max"
 			+ PassWordHandler.getMaximalLengthOfPassword() + "tecken. </html>"; // TODO
 	// FIXA
@@ -42,12 +42,12 @@ public class CreateNewUserWindow {
 	// GENOM
 	// ACTIONHANDLER
 	private static String QUITBUTTONTEXT = "Avbryt";
-	private static String CREATENEWUSER = "Skapa ny anv√§ndare";
-	private static String WINDOWTEXT = "Skapa ny anv√§dnare till " + PROGRAMNAME;
-	private static String EMPTYLOGINFIELDDIALOG = "Du m√•ste fylla i b√•de anv√§ndarnamn och l√∂senordsf√§lten";
-	private static String MISSMATCHPASSWORDFIELDDIALOG = "L√∂senorden matchade ej f√∂rs√∂k igen";
-	private static String NEWUSERCREATEDDIALOG = "En ny anv√§ndare har nu lagts till";
-	private static String NOTVALIDUSERNAMEPASSWORD = "Anv√§ndarnamn upptaget alternativ ej godk√§nd l√§ngd p√• anv√§ndarnamn / l√∂senord ";
+	private static String CREATENEWUSER = "Skapa ny anv‰ndare";
+	private static String WINDOWTEXT = "Skapa ny anv‰dnare till " + PROGRAMNAME;
+	private static String EMPTYLOGINFIELDDIALOG = "Du mÂste fylla i bÂde anv‰ndarnamn och lˆsenordsf‰lten";
+	private static String MISSMATCHPASSWORDFIELDDIALOG = "Lˆsenorden matchade ej fˆrsˆk igen";
+	private static String NEWUSERCREATEDDIALOG = "En ny anv‰ndare har nu lagts till";
+	private static String NOTVALIDUSERNAMEPASSWORD = "Anv‰ndarnamn upptaget alternativ ej godk‰nd l‰ngd pÂ anv‰ndarnamn / lˆsenord ";
 
 	public CreateNewUserWindow(JFrame frame) {
 		createNewUserFrame = frame;

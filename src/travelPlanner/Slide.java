@@ -15,6 +15,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+/**
+ * The superclass of the both slide types Destination and Travelproject.
+ * Slide together with TravelProject or Destiantion holds information to be 
+ * viewed in each destination of for the project.
+ * @author Joakim Candefors
+ *
+ */
+
 public class Slide {
 
 
@@ -26,7 +34,7 @@ public class Slide {
 	/**
 	 * Contructor of class Slide. 
 	 * @param layoutHandler The layoutHandler to used layout all components.
-	 * @param userName the username (and logic projectName).
+	 * @param userName the user name.
 	 */
 	public Slide(LayoutHandler layoutHandler, String userName){
 		this.layoutHandler = layoutHandler;
@@ -67,7 +75,7 @@ public class Slide {
 	}
 
 	/**
-	 * 
+	 * A destination button used from both Destination and TravelProject to load or initiate creation of destinations. 
 	 * @author Joakim Candefors
 	 */
 	public class DestinationButton extends JButton implements ActionListener{
@@ -77,15 +85,15 @@ public class Slide {
 		public static final int NEW = 2;
 		private JTextField destinationField;
 		private JDialog dialog;
-		private final String NEWBUTTONTEXT = "Skapa en ny destination", OPENBUTTONTEXT = "Ã–ppna destinationen ", 
+		private final String NEWBUTTONTEXT = "Skapa en ny destination", OPENBUTTONTEXT = "Öppna destinationen ", 
 		CREATEDIALOGTITLE = "Skapa Destination", TEXTFIELDTEXT = "destinationens namn", CREATEBUTTONTEXT = "Skapa",
 		DESTINATIONLABELTEXT = "Destinationens titel:", TEXTFIELDINPUTEXISTERROR = "Destinationsnamnet finns redan i reseprojektet.",
-		TEXTFIELDINPUTSIZEERROR = "Destinationsnamnet mÃ¥ste vara minst 1 tecken och max 25 tecken.";
+		TEXTFIELDINPUTSIZEERROR = "Destinationsnamnet måste vara minst 1 tecken och max 25 tecken.";
 
 		/**
-		 * Constructor of a destination-button. This component takes the user to the destination referenced in this button. 
+		 * Constructor of a DestinationButton.  
 		 * @param destinationTitle	The title of the destination.
-		 * @param actionType
+		 * @param actionType the type of button.
 		 */
 		public DestinationButton(String title, int actionType){
 			super(title);			
@@ -109,7 +117,7 @@ public class Slide {
 
 
 		/**
-		 * Shows a dialog after firing destination button. Asks user for title of the destination to be created. 
+		 * Shows a dialog after firing a destination button. Asks user for title of the destination to be created. 
 		 */
 		public void showCreateDialog(){			
 			dialog = new JDialog(layoutHandler.getFrame());
