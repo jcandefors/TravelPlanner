@@ -30,7 +30,7 @@ public class TravelProject extends Slide{
 
 	private final int hometown = 1;
 	private String[] labels;
-	private final String PROJECTTITLE = "Resen√§r: ", EDITPROJECTBUTTONTEXT = "Redigera reseprojekt", CREATEBUTTONTEXT = "Skapa destination",
+	private final String PROJECTTITLE = "Resen‰r: ", EDITPROJECTBUTTONTEXT = "Redigera reseprojekt", CREATEBUTTONTEXT = "Skapa destination",
 	DESTINATIONLABELTEXT = "Destinationer:";
 	
 	/**
