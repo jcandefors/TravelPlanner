@@ -25,8 +25,9 @@ public class LayoutHandler {
 	private ImagePanel map;
 	private JPanel main;
 	private JLabel title;
-	private Dimension frameSize;
-	private Dimension screenSize;
+	private Dimension frameSize;	
+	private final String EXITPROMPTMESSAGE = "Vill du verkligen avsluta?", EXITPROMPTTITLE = "Avsluta TravelPlanner",
+	EXITBUTTONTEXT = "Avsluta", LOGOUTBUTTONTEXT = "Logga ut", MENUBUTTONTEXT = "Meny"; 
 
 	/**
 	 * Constructor of LayoutHandler
@@ -35,7 +36,7 @@ public class LayoutHandler {
 	public LayoutHandler(JFrame frame){
 		this.frame = frame;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		screenSize = new Dimension(frame.getToolkit().getScreenSize());
+		Dimension screenSize = new Dimension(frame.getToolkit().getScreenSize());
 		frame.setLocation(screenSize.width*1/6, screenSize.height*1/6);		
 		frameSize = new Dimension(screenSize.width*2/3,screenSize.height*2/3);
 		background = new JPanel(new BorderLayout(0,0));
@@ -58,11 +59,11 @@ public class LayoutHandler {
 		topMenuBar.setPreferredSize(new Dimension(40,20));
 		topMenuBar.setBorder(null);
 		topMenuBar.setBackground(Color.LIGHT_GRAY);
-		JMenu topMenu = new JMenu("Meny");
+		JMenu topMenu = new JMenu(MENUBUTTONTEXT);
 		topMenu.setMnemonic(KeyEvent.VK_A);
 		topMenuBar.add(topMenu);
 		
-		JMenuItem menuItem_1 = new JMenuItem("Logga ut"); 			//create log out-button
+		JMenuItem menuItem_1 = new JMenuItem(LOGOUTBUTTONTEXT); 			//create log out-button
 		menuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
@@ -73,10 +74,10 @@ public class LayoutHandler {
 			}});
 		topMenu.add(menuItem_1);
 		
-		JMenuItem menuItem = new JMenuItem("Avsluta", KeyEvent.VK_F4);		// create exit-button
+		JMenuItem menuItem = new JMenuItem(EXITBUTTONTEXT, KeyEvent.VK_F4);		// create exit-button
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int answer = JOptionPane.showConfirmDialog(frame, "Vill du verkligen avsluta?", "Avsluta TravelPlanner", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+				int answer = JOptionPane.showConfirmDialog(frame, EXITPROMPTMESSAGE, EXITPROMPTTITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (answer == 0){System.exit(0);}}});
 		topMenu.add(menuItem);
 		title = new JLabel();
@@ -119,7 +120,8 @@ public class LayoutHandler {
 	 */
 	public void setUpMain(){
 		map = new ImagePanel(new File("img/mappanel.png"));
-		map.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 35));
+		map.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 30));
+		Dimension screenSize = new Dimension(frame.getToolkit().getScreenSize());
 		map.setPreferredSize(new Dimension(screenSize.width*5/6,360));
 		map.setAlignmentY(JPanel.CENTER_ALIGNMENT);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));

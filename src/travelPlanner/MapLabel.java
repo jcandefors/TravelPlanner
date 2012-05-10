@@ -1,35 +1,34 @@
 package travelPlanner;
-import java.awt.Dimension;
+
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-import sun.awt.image.GifImageDecoder;
 import sun.awt.image.URLImageSource;
 
+/**
+ * 
+ * 
+ * @author Joakim Candefors
+ */
 public class MapLabel extends JLabel{
 	private Image mapImage = null;
 	private final int TIMEOUT = 1000;
 	private String hometown;
+	private final String TOOLTIP = "Maps provided by Google.";
 
 	/**
 	 * 
 	 * @param destinations
 	 */
 	public MapLabel(String hometown, ArrayList<String> destinations){
+		super.setToolTipText(TOOLTIP);
 		this.hometown = hometown;
 		if(!buildProjectMap( destinations)){
 			loadNoMap();
@@ -41,7 +40,7 @@ public class MapLabel extends JLabel{
 	 * @param destination
 	 */
 	public MapLabel(String destination){
-
+		super.setToolTipText(TOOLTIP);
 		if(!buildDestinationMap(destination)){
 			loadNoMap();
 		}

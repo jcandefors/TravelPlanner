@@ -27,8 +27,11 @@ import javax.swing.JPanel;
 public class TravelProject extends Slide{
 
 	private String[] projectInfo; 				//serialized
-	private final int PROJECTINFOSIZE = 4;
+
+	private final int hometown = 1;
 	private String[] labels;
+	private final String PROJECTTITLE = "Resenär: ", EDITPROJECTBUTTONTEXT = "Redigera reseprojekt", CREATEBUTTONTEXT = "Skapa destination",
+	DESTINATIONLABELTEXT = "Destinationer:";
 	
 	/**
 	 * Constructor of class TravelProject. firstTime = true should only be called with when user is created.
@@ -39,10 +42,10 @@ public class TravelProject extends Slide{
 	public TravelProject(LayoutHandler layoutHandler, String userName, boolean firstTime) {
 		super(layoutHandler, userName);
 		super.title = userName;		
-		labels = new String[]{"Reseprojekt:","Hemstad", "Startdatum:","Slutdatum"};
+		labels = new String[]{"Reseprojekt:","Hemstad:", "Startdatum:","Slutdatum:"};
 		if(firstTime){
 			new File("data/"+userName).mkdir();
-			projectInfo = new String[PROJECTINFOSIZE];
+			projectInfo = new String[labels.length];
 			super.destinations = new ArrayList<String>();
 			editTravelProject();
 			saveDestinations();
@@ -67,14 +70,12 @@ public class TravelProject extends Slide{
 	 * Creates general components common for every TravelProject.
 	 */
 	public void generalProjectLayout(){
-		layoutHandler.updateTitle("Resen�r: " + title);
-		JLabel menuLabel = new JLabel("Destinationer:");
-		menuLabel.setSize(10, 30);				//TBC
-		layoutHandler.addToMenuLow(menuLabel);
+		layoutHandler.updateTitle(PROJECTTITLE + title);
+		
 		layoutHandler.addToMenuUp(Box.createRigidArea(new Dimension(20, 10)));
-		layoutHandler.addToMenuUp(new ProjectButton("Redigera reseprojekt", 1));
-		layoutHandler.addToMenuUp(new DestinationButton("Skapa destination", 2));
-		layoutHandler.addToMap(new MapLabel(projectInfo[1],destinations));
+		layoutHandler.addToMenuUp(new ProjectButton(EDITPROJECTBUTTONTEXT, 1));
+		layoutHandler.addToMenuUp(new DestinationButton(CREATEBUTTONTEXT, 2));
+		layoutHandler.addToMap(new MapLabel(projectInfo[hometown],destinations));
 	}
 
 
@@ -83,6 +84,9 @@ public class TravelProject extends Slide{
 	 */
 	public void destinationLayout(){
 		layoutHandler.addToMenuLow(Box.createRigidArea(new Dimension(20, 10)));
+		JLabel menuLabel = new JLabel(DESTINATIONLABELTEXT);
+		menuLabel.setFont(new Font("Tahoma", Font.BOLD, 16));			
+		layoutHandler.addToMenuLow(menuLabel);		
 		Iterator<String> iterator = destinations.iterator();
 		while (iterator.hasNext()){
 			layoutHandler.addToMenuLow(new DestinationButton(iterator.next(), DestinationButton.OPEN));
@@ -151,10 +155,11 @@ public class TravelProject extends Slide{
 
 
 	/**
-	 * ProjectButton is a JButtons specifically for TravelProjects.
+	 * ProjectButton is a JButton specifically for TravelProjects.
 	 */
 	public class ProjectButton extends JButton implements ActionListener{
 		private int actionType;
+		private final String EDITTOOLTIPTEXT = "Redigera Reseprojekt";
 
 		/**
 		 * Constructor of a project button.
@@ -167,7 +172,7 @@ public class TravelProject extends Slide{
 			super.setBorderPainted(false);
 			this.actionType = actionType;
 			if(actionType == 1){
-				super.setToolTipText("Redigera Reseprojekt");
+				super.setToolTipText(EDITTOOLTIPTEXT);
 			}
 			super.addActionListener(this); 
 		}

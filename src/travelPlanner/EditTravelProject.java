@@ -20,6 +20,7 @@ public class EditTravelProject {
 	private String[] labels;
 	private	ImagePanel panel;
 	private JTextField[] textFields; 
+	private final String CANCELBUTTONTEXT = "Avbryt" , SAVEBUTTONTEXT = "Spara" , FRAMETITLE = "Redigera reseprojekt";
 
 
 	/**
@@ -38,7 +39,7 @@ public class EditTravelProject {
 
 	public void createPopUp(){
 
-		frame = new JFrame("Redigera reseprojekt");
+		frame = new JFrame(FRAMETITLE);
 		frame.setSize(300, 600);
 		frame.setMinimumSize(new Dimension(200, 600));
 		Container contentPane = frame.getContentPane();
@@ -50,7 +51,7 @@ public class EditTravelProject {
 
 		JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT,10,10));
 		bottom.setOpaque(false);
-		JButton save = new JButton("Spara");
+		JButton save = new JButton(SAVEBUTTONTEXT);
 		save.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent arg0) {	
 				saveProjectInfo();
@@ -60,9 +61,9 @@ public class EditTravelProject {
 
 			}
 		});
-		JButton cancel = new JButton("Avbryt");
+		JButton cancel = new JButton(CANCELBUTTONTEXT);
 		cancel.addActionListener(new ActionListener() { 
-			public void actionPerformed(ActionEvent arg0) { frame.dispose();}  //handle first time set up?
+			public void actionPerformed(ActionEvent arg0) { frame.dispose();}
 		});		
 		bottom.add(save);
 		bottom.add(cancel);

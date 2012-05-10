@@ -5,7 +5,6 @@ import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -18,7 +17,7 @@ import javax.swing.JTextField;
 
 public class Slide {
 
-	
+
 	protected ArrayList<String> destinations;		//serialized
 	protected LayoutHandler layoutHandler;
 	protected String userName;
@@ -33,7 +32,7 @@ public class Slide {
 		this.layoutHandler = layoutHandler;
 		this.userName = userName;
 	}
-	
+
 	/**
 	 * Loads the list of destinations from disk.
 	 */
@@ -47,7 +46,7 @@ public class Slide {
 		}
 	}
 
-	
+
 	/**
 	 * Adds a destination to the projects list of destinations.
 	 */
@@ -78,6 +77,10 @@ public class Slide {
 		public static final int NEW = 2;
 		private JTextField destinationField;
 		private JDialog dialog;
+		private final String NEWBUTTONTEXT = "Skapa en ny destination", OPENBUTTONTEXT = "Ã–ppna destinationen ", 
+		CREATEDIALOGTITLE = "Skapa Destination", TEXTFIELDTEXT = "destinationens namn", CREATEBUTTONTEXT = "Skapa",
+		DESTINATIONLABELTEXT = "Destinationens titel:", TEXTFIELDINPUTEXISTERROR = "Destinationsnamnet finns redan i reseprojektet.",
+		TEXTFIELDINPUTSIZEERROR = "Destinationsnamnet mÃ¥ste vara minst 1 tecken och max 25 tecken.";
 
 		/**
 		 * Constructor of a destination-button. This component takes the user to the destination referenced in this button. 
@@ -90,9 +93,9 @@ public class Slide {
 			super.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			super.setBorderPainted(false);
 			if(actionType == OPEN){
-				super.setToolTipText("Öppna destinationen " + title);
+				super.setToolTipText(OPENBUTTONTEXT + title);
 			}else if(actionType == NEW){
-				super.setToolTipText("Skapa en ny destination");
+				super.setToolTipText(NEWBUTTONTEXT);
 			}			
 			super.addActionListener(this);
 		}
@@ -119,9 +122,9 @@ public class Slide {
 			dialog.setBackground(Color.BLUE);
 			dialog.setLayout(new FlowLayout(FlowLayout.LEFT,2,2));
 			dialog.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-			dialog.setTitle("Skapa Destination");
-			destinationField = new JTextField("destinationens namn");
-			JButton createButton = new JButton("Skapa");
+			dialog.setTitle(CREATEDIALOGTITLE);
+			destinationField = new JTextField(TEXTFIELDTEXT);
+			JButton createButton = new JButton(CREATEBUTTONTEXT);
 			createButton.addActionListener(new ActionListener() {				
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -130,7 +133,7 @@ public class Slide {
 						createDestination(input);					
 				}
 			});
-			dialog.add(new JLabel("Destinationens titel:"));
+			dialog.add(new JLabel(DESTINATIONLABELTEXT));
 			dialog.add(destinationField);
 			dialog.add(createButton);
 			dialog.setVisible(true);
@@ -138,15 +141,17 @@ public class Slide {
 		}	
 
 		/**
-		 * 
+		 * Checks the input in the textfield to make sure the destination is not already in the project
+		 *  and that it is in the correct length.
+		 *  @return the input string.
 		 */
 		private String checkInput(){
 			String input = destinationField.getText();
 			if(input.length() < 1 || input.length()>25 || input.matches("destinationens namn")){
-				JOptionPane.showMessageDialog(dialog, "Destinationsnamnet måste vara minst 1 tecken och max 25 tecken.");
+				JOptionPane.showMessageDialog(dialog, TEXTFIELDINPUTSIZEERROR);
 				return null;
 			}else if(destinations.contains(input)){
-				JOptionPane.showMessageDialog(dialog, "Destinationsnamnet finns redan i reseprojektet.");
+				JOptionPane.showMessageDialog(dialog, TEXTFIELDINPUTEXISTERROR);
 				return null;
 			}else{			
 				return input;
