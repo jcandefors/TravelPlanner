@@ -26,6 +26,7 @@ public class ObjectIO {
 		ObjectInputStream object_in = new ObjectInputStream(fileIn);
 		// Read an object
 		Object returnObject = object_in.readObject();
+		object_in.close();
 		if (returnObject instanceof ArrayList<?> || returnObject instanceof String[] || returnObject instanceof String){
 			return returnObject;
 		}
@@ -46,9 +47,10 @@ public class ObjectIO {
 
 			// Write object with ObjectOutputStream
 			ObjectOutputStream travelObjectOut = new ObjectOutputStream(fileout);
-
+			
 			// Write object out to disk
 			travelObjectOut.writeObject(object);
+			travelObjectOut.close();
 	}
 
 }

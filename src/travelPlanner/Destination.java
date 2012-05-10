@@ -136,8 +136,12 @@ public class Destination extends Slide {
 	 */
 	private void removeDestination() {
 		destinations.remove(title);
-		File removeFile = new File("data/" + userName + "/" + title);
-		removeFile.delete(); // returns true if succeded - handle???
+		File folder = new File("data/" + userName + "/" + title);
+		File[] filelist = folder.listFiles();
+		for(int index = 0 ; index < filelist.length; index ++){
+			System.out.println(filelist[index].delete());
+		}
+		folder.delete();
 		saveDestinations();
 	}
 }

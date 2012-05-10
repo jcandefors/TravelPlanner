@@ -19,7 +19,6 @@ public class LayoutHandler {
 
 	private JFrame frame;
 	private JPanel background;
-	private MapLabel mapLabel;
 	private JPanel top;	
 	private JPanel menuUp;
 	private JPanel menuLow;
@@ -38,7 +37,6 @@ public class LayoutHandler {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		screenSize = new Dimension(frame.getToolkit().getScreenSize());
 		frameSize = new Dimension(frame.getToolkit().getScreenSize().width*2/3,frame.getToolkit().getScreenSize().height*2/3);
-		frame.setSize(frameSize);
 		background = new JPanel(new BorderLayout(0,0));
 		frame.setContentPane(background);
 		background.setPreferredSize(frameSize);
@@ -97,7 +95,7 @@ public class LayoutHandler {
 	 * Sets up the menu in the west area of the layout.
 	 */
 	public void setUpMenu(){
-		JPanel leftMenu = new ImagePanel(new File("img/menu.png"));
+		ImagePanel leftMenu = new ImagePanel(new File("img/menu.png"));
 		leftMenu.setLayout(new FlowLayout(FlowLayout.CENTER,2,2));		
 		leftMenu.setPreferredSize(new Dimension(frameSize.width/5, frameSize.height-50));
 		menuUp = new JPanel();
@@ -120,13 +118,13 @@ public class LayoutHandler {
 	 */
 	public void setUpMain(){
 		map = new ImagePanel(new File("img/mappanel.png"));
-		map.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0)); //perhaps (layoutmgr, true) = double buffered - less flickering, more memory usage.
-		map.setPreferredSize(new Dimension(screenSize.width*5/6,screenSize.height*2/5));
+		map.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 30));
+		map.setPreferredSize(new Dimension(screenSize.width*5/6,360));
 		map.setAlignmentY(JPanel.CENTER_ALIGNMENT);
 		map.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		JPanel outerMain = new JPanel(new FlowLayout(FlowLayout.CENTER,4,2));
 		main = new ImagePanel(new File("img/mainmap.png"));
-		main.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
+		main.setLayout(new FlowLayout(FlowLayout.CENTER,30,40));
 		main.setPreferredSize(new Dimension(screenSize.width*5/6,screenSize.height*3/5));
 		main.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		outerMain.add(map);
@@ -171,12 +169,7 @@ public class LayoutHandler {
 	 * @param component The component to be added.
 	 */
 	public void addToMap(Component component){
-		if(component instanceof MapLabel){
-			mapLabel = (MapLabel) component;
-			map.add(component);
-		}else{
-			map.add(component);
-		}
+		map.add(component);
 		map.revalidate();
 
 	}

@@ -2,8 +2,8 @@ package travelPlanner;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -96,8 +96,13 @@ public class TravelProject extends Slide{
 		JPanel panel = new JPanel(new GridLayout(0,2,20,8));
 		panel.setOpaque(false);
 		for(int index = 0; index < labels.length; index++){
-			panel.add(new JLabel(labels[index]));
-			panel.add(new JLabel(projectInfo[index]));
+			
+			JLabel tempLabel1 = new JLabel(labels[index]);
+			tempLabel1.setFont(new Font("Tahoma", Font.BOLD, 16));
+			panel.add(tempLabel1);
+			JLabel tempLabel2 = new JLabel(projectInfo[index]);
+			tempLabel2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			panel.add(tempLabel2);
 		}
 			layoutHandler.addToMain(panel);
 		
